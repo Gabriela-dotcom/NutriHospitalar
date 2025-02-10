@@ -198,6 +198,7 @@ public void listarFinalizadaDeposito() {
         jLabel6 = new javax.swing.JLabel();
         bVoltar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        criarLogin = new javax.swing.JButton();
         pesquisaDieta = new javax.swing.JTextField();
         imgFundo2 = new javax.swing.JLabel();
 
@@ -583,6 +584,15 @@ public void listarFinalizadaDeposito() {
         jLabel3.setText("Pesquisar:");
         painelDoEstoqueDietas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 55, -1, 30));
 
+        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
+        criarLogin.setText("Presquisar Dieta");
+        criarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarLoginActionPerformed(evt);
+            }
+        });
+        painelDoEstoqueDietas.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 140, 20));
+
         pesquisaDieta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesquisaDietaActionPerformed(evt);
@@ -816,6 +826,14 @@ if (linhaSelecionada >= 0) {
         painelDoEstoqueDietas.setVisible(false);
     }//GEN-LAST:event_btnSair3ActionPerformed
 
+    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
+        // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso();
+        aviso.setVisible(true);
+        //login.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_criarLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -861,6 +879,7 @@ if (linhaSelecionada >= 0) {
     private javax.swing.JButton botaofinal;
     private javax.swing.JToggleButton btnSair3;
     private javax.swing.JComboBox<String> conformeD;
+    private javax.swing.JButton criarLogin;
     private javax.swing.JComboBox<String> finalizarSim1;
     private javax.swing.JTextField fornecedorD;
     private javax.swing.JTextField idCha1;

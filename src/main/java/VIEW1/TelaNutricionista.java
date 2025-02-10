@@ -321,6 +321,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jLabel15 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        criarLogin = new javax.swing.JButton();
         pesquisarPaciente = new javax.swing.JTextField();
         pdfTudo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -492,15 +493,12 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         menuEsquerda3Layout.setHorizontalGroup(
             menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel16)
                     .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(11, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -724,6 +722,15 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jLabel8.setText("Pesquisar:");
         tabelaPresStatus.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
 
+        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
+        criarLogin.setText("Presquisar Dieta");
+        criarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarLoginActionPerformed(evt);
+            }
+        });
+        tabelaPresStatus.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 140, 20));
+
         pesquisarPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesquisarPacienteActionPerformed(evt);
@@ -757,7 +764,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jScrollPane3.setViewportView(tabelaNutriTudo);
 
         tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 719, 324));
-        tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, -4, 840, 800));
+        tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 840, 800));
 
         imgFundoPresquicap1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         tabelaPresStatus.add(imgFundoPresquicap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 860, 800));
@@ -1084,6 +1091,14 @@ try {
         
     }//GEN-LAST:event_tabelaAtualizarPrescricaoMouseClicked
 
+    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
+        // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso();
+        aviso.setVisible(true);
+        //login.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_criarLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1130,6 +1145,7 @@ try {
     private javax.swing.JTextField campoNomeLeitoP;
     private javax.swing.JTextField campoNomePacienteP;
     private javax.swing.JTextField campoPacienteA;
+    private javax.swing.JButton criarLogin;
     private javax.swing.JButton dietaBotao;
     private javax.swing.JTextField dietaCampoP;
     private javax.swing.JPanel dietasAt;
