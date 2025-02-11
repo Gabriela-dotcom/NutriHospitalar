@@ -67,6 +67,10 @@ package MODEL;
     public void setIdDieta(int idDieta) {
         this.idDieta = idDieta;
     }
+
+    public Object getNomePaciente() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
 
 

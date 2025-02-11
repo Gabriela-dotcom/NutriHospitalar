@@ -155,9 +155,9 @@ public void listarFinalizadaDeposito() {
                 linha.getNomePaciente(),
                 linha.getLeito(),
                 linha.getAla(),
-                linha.isTurno() ? "Sim" : "Não",
+                linha.isTurno() ,
                 linha.getQualFuncionario(),
-                linha.isStatus() ? "Sim" : "Não",
+                linha.isStatus()? "Sim": "Não" ,
                 linha.getIdPaciente(),
                 linha.getIdDeposito()
             }); 
@@ -788,45 +788,53 @@ if (linhaSelecionada >= 0) {
 } // fim do if
 
     }//GEN-LAST:event_tabelaRetiradaDietaselecionarFuncionarioDaTabela
+public void gerarPDF() {
+    // Código para gerar o PDF
+    // ...
+}
 
     private void botaofinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofinalActionPerformed
-        // TODO add your handling code here:
-    try {
-        // Obtenha o valor selecionado na combobox
-        boolean finalizarSim = Boolean.parseBoolean(finalizarSim1.getSelectedItem().toString());
+ 
+ 
+        try {
+            // Obtenha o valor selecionado na combobox
+            boolean finalizarSim = Boolean.parseBoolean(finalizarSim1.getSelectedItem().toString());
 
-        // Obtenha o ID da finalização do campo de texto
-        int idFinalizada = Integer.parseInt(qualFinalizada.getText());
+            // Obtenha o ID da finalização do campo de texto
+            int idFinalizada = Integer.parseInt(qualFinalizada.getText());
 
-        // Atualize o status na tabela finalizada
-        DietasController dietasController = new DietasController();
-        boolean atualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, finalizarSim);
+            // Atualize o status na tabela finalizada
+            DietasController dietasController = new DietasController();
+            boolean atualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, finalizarSim);
 
-          if (atualizado) {
-            JOptionPane.showMessageDialog(null, "Status atualizado com sucesso!");
+            if (atualizado) {
+                JOptionPane.showMessageDialog(null, "Status atualizado com sucesso!");
 
-            // Caminho do arquivo PDF
-            String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
+                // Gere o PDF
+                gerarPDF();
 
-            // Abrir o PDF
-            File arquivoPdf = new File(caminhoDoPdf);
-            if (arquivoPdf.exists()) {
-                if (Desktop.isDesktopSupported()) {
-                    Desktop.getDesktop().open(arquivoPdf);
+                // Caminho do arquivo PDF
+                String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
+
+                // Abrir o PDF
+                File arquivoPdf = new File(caminhoDoPdf);
+                if (arquivoPdf.exists()) {
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop.getDesktop().open(arquivoPdf);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Abertura de PDF não suportada.");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Abertura de PDF não suportada.");
+                    JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
+                JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Erro ao atualizar o status: " + e.getMessage());
-    }
+    
 
 
 

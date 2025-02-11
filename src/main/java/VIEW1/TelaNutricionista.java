@@ -36,6 +36,7 @@ public class TelaNutricionista extends javax.swing.JFrame {
         Listagem();
         ListagemAT();
         listarDietas1();
+        
         // Esconde outros painéis que não devem ser visíveis após o login
     dietasAt.setVisible(false);
     tabelaPresStatus.setVisible(false);
@@ -214,7 +215,7 @@ public void ListagemAT() {
 }*/
  //fim listagem
  //Listar finalizadas
- public void listarDietas1() {
+public void listarDietas1() {
     try {
         // Criar o controlador para acessar os dados das dietas
         DietasController dietasController = new DietasController();
@@ -223,7 +224,7 @@ public void ListagemAT() {
         List<InformacaoPaciente> dadosInformacao = dietasController.getDadosInformacaoPacientesView();
 
         // Obter o modelo da tabela
-        DefaultTableModel modeloTabela = (DefaultTableModel) tabelaNutriTudo.getModel();
+        DefaultTableModel modeloTabela = (DefaultTableModel) tabelaNutriTudo1.getModel();
 
         // Verificando se o modelo da tabela já tem o número correto de colunas
         if (modeloTabela.getColumnCount() == 0) {
@@ -231,6 +232,7 @@ public void ListagemAT() {
             modeloTabela.addColumn("Leito");
             modeloTabela.addColumn("Dieta");
             modeloTabela.addColumn("Status");
+            modeloTabela.addColumn("ID Dieta"); // Adicionando coluna para ID Dieta
         }
 
         // Limpar a tabela antes de adicionar novos dados
@@ -242,7 +244,8 @@ public void ListagemAT() {
                 paciente.getNome(),
                 paciente.getLeito(),
                 paciente.getDieta(),
-                paciente.getStatus()  // Status já será "Sim" ou "Não"
+                paciente.getStatus(),  // Status já será "Sim" ou "Não"
+                paciente.getIdDieta()  // Adicionando ID Dieta
             });
         }
     } catch (SQLException e) {
@@ -254,11 +257,38 @@ public void ListagemAT() {
 
 
 
+
+
+
  // fim listar dietas
     // Método para atualizar a tabela com a lista de pacientes
 private void atualizarTabela(List<Object[]> dadosPaciente) {
     // Obter o modelo da tabela
     DefaultTableModel modeloTabela = (DefaultTableModel) tabelaPresquicao.getModel();
+    
+    // Limpar a tabela antes de adicionar novos dados
+    modeloTabela.setRowCount(0);
+
+    // Adicionar cada linha de dados à tabela
+    for (Object[] dados : dadosPaciente) {
+        modeloTabela.addRow(dados);  // Adiciona cada array de dados como uma nova linha na tabela
+    }
+}
+private void atualizarTabela2(List<Object[]> dadosPaciente) {
+    // Obter o modelo da tabela
+    DefaultTableModel modeloTabela = (DefaultTableModel) tabelaAtualizarPrescricao.getModel();
+    
+    // Limpar a tabela antes de adicionar novos dados
+    modeloTabela.setRowCount(0);
+
+    // Adicionar cada linha de dados à tabela
+    for (Object[] dados : dadosPaciente) {
+        modeloTabela.addRow(dados);  // Adiciona cada array de dados como uma nova linha na tabela
+    }
+}
+private void atualizarTabela3(List<Object[]> dadosPaciente) {
+    // Obter o modelo da tabela
+    DefaultTableModel modeloTabela = (DefaultTableModel) tabelaNutriTudo1.getModel();
     
     // Limpar a tabela antes de adicionar novos dados
     modeloTabela.setRowCount(0);
@@ -327,7 +357,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         pesquisarPaciente = new javax.swing.JTextField();
         pdfTudo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tabelaNutriTudo = new javax.swing.JTable();
+        tabelaNutriTudo1 = new javax.swing.JTable();
         imgAtualDiet1 = new javax.swing.JLabel();
         imgFundoPresquicap1 = new javax.swing.JLabel();
 
@@ -524,7 +554,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         prescreverNutricionista.add(menuEsquerda3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 790));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel20.setText("Leito:");
+        jLabel20.setText("Ala:");
         prescreverNutricionista.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, -1, -1));
 
         imgFundoPresquicap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
@@ -751,8 +781,8 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         });
         tabelaPresStatus.add(pdfTudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 670, 138, 42));
 
-        tabelaNutriTudo.setBackground(new java.awt.Color(236, 231, 231));
-        tabelaNutriTudo.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaNutriTudo1.setBackground(new java.awt.Color(236, 231, 231));
+        tabelaNutriTudo1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -763,7 +793,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
                 "Nome do paciente", "Leito", "ID Dieta", "Status"
             }
         ));
-        jScrollPane3.setViewportView(tabelaNutriTudo);
+        jScrollPane3.setViewportView(tabelaNutriTudo1);
 
         tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 719, 324));
         tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 840, 800));
@@ -1183,7 +1213,7 @@ try {
     private javax.swing.JButton presquicao3;
     private javax.swing.JButton saida;
     private javax.swing.JTable tabelaAtualizarPrescricao;
-    private javax.swing.JTable tabelaNutriTudo;
+    private javax.swing.JTable tabelaNutriTudo1;
     private javax.swing.JPanel tabelaPresStatus;
     private javax.swing.JTable tabelaPresquicao;
     // End of variables declaration//GEN-END:variables

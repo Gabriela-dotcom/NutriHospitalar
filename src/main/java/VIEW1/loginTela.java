@@ -106,12 +106,13 @@ private void limparCampos() {
         panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 341, 193, -1));
 
         olhoBot.setForeground(new java.awt.Color(102, 255, 102));
+        olhoBot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/eye.png"))); // NOI18N
         olhoBot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 olhoBotActionPerformed(evt);
             }
         });
-        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(619, 337, 39, 22));
+        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 340, 39, 22));
 
         estiloAzul.setBackground(new java.awt.Color(51, 102, 0));
         panelLog.add(estiloAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 632, 1000, 68));
