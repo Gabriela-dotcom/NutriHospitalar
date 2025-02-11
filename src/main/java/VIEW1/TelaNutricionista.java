@@ -212,7 +212,7 @@ public void ListagemAT() {
 }*/
  //fim listagem
  //Listar finalizadas
- public void listarDietas1() {
+public void listarDietas1() {
     try {
         // Criar o controlador para acessar os dados das dietas
         DietasController dietasController = new DietasController();
@@ -229,6 +229,7 @@ public void ListagemAT() {
             modeloTabela.addColumn("Leito");
             modeloTabela.addColumn("Dieta");
             modeloTabela.addColumn("Status");
+            modeloTabela.addColumn("ID Dieta"); // Adicionando coluna para ID Dieta
         }
 
         // Limpar a tabela antes de adicionar novos dados
@@ -240,7 +241,8 @@ public void ListagemAT() {
                 paciente.getNome(),
                 paciente.getLeito(),
                 paciente.getDieta(),
-                paciente.getStatus()  // Status já será "Sim" ou "Não"
+                paciente.getStatus(),  // Status já será "Sim" ou "Não"
+                paciente.getIdDieta()  // Adicionando ID Dieta
             });
         }
     } catch (SQLException e) {
@@ -248,6 +250,8 @@ public void ListagemAT() {
         JOptionPane.showMessageDialog(this, "Erro ao atualizar a tabela: " + e.getMessage());
     }
 }
+
+
 
 
 
@@ -453,7 +457,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         });
         jScrollPane1.setViewportView(tabelaPresquicao);
 
-        prescreverNutricionista.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 740, 320));
+        prescreverNutricionista.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 320, 740, 320));
 
         menuEsquerda3.setBackground(new java.awt.Color(51, 102, 0));
         menuEsquerda3.setForeground(new java.awt.Color(51, 102, 0));

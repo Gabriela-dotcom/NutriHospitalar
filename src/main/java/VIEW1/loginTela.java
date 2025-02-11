@@ -34,22 +34,10 @@ public class loginTela extends javax.swing.JFrame {
         // Torna a janela visível
         setVisible(true);
         initComponents();
-        iconeTela();
+        
         olhoBot.setIcon(new ImageIcon("C:/Users/devmat/Downloads/eye-slash.png"));
     }
 
-private void iconeTela(){  
-        try {
-
-        Image iconeTitulo = ImageIO.read(getClass().getResource("/imagens/SENAI_LOGO.png"));
-       
-            this.setIconImage(iconeTitulo);
-           
-        } catch(IOException ex) {
-          System.out.println("Erro ao importar icone: " + ex.getMessage());
-        }        
-   
-    }
   //  limpar campos  
 private void limparCampos() {
    campoSenhaLog.setText("");
