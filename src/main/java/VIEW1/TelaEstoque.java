@@ -9,11 +9,16 @@ import MODEL.Deposito;
 import MODEL.FinalizadaDeposito;
 import MODEL.Finalizadas;
 import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.SQLException;
 
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,12 +32,35 @@ public class TelaEstoque extends javax.swing.JFrame {
      */
     public TelaEstoque() {
         initComponents();
+        // Dentro do construtor da tela de depósito
+setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
          listarDepositoTudo();
          listarFinalizadaDeposito();
-         PainelcadastrosDeDietas.setVisible(false);
+     PainelcadastrosDeDietas.setVisible(false);
         painelRetiradaDieta.setVisible(true);
         painelDoEstoqueDietas.setVisible(false);
         
+    }
+   // Método para fechar a tela
+    public void fecharTela() {
+        dispose();
+    }
+
+    // Método para configurar o evento do botão de sair
+    private void configurarBotaoDeSair() {
+        JButton seuBotaoDeSair = new JButton("Sair");
+        seuBotaoDeSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginTela login = new loginTela();
+                login.setVisible(true);
+                fecharTela();
+            }
+        });
+
+        // Adicione o botão à tela
+        add(saida);
     }
   //  limpar campos  
 private void limparCampos() {
@@ -187,7 +215,7 @@ public void listarFinalizadaDeposito() {
         jPanel4 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         infoDeposito = new javax.swing.JToggleButton();
-        btnSair3 = new javax.swing.JToggleButton();
+        saida = new javax.swing.JButton();
         qualFinalizada = new javax.swing.JTextField();
         finalizarSim1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -198,6 +226,7 @@ public void listarFinalizadaDeposito() {
         jLabel6 = new javax.swing.JLabel();
         bVoltar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        criarLogin = new javax.swing.JButton();
         pesquisaDieta = new javax.swing.JTextField();
         imgFundo2 = new javax.swing.JLabel();
 
@@ -376,20 +405,20 @@ public void listarFinalizadaDeposito() {
 
         tabelaRetiradaDieta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Qual Finalizada", "ID Dieta", "Nome Paciente", "Leito", "Ala", "Turno", "Responsavel", "Quantidade", "Status"
+                "Qual Finalizada", "ID Dieta", "Nome Paciente", "Leito", "Ala", "Turno", "Responsavel", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, true, true, true, true, true, true
+                true, false, false, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -459,13 +488,12 @@ public void listarFinalizadaDeposito() {
             }
         });
 
-        btnSair3.setBackground(new java.awt.Color(204, 0, 51));
-        btnSair3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnSair3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/man.png"))); // NOI18N
-        btnSair3.setText("Sair");
-        btnSair3.addActionListener(new java.awt.event.ActionListener() {
+        saida.setBackground(new java.awt.Color(255, 0, 0));
+        saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/man.png"))); // NOI18N
+        saida.setText("Sair");
+        saida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSair3ActionPerformed(evt);
+                saidaActionPerformed(evt);
             }
         });
 
@@ -474,17 +502,18 @@ public void listarFinalizadaDeposito() {
         menuEstoquista1Layout.setHorizontalGroup(
             menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuEstoquista1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14)
+                            .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(menuEstoquista1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(saida)))
                 .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEstoquista1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSair3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
         );
         menuEstoquista1Layout.setVerticalGroup(
             menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,9 +526,9 @@ public void listarFinalizadaDeposito() {
                 .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
-                .addComponent(btnSair3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         painelRetiradaDieta.add(menuEstoquista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
@@ -529,30 +558,23 @@ public void listarFinalizadaDeposito() {
 
         TabelaDeDeposito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome Dieta", "Quantidade", "Lote", "Validade"
+                "Deposito", "Nome Dieta", "Lote", "Fornecedor", "Validade", "Quantidade", "Conforme"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         TabelaDeDeposito.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -582,6 +604,15 @@ public void listarFinalizadaDeposito() {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Pesquisar:");
         painelDoEstoqueDietas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 55, -1, 30));
+
+        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
+        criarLogin.setText("Presquisar Dieta");
+        criarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarLoginActionPerformed(evt);
+            }
+        });
+        painelDoEstoqueDietas.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 140, 20));
 
         pesquisaDieta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -659,7 +690,8 @@ public void listarFinalizadaDeposito() {
 
     private void BcadastrarDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcadastrarDietaActionPerformed
      // Capturando os dados dos campos de entrada
-  if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getText().isEmpty() || validadeD.getText().isEmpty() || quantidadeD.getText().isEmpty() || conformeD.getSelectedItem() == null) {
+  if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getText().isEmpty() || validadeD.getText().isEmpty() || 
+          quantidadeD.getText().isEmpty() || conformeD.getSelectedItem() == null) {
     JOptionPane.showMessageDialog(null,"Preencha todos os campos antes de adicionar.");
 } else {
     String tipoDieta = nomeDaDietaD.getText(); // Assumindo que tipoDieta é nomeDaDietaD
@@ -806,15 +838,24 @@ if (linhaSelecionada >= 0) {
         // TODO add your handling code here:
     }//GEN-LAST:event_pesquisaDietaActionPerformed
 
-    private void btnSair3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSair3ActionPerformed
+    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
+        // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso();
+        aviso.setVisible(true);
+        //login.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_criarLoginActionPerformed
+
+    private void saidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saidaActionPerformed
         // TODO add your handling code here:
         loginTela login = new loginTela();
         login.setVisible(true);
-        dispose();
-         PainelcadastrosDeDietas.setVisible(false);
-        painelRetiradaDieta.setVisible(false);
-        painelDoEstoqueDietas.setVisible(false);
-    }//GEN-LAST:event_btnSair3ActionPerformed
+       
+        ((JFrame) SwingUtilities.getWindowAncestor(saida)).dispose();
+        // Dentro do construtor da tela de depósito
+
+
+    }//GEN-LAST:event_saidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -859,8 +900,8 @@ if (linhaSelecionada >= 0) {
     private javax.swing.JToggleButton bRetirada2;
     private javax.swing.JButton bVoltar;
     private javax.swing.JButton botaofinal;
-    private javax.swing.JToggleButton btnSair3;
     private javax.swing.JComboBox<String> conformeD;
+    private javax.swing.JButton criarLogin;
     private javax.swing.JComboBox<String> finalizarSim1;
     private javax.swing.JTextField fornecedorD;
     private javax.swing.JTextField idCha1;
@@ -897,6 +938,7 @@ if (linhaSelecionada >= 0) {
     private javax.swing.JTextField pesquisaDieta;
     private javax.swing.JTextField qualFinalizada;
     private javax.swing.JTextField quantidadeD;
+    private javax.swing.JButton saida;
     private javax.swing.JTable tabelaRetiradaDieta;
     private javax.swing.JTextField validadeD;
     // End of variables declaration//GEN-END:variables

@@ -14,7 +14,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +31,7 @@ public class TelaNutricionista extends javax.swing.JFrame {
      * Creates new form TelaNutricionista
      */
     public TelaNutricionista() {
-       
+       setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         Listagem();
         ListagemAT();
@@ -295,9 +297,9 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         tabelaPresquicao = new javax.swing.JTable();
         menuEsquerda3 = new javax.swing.JPanel();
         listaDeDietas3 = new javax.swing.JButton();
-        btnSair3 = new javax.swing.JToggleButton();
         atualizarDietas4 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
+        saida = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         imgFundoPresquicap = new javax.swing.JLabel();
         dietasAt = new javax.swing.JPanel();
@@ -321,6 +323,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jLabel15 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        criarLogin = new javax.swing.JButton();
         pesquisarPaciente = new javax.swing.JTextField();
         pdfTudo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -466,16 +469,6 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
             }
         });
 
-        btnSair3.setBackground(new java.awt.Color(204, 0, 51));
-        btnSair3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnSair3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/man.png"))); // NOI18N
-        btnSair3.setText("Sair");
-        btnSair3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSair3ActionPerformed(evt);
-            }
-        });
-
         atualizarDietas4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/atualizar.png"))); // NOI18N
         atualizarDietas4.setText("Atualizar Dietas");
         atualizarDietas4.addActionListener(new java.awt.event.ActionListener() {
@@ -487,25 +480,32 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jLabel16.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel16.setText("Nutricionista");
 
+        saida.setBackground(new java.awt.Color(255, 0, 0));
+        saida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/man.png"))); // NOI18N
+        saida.setText("Sair");
+        saida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuEsquerda3Layout = new javax.swing.GroupLayout(menuEsquerda3);
         menuEsquerda3.setLayout(menuEsquerda3Layout);
         menuEsquerda3Layout.setHorizontalGroup(
             menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel16)
-                    .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel16)
+                            .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(saida)))
                 .addContainerGap(11, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnSair3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
         );
         menuEsquerda3Layout.setVerticalGroup(
             menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,9 +516,9 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
                 .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
-                .addComponent(btnSair3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
+                .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70))
         );
 
         prescreverNutricionista.add(menuEsquerda3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 790));
@@ -724,6 +724,15 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jLabel8.setText("Pesquisar:");
         tabelaPresStatus.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
 
+        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
+        criarLogin.setText("Presquisar Dieta");
+        criarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarLoginActionPerformed(evt);
+            }
+        });
+        tabelaPresStatus.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 140, 20));
+
         pesquisarPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesquisarPacienteActionPerformed(evt);
@@ -757,7 +766,7 @@ private void atualizarTabela(List<Object[]> dadosPaciente) {
         jScrollPane3.setViewportView(tabelaNutriTudo);
 
         tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 719, 324));
-        tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, -4, 840, 800));
+        tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 840, 800));
 
         imgFundoPresquicap1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         tabelaPresStatus.add(imgFundoPresquicap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 860, 800));
@@ -967,16 +976,6 @@ try {
         });
     }//GEN-LAST:event_pesquisarPacienteActionPerformed
 
-    private void btnSair3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSair3ActionPerformed
-        // TODO add your handling code here:
-        loginTela login = new loginTela();
-        login.setVisible(true);
-        dietasAt.setVisible(false);
-    tabelaPresStatus.setVisible(false);
- 
-    prescreverNutricionista.setVisible(false); 
-    }//GEN-LAST:event_btnSair3ActionPerformed
-
     private void tabelaPresquicaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPresquicaoMouseClicked
 
         int linhaSelecionada = tabelaPresquicao.getSelectedRow();
@@ -1084,6 +1083,24 @@ try {
         
     }//GEN-LAST:event_tabelaAtualizarPrescricaoMouseClicked
 
+    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
+        // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso();
+        aviso.setVisible(true);
+        //login.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_criarLoginActionPerformed
+
+    private void saidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saidaActionPerformed
+        // TODO add your handling code here:
+        loginTela login = new loginTela();
+        login.setVisible(true);
+
+        ((JFrame) SwingUtilities.getWindowAncestor(saida)).dispose();
+        // Dentro do construtor da tela de depósito
+
+    }//GEN-LAST:event_saidaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1123,13 +1140,13 @@ try {
     private javax.swing.JButton atualizarBT;
     private javax.swing.JButton atualizarDietas2;
     private javax.swing.JButton atualizarDietas4;
-    private javax.swing.JToggleButton btnSair3;
     private javax.swing.JButton cadastrarPresquicaoDia1;
     private javax.swing.JTextField campoAlaP;
     private javax.swing.JTextField campoDietaA;
     private javax.swing.JTextField campoNomeLeitoP;
     private javax.swing.JTextField campoNomePacienteP;
     private javax.swing.JTextField campoPacienteA;
+    private javax.swing.JButton criarLogin;
     private javax.swing.JButton dietaBotao;
     private javax.swing.JTextField dietaCampoP;
     private javax.swing.JPanel dietasAt;
@@ -1164,6 +1181,7 @@ try {
     private javax.swing.JPanel prescreverNutricionista;
     private javax.swing.JButton presquicao2;
     private javax.swing.JButton presquicao3;
+    private javax.swing.JButton saida;
     private javax.swing.JTable tabelaAtualizarPrescricao;
     private javax.swing.JTable tabelaNutriTudo;
     private javax.swing.JPanel tabelaPresStatus;

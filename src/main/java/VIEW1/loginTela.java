@@ -34,22 +34,11 @@ public class loginTela extends javax.swing.JFrame {
         // Torna a janela visível
         setVisible(true);
         initComponents();
-        iconeTela();
+    
         olhoBot.setIcon(new ImageIcon("C:/Users/devmat/Downloads/eye-slash.png"));
     }
 
-private void iconeTela(){  
-        try {
 
-        Image iconeTitulo = ImageIO.read(getClass().getResource("/imagens/SENAI_LOGO.png"));
-       
-            this.setIconImage(iconeTitulo);
-           
-        } catch(IOException ex) {
-          System.out.println("Erro ao importar icone: " + ex.getMessage());
-        }        
-   
-    }
   //  limpar campos  
 private void limparCampos() {
    campoSenhaLog.setText("");
@@ -75,6 +64,7 @@ private void limparCampos() {
         estiloAzul1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        criarLogin = new javax.swing.JButton();
         imgFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,11 +121,23 @@ private void limparCampos() {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Bem Vindo ao Login");
-        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 210, -1, -1));
+        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 51));
         jLabel3.setText("NutriHospitalar");
-        panelLog.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(356, 124, -1, -1));
+        panelLog.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 340, -1));
+
+        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
+        criarLogin.setText("Criar Usuario");
+        criarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarLoginActionPerformed(evt);
+            }
+        });
+        panelLog.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 140, 40));
+
+        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Nutri.png"))); // NOI18N
         panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 66, 1000, 570));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,6 +204,14 @@ boolean oculto = true;
         
     }//GEN-LAST:event_campoEmailLogActionPerformed
 
+    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
+        // TODO add your handling code here:
+        TelaAviso aviso = new TelaAviso();
+        aviso.setVisible(true);
+        //login.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_criarLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -240,6 +250,7 @@ boolean oculto = true;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoEmailLog;
     private javax.swing.JPasswordField campoSenhaLog;
+    private javax.swing.JButton criarLogin;
     private javax.swing.JLabel emailnome;
     private javax.swing.JTextField estiloAzul;
     private javax.swing.JTextField estiloAzul1;

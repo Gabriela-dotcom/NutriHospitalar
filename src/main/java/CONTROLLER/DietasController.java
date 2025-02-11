@@ -321,6 +321,23 @@ public boolean finalizarAtualizacao(String nomePaciente, boolean qualFuncionario
         return false;
     }
 }
+public boolean excluirFinalizacao(int idFinalizada) {
+    String query = "DELETE FROM finalizada WHERE idFinalizada=?";
+    try (Connection connection = Conexao.getConexao();
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        
+        // Definir o parâmetro da consulta
+        preparedStatement.setInt(1, idFinalizada);
+        
+        int excluiu = preparedStatement.executeUpdate();
+        return excluiu > 0;
+        
+    } catch (SQLException e) {
+        System.err.println("Erro ao excluir a finalização! " + e);
+        return false;
+    }
+}
+
 //fim codigo combobox
 
 //lista de infos finalizada deposito
