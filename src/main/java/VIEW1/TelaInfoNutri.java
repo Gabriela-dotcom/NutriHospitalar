@@ -296,6 +296,7 @@ private void atualizarTableActionPerformed() {
      // panelMenuCooped.setVisible(true);
      TelaNutricionista nutri = new  TelaNutricionista();
      nutri.setVisible(true);
+     dispose();
 
     }//GEN-LAST:event_Fechar1ActionPerformed
 
