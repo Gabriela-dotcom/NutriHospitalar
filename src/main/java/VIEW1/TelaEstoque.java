@@ -784,7 +784,7 @@ if (linhaSelecionada >= 0) {
             JOptionPane.showMessageDialog(null, "Status atualizado com sucesso!");
 
             // Caminho do arquivo PDF
-            String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
+            String caminhoDoPdf = "C:\\Users\\devmat\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\nutriHopitalarMaven\\NutriHospitalar\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
 
             // Abrir o PDF
             File arquivoPdf = new File(caminhoDoPdf);
