@@ -14,22 +14,24 @@ public class Deposito {
     private String lote;
     private String fornecedor;
     private String validade;
-    private String quantidade;
+    private int quantidade;
     private boolean conforme;
+    private String nomedieta;
     // Construtor padrão
     public Deposito() {
     }
 
-    public Deposito(int idDieta, String lote, String fornecedor, String validade, String quantidade, boolean conforme) {
-        this.idDieta = idDieta;
+    public Deposito(int idDeposito, String lote, String fornecedor, String validade, int quantidade, boolean conforme, String nomedieta) {
+        this.idDeposito = idDeposito;
         this.lote = lote;
         this.fornecedor = fornecedor;
         this.validade = validade;
         this.quantidade = quantidade;
         this.conforme = conforme;
+        this.nomedieta = nomedieta;
     }
 
-    public Deposito(int idDeposito, int idDieta, String lote, String fornecedor, String validade, String quantidade, boolean conforme) {
+    public Deposito(int idDeposito, int idDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, String nomedieta) {
         this.idDeposito = idDeposito;
         this.idDieta = idDieta;
         this.lote = lote;
@@ -37,6 +39,7 @@ public class Deposito {
         this.validade = validade;
         this.quantidade = quantidade;
         this.conforme = conforme;
+        this.nomedieta = nomedieta;
     }
 
     public int getIdDeposito() {
@@ -79,11 +82,11 @@ public class Deposito {
         this.validade = validade;
     }
 
-    public String getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -95,5 +98,14 @@ public class Deposito {
         this.conforme = conforme;
     }
 
+    public String getNomedieta() {
+        return nomedieta;
+    }
+
+    public void setNomedieta(String nomedieta) {
+        this.nomedieta = nomedieta;
+    }
+
+   
 }
  

@@ -4,6 +4,7 @@
  */
 package VIEW1;
 
+import CONTROLLER.Conexao;
 import CONTROLLER.DietasController;
 import CONTROLLER.PacienteController;
 import MODEL.Finalizadas;
@@ -11,6 +12,9 @@ import MODEL.InformacaoPaciente;
 import MODEL.Paciente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +39,87 @@ public class TelaNutricionista extends javax.swing.JFrame {
         initComponents();
         Listagem();
         ListagemAT();
-        listarDietas1();
-        
+   //     listarDietas1();
+       ListagemDePacientes();
         // Esconde outros painéis que não devem ser visíveis após o login
     dietasAt.setVisible(false);
     tabelaPresStatus.setVisible(false);
 
+
     }
+    
+   // Método sem argumento, lista todos os pacientes
+public void ListagemDePacientes() {
+    ListagemDePacientes(""); // Chama a versão do método com filtro passando uma string vazia
+}
+
+// Método com filtro por nome do paciente
+public void ListagemDePacientes(String nomePaciente) {
+    // Chamando o controlador que obtém os dados dos pacientes com o filtro
+    PacienteController controller = new PacienteController();
+
+    // Capturando a lista de pacientes filtrada pelo nome
+    List<InformacaoPaciente> listaPacientes = null;
+    try {
+        listaPacientes = controller.ListarInformacaoPacientesView(nomePaciente);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Erro ao listar pacientes: " + ex.getMessage());
+        return; // Evita continuar caso ocorra um erro
+    }
+
+    // Obtendo o modelo da tabela
+    DefaultTableModel modeloTabela = (DefaultTableModel) tabelaNutriTudo1.getModel();
+
+    // Limpando a tabela antes de adicionar novos dados
+    modeloTabela.setRowCount(0);
+
+    // Verificando se a lista não é nula ou vazia
+    if (listaPacientes != null && !listaPacientes.isEmpty()) {
+        // Inserindo os dados na tabela
+        for (InformacaoPaciente paciente : listaPacientes) {
+            // Criando uma nova linha para a tabela
+            Object[] linha = {
+                paciente.getNome(),
+                paciente.getLeito(),
+                paciente.getIdDieta(),
+                paciente.getStatus()
+            };
+            // Adicionando a linha ao modelo da tabela
+            modeloTabela.addRow(linha);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Nenhum paciente encontrado.");
+    }
+}
+public void PesquisaPacientes() {
+    pesquisarPaciente.getDocument().addDocumentListener(
+        new DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                Pesquisar();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                Pesquisar();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                Pesquisar();
+            }
+
+            // Método de pesquisa que chama ListagemDePacientes com filtro
+            private void Pesquisar() {
+                String filtro = pesquisarPaciente.getText(); // Captura o texto digitado
+                ListagemDePacientes(filtro); // Chama o método passando o filtro como parâmetro
+            }
+        }
+    );
+}
+
+    
+    
     // Método para limpar os campos de cadastro do paciente
 private void limparCampos() {
     campoNomePacienteP.setText("");  // Limpa o campo de nome do paciente
@@ -215,6 +293,7 @@ public void ListagemAT() {
 }*/
  //fim listagem
  //Listar finalizadas
+/*
 public void listarDietas1() {
     try {
         // Criar o controlador para acessar os dados das dietas
@@ -230,9 +309,10 @@ public void listarDietas1() {
         if (modeloTabela.getColumnCount() == 0) {
             modeloTabela.addColumn("Nome");
             modeloTabela.addColumn("Leito");
-            modeloTabela.addColumn("Dieta");
+            modeloTabela.addColumn("idDieta");
+              modeloTabela.addColumn("ID Dieta"); // Adicionando coluna para ID Dieta
             modeloTabela.addColumn("Status");
-            modeloTabela.addColumn("ID Dieta"); // Adicionando coluna para ID Dieta
+            
         }
 
         // Limpar a tabela antes de adicionar novos dados
@@ -255,7 +335,7 @@ public void listarDietas1() {
 }
 
 
-
+*/
 
 
 
@@ -793,6 +873,11 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 "Nome do paciente", "Leito", "ID Dieta", "Status"
             }
         ));
+        tabelaNutriTudo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaNutriTudo1MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tabelaNutriTudo1);
 
         tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 719, 324));
@@ -815,42 +900,24 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
     }//GEN-LAST:event_campoNomeLeitoPActionPerformed
 
     private void cadastrarPresquicaoDia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarPresquicaoDia1ActionPerformed
-Finalizadas finalizada = new Finalizadas();
-if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty() || campoAlaP.getText().isEmpty() || dietaCampoP.getText().isEmpty()) {
+if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty() ||
+    campoAlaP.getText().isEmpty() || dietaCampoP.getText().isEmpty()) {
+    
     JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar.");
 } else {
-    // Captura os dados dos campos de entrada
-    String nomePaciente = campoNomePacienteP.getText();
-    String leito = campoNomeLeitoP.getText();
-    int idDieta = Integer.parseInt(dietaCampoP.getText());
-    String ala = campoAlaP.getText();
+    String nomePaciente = campoNomePacienteP.getText().trim();
+    String leito = campoNomeLeitoP.getText().trim();
+    String nomeDieta = dietaCampoP.getText().trim();
+    String ala = campoAlaP.getText().trim();
 
-    // Cria o objeto Finalizadas e define os dados
-    finalizada.setNomePaciente(nomePaciente);
-    finalizada.setLeito(leito);
-    finalizada.setIdDieta(idDieta);
-    finalizada.setAla(ala);
+    DietasController dao = new DietasController();
+    boolean sucesso = dao.cadastrarPrescricaoPorDieta(nomeDieta, nomePaciente, leito, ala);
 
-    // Cria um objeto FinalizadasController para inserir a prescrição
-   DietasController dao = new DietasController();
-    boolean inserir = dao.cadastrarFinalizada(finalizada);
-
-    // Verifica se a inserção foi bem-sucedida
-    if (inserir) {
-        JOptionPane.showMessageDialog(this, "Prescrição cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        Listagem(); // Atualiza a lista de pacientes
-        limparCampos(); // Limpa os campos de entrada
-    } else {
-        JOptionPane.showMessageDialog(this, "Não foi possível cadastrar a prescrição.", "Erro", JOptionPane.ERROR_MESSAGE);
-        limparCamposReservas(); // Se falhar, limpa os campos
+    if (sucesso) {
+        Listagem();
+        limparCampos();
     }
 }
-
-
-
-
-
-
 
     }//GEN-LAST:event_cadastrarPresquicaoDia1ActionPerformed
 
@@ -865,7 +932,7 @@ if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty(
     private void dietaBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dietaBotaoActionPerformed
 // TODO add your handling code here:
 // Método para cadastrar um novo paciente
-
+/*
     if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty() || campoAlaP.getText().isEmpty() || dietaCampoP.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null,"Preencha todos os campos antes de cadastrar.");
     } else {
@@ -895,7 +962,26 @@ if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty(
             JOptionPane.showMessageDialog(this, "Não foi possível cadastrar o paciente.", "Erro", JOptionPane.ERROR_MESSAGE);
             limparCamposReservas(); // Se falhar, limpa os campos
         }
+    }*/
+if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty() ||
+    campoAlaP.getText().isEmpty() || dietaCampoP.getText().isEmpty()) {
+    
+    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar.");
+} else {
+    String nomePaciente = campoNomePacienteP.getText().trim();
+    String leito = campoNomeLeitoP.getText().trim();
+    String nomeDieta = dietaCampoP.getText().trim();
+    String ala = campoAlaP.getText().trim();
+
+    PacienteController dao = new PacienteController();
+    boolean sucesso = dao.cadastrarPaciente(nomePaciente, leito, ala, nomeDieta);
+
+    if (sucesso) {
+        Listagem();
+        limparCampos();
     }
+}
+
 
 
 
@@ -945,7 +1031,7 @@ try {
        
  Listagem();
         ListagemAT();
-        listarDietas1();
+      
 
     }//GEN-LAST:event_atualizarBTActionPerformed
 
@@ -958,7 +1044,7 @@ try {
     tabelaPresStatus.setVisible(false);
      Listagem();
         ListagemAT();
-        listarDietas1();
+     
     }//GEN-LAST:event_pdfTudoActionPerformed
 
     private void pesquisarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisarPacienteActionPerformed
@@ -1035,7 +1121,7 @@ try {
     prescreverNutricionista.setVisible(false); 
      Listagem();
         ListagemAT();
-        listarDietas1();
+        
     }//GEN-LAST:event_listaDeDietas3ActionPerformed
 
     private void atualizarDietas4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarDietas4ActionPerformed
@@ -1046,7 +1132,7 @@ try {
     prescreverNutricionista.setVisible(false); 
      Listagem();
         ListagemAT();
-        listarDietas1();
+        
     }//GEN-LAST:event_atualizarDietas4ActionPerformed
 
     private void presquicao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presquicao2ActionPerformed
@@ -1057,7 +1143,7 @@ try {
     prescreverNutricionista.setVisible(true); 
      Listagem();
         ListagemAT();
-        listarDietas1();
+        
     }//GEN-LAST:event_presquicao2ActionPerformed
 
     private void presquicao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_presquicao3ActionPerformed
@@ -1068,7 +1154,7 @@ try {
     prescreverNutricionista.setVisible(true); 
      Listagem();
         ListagemAT();
-        listarDietas1();
+        
     }//GEN-LAST:event_presquicao3ActionPerformed
 
     private void atualizarDietas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarDietas2ActionPerformed
@@ -1079,7 +1165,7 @@ try {
     prescreverNutricionista.setVisible(false); 
      Listagem();
         ListagemAT();
-        listarDietas1();
+      
     }//GEN-LAST:event_atualizarDietas2ActionPerformed
 
     private void listaDeDietas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaDeDietas1ActionPerformed
@@ -1090,7 +1176,7 @@ try {
     prescreverNutricionista.setVisible(false); 
      Listagem();
         ListagemAT();
-        listarDietas1();
+       
     }//GEN-LAST:event_listaDeDietas1ActionPerformed
 
     private void tabelaAtualizarPrescricaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAtualizarPrescricaoMouseClicked
@@ -1130,6 +1216,26 @@ try {
         // Dentro do construtor da tela de depósito
 
     }//GEN-LAST:event_saidaActionPerformed
+
+    private void tabelaNutriTudo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaNutriTudo1MouseClicked
+        // TODO add your handling code here:
+         // Captura a linha que o usuário clicou
+    int linhaSelecionada = tabelaNutriTudo1.getSelectedRow();
+    
+    if (linhaSelecionada >= 0) {
+        // Define o modelo padrão da tabela
+        DefaultTableModel modeloTabela = (DefaultTableModel) tabelaNutriTudo1.getModel();
+
+        // Captura os valores da linha selecionada
+        String nomePaciente = modeloTabela.getValueAt(linhaSelecionada, 0).toString(); // Coluna "Nome"
+        String leitoPaciente = modeloTabela.getValueAt(linhaSelecionada, 1).toString(); // Coluna "Leito"
+        int idDieta = Integer.parseInt(modeloTabela.getValueAt(linhaSelecionada, 2).toString()); // Coluna "IdDieta"
+        String statusPaciente = modeloTabela.getValueAt(linhaSelecionada, 3).toString(); // Coluna "Status"
+
+       
+    }
+        
+    }//GEN-LAST:event_tabelaNutriTudo1MouseClicked
 
     /**
      * @param args the command line arguments

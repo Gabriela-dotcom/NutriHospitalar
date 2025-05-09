@@ -19,37 +19,39 @@ public class Finalizadas {
     private String nomePaciente; // Novo campo adicionado
     private String leito; // Novo campo adicionado
     private String ala; // Novo campo adicionado
-    
+    private String nomedieta;
     // Construtor padrão
     public Finalizadas() {
     }
 
-    public Finalizadas(String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito,  int idDieta, String nomePaciente, String leito, String ala) {
+    public Finalizadas(String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
         this.qualFuncionario = qualFuncionario;
         this.turno = turno;
         this.status = status;
         this.idPaciente = idPaciente;
         this.idDeposito = idDeposito;
-     
         this.idDieta = idDieta;
         this.nomePaciente = nomePaciente;
         this.leito = leito;
         this.ala = ala;
+        this.nomedieta = nomedieta;
     }
 
-    public Finalizadas(int idFinalizada, String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala) {
+    public Finalizadas(int idFinalizada, String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
         this.idFinalizada = idFinalizada;
         this.qualFuncionario = qualFuncionario;
         this.turno = turno;
         this.status = status;
         this.idPaciente = idPaciente;
         this.idDeposito = idDeposito;
-   
         this.idDieta = idDieta;
         this.nomePaciente = nomePaciente;
         this.leito = leito;
         this.ala = ala;
+        this.nomedieta = nomedieta;
     }
+
+  
 
     // Getters and Setters for all fields
     public int getIdFinalizada() {
@@ -133,4 +135,13 @@ public class Finalizadas {
     public void setAla(String ala) {
         this.ala = ala;
     }
+
+    public String getNomedieta() {
+        return nomedieta;
+    }
+
+    public void setNomedieta(String nomedieta) {
+        this.nomedieta = nomedieta;
+    }
+    
 }

@@ -4,6 +4,8 @@
  */
 package CONTROLLER;
 
+import MODEL.Deposito;
+import MODEL.InformacaoPaciente;
 import MODEL.Paciente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,7 +60,32 @@ public class PacienteController {
         return lista;
     }
     
-    public boolean cadastrarPaciente(Paciente paciente) {
+    public Deposito buscarDietaPorNome(String nomeDieta) {
+    String query = "SELECT nomedieta FROM Deposito WHERE nomedieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, nomeDieta);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            Deposito deposito = new Deposito();
+            deposito.setNomedieta(resultSet.getString("nomedieta"));
+            return deposito;
+        } else {
+            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
+            return null;
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
+        return null;
+    }
+}
+
+    
+    
+  /*  public boolean cadastrarPaciente(Paciente paciente) {
         String query = "INSERT INTO Paciente (nomePaciente, leito, idDieta, ala)"
                      + " VALUES (?, ?, ?, ?)";
 
@@ -78,7 +106,42 @@ public class PacienteController {
             System.err.print("Erro ao Inserir Dados: " + e);
             return false;
         }
+    }*/
+    public boolean cadastrarPaciente(String nomePaciente, String leito, String ala, String nomeDieta) {
+    Deposito deposito = buscarDietaPorNome(nomeDieta); // Busca a dieta no depósito
+
+    if (deposito == null) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada no depósito! Verifique o nome.", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
     }
+
+    String query = "INSERT INTO Paciente (nomePaciente, leito, ala, nomedieta) VALUES (?, ?, ?, ?)";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+
+        preparedStatement.setString(1, nomePaciente);
+        preparedStatement.setString(2, leito);
+        preparedStatement.setString(3, ala);
+        preparedStatement.setString(4, deposito.getNomedieta()); // Usa o nome da dieta
+
+        int resultado = preparedStatement.executeUpdate();
+        if (resultado > 0) {
+            JOptionPane.showMessageDialog(null, "Paciente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o paciente.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao cadastrar paciente: " + e.getMessage());
+        return false;
+    }
+}
+
+    
+    
   /*  public boolean editarPaciente(Paciente paciente) {
     String query = "UPDATE Paciente SET nomePaciente = ?, leito = ?, idDieta = ?, ala = ? WHERE idPaciiente = ?";
     // Conexão com o banco de dados
@@ -120,6 +183,38 @@ public boolean atualizarDietasPac(Paciente paciente) {
         return false;
     }
 }
+
+//listagem para pesquisa de paciente para tabela 
+public List<InformacaoPaciente> ListarInformacaoPacientesView(String nomePaciente) throws SQLException {
+    List<InformacaoPaciente> dadosInformacao = new ArrayList<>();
+    String sql = "SELECT * FROM InformacaoPacientes WHERE Nome LIKE ?;";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+
+        pstmt.setString(1, "%" + nomePaciente + "%");  // '%' para busca parcial
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                InformacaoPaciente paciente = new InformacaoPaciente();
+                paciente.setNome(rs.getString("Nome"));
+                paciente.setLeito(rs.getString("Leito"));
+                paciente.setIdDieta(rs.getInt("IdDieta"));
+
+                // Converte o status para "Sim" ou "Não"
+                boolean status = rs.getBoolean("Status");
+                paciente.setStatus(status ? "Sim" : "Não");
+
+                dadosInformacao.add(paciente);
+            }
+        }
+    }
+
+    return dadosInformacao;
+}
+
+
+// fim da listagem
 
 
 }

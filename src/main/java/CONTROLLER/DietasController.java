@@ -5,6 +5,7 @@
 package CONTROLLER;
 //import MODEl.Dieta;
 import MODEL.Deposito;
+import MODEL.Dieta;
 import MODEL.Finalizadas;
 import MODEL.InformacaoPaciente;
 import MODEL.InformacaoPacienteFim;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,10 +25,103 @@ import javax.swing.table.DefaultTableModel;
  * @author edi
  */
 public class DietasController {
-    
+  
+
    //cadastra uma finalizada, preenchendo  apenas o nome, leito, ala, dieta e
    // deixando o Status "False" no cao "Não".
-public boolean cadastrarFinalizada(Finalizadas finalizada) {
+   /* public boolean cadastrarFinalizada(Finalizadas finalizada) {
+    String query = "INSERT INTO finalizada (nomePaciente, leito, ala, idDieta, nomedieta, status) VALUES (?, ?, ?, ?, ?, ?)";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+
+        preparedStatement.setString(1, finalizada.getNomePaciente());
+        preparedStatement.setString(2, finalizada.getLeito());
+        preparedStatement.setString(3, finalizada.getAla());
+        preparedStatement.setInt(4, finalizada.getIdDieta());
+        preparedStatement.setString(5, finalizada.getNomedieta()); // Nome da dieta agora está correto
+        preparedStatement.setBoolean(6, false); // Define o status como false
+
+        int cadastrou = preparedStatement.executeUpdate();
+        return cadastrou > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao cadastrar prescrição: " + e.getMessage());
+        return false;
+    }
+}
+*/
+    //buscar dieta
+    public Deposito buscarDietaNoDeposito(String nomeDieta) {
+    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, nomeDieta);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            Deposito deposito = new Deposito();
+            deposito.setIdDieta(resultSet.getInt("idDieta"));
+            deposito.setNomedieta(resultSet.getString("nomedieta"));
+            return deposito;
+        } else {
+            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
+            return null;
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
+        return null;
+    }
+}
+public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente, String leito, String ala) {
+    Deposito deposito = buscarDietaNoDeposito(nomeDieta); // Obtém os dados da dieta no depósito
+    
+    if (deposito == null) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada no depósito! Verifique o nome.", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    String query = "INSERT INTO finalizada (nomePaciente, leito, ala, idDieta, nomedieta, status) VALUES (?, ?, ?, ?, ?, ?)";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+
+        preparedStatement.setString(1, nomePaciente);
+        preparedStatement.setString(2, leito);
+        preparedStatement.setString(3, ala);
+        preparedStatement.setInt(4, deposito.getIdDieta()); // Usa o ID da dieta do depósito
+        preparedStatement.setString(5, deposito.getNomedieta()); // Usa o nome da dieta do depósito
+        preparedStatement.setBoolean(6, false); // Define o status como false
+
+        int resultado = preparedStatement.executeUpdate();
+        if (resultado > 0) {
+            JOptionPane.showMessageDialog(null, "Prescrição cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar a prescrição.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao cadastrar prescrição: " + e.getMessage());
+        return false;
+    }
+}
+
+
+//fim metodo cadastrar
+   // cadastrar finalizada por nome
+   /* public boolean cadastrarFinalizada(Finalizadas finalizada) {
+    // Obtém o ID da dieta a partir do nome
+    int idDieta = obterIdDietaPorNome(finalizada.getNomeDieta());
+
+    if (idDieta == -1) {
+        System.err.println("Erro: Dieta não encontrada para prescrição.");
+        return false;
+    }
+
     String query = "INSERT INTO finalizada (nomePaciente, leito, ala, idDieta, status)"
                  + " VALUES (?, ?, ?, ?, ?)";
     try (Connection conexao = Conexao.getConexao();
@@ -35,19 +130,40 @@ public boolean cadastrarFinalizada(Finalizadas finalizada) {
         preparedStatement.setString(1, finalizada.getNomePaciente());
         preparedStatement.setString(2, finalizada.getLeito());
         preparedStatement.setString(3, finalizada.getAla());
-        preparedStatement.setInt(4, finalizada.getIdDieta());
+        preparedStatement.setInt(4, idDieta); // Agora passamos o ID obtido da dieta
         preparedStatement.setBoolean(5, false); // Define o status como false
 
         int cadastrou = preparedStatement.executeUpdate();
         return cadastrou > 0;
 
     } catch (SQLException e) {
-        System.err.println("Erro ao cadastrar prescrição: " + e);
+        System.err.println("Erro ao cadastrar prescrição: " + e.getMessage());
+        e.printStackTrace();
         return false;
     }
 }
-//fim metodo cadastrar
 
+ // fim  cadastrar por nome   
+    */
+//metodo novo para criar presquicão apartir do nome da dieta
+    public int obterIdDietaPorNome(String nomeDieta) {
+    String query = "SELECT idDieta FROM Dieta WHERE nomeDieta = ?";
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, nomeDieta);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("idDieta"); // Retorna o ID da dieta correspondente
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao buscar ID da dieta: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return -1; // Retorna -1 se não encontrar a dieta
+}
+    // fim do metodo nome dieta
 
 
    
@@ -249,6 +365,7 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
     }
     return dadosInformacao;
 }
+    
 
     public boolean verificarECriarInformacaoPaciente() {
         String sql = "CREATE TABLE IF NOT EXISTS informacaoPaciente (" +
@@ -374,7 +491,7 @@ public boolean excluirFinalizacao(int idFinalizada) {
  
  //deposito tudo
  public List<Deposito> listarDepositoTudo() {
-    String query = "SELECT idDeposito, idDieta, lote, fornecedor, validade, quantidade, conforme FROM Deposito";
+    String query = "SELECT idDeposito, idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta FROM Deposito";
     List<Deposito> lista = new ArrayList<>();
 
     // Usando try-with-resources para garantir o fechamento dos recursos automaticamente
@@ -390,8 +507,9 @@ public boolean excluirFinalizacao(int idFinalizada) {
             item.setLote(resultSet.getString("lote"));
             item.setFornecedor(resultSet.getString("fornecedor"));
             item.setValidade(resultSet.getString("validade"));
-            item.setQuantidade(resultSet.getString("quantidade"));
+            item.setQuantidade(resultSet.getInt ("quantidade"));
             item.setConforme(resultSet.getBoolean("conforme"));
+            item.setNomedieta(resultSet.getString("nomedieta"));
             lista.add(item);
         }
 
@@ -405,7 +523,7 @@ public boolean excluirFinalizacao(int idFinalizada) {
 //fim deposito tudo
  
  
-public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, String quantidade, boolean conforme) {
+public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme) {
     int idDieta = criarDieta(tipoDieta); // Cria a dieta se necessário e obtém o ID
 
     if (idDieta == -1) {
@@ -413,7 +531,8 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
         return false;
     }
 
-    String query = "INSERT INTO Deposito (idDieta, lote, fornecedor, validade, quantidade, conforme) VALUES (?, ?, ?, ?, ?, ?)";
+    // Consulta SQL atualizada para incluir o campo 'nomedieta'
+    String query = "INSERT INTO Deposito (idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection connection = Conexao.getConexao();
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -422,16 +541,27 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
         preparedStatement.setString(2, lote);
         preparedStatement.setString(3, fornecedor);
         preparedStatement.setString(4, validade);
-        preparedStatement.setString(5, quantidade);
+        preparedStatement.setInt(5, quantidade);
         preparedStatement.setBoolean(6, conforme);
+        preparedStatement.setString(7, tipoDieta); // Adicionando nomedieta
 
         int adicionou = preparedStatement.executeUpdate();
-        return adicionou > 0;
+
+        if (adicionou > 0) {
+            System.out.println("Dieta adicionada ao depósito com sucesso!");
+            return true;
+        } else {
+            System.err.println("Erro ao adicionar dieta ao depósito.");
+            return false;
+        }
+
     } catch (SQLException e) {
-        System.err.println("Erro ao adicionar no depósito! " + e);
+        System.err.println("Erro ao adicionar no depósito! " + e.getMessage());
+        e.printStackTrace();
         return false;
     }
 }
+
 
 //fim controller infor deposito
  
@@ -515,6 +645,55 @@ public List<Finalizadas> listarFinDeposito() {
 }
 
  //fim do metodo atualizar finalizada de não para sim
+ 
+ //descontar dietas
+    public boolean descontarEstoque(int idDieta, int quantidade) {
+        String query = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
+        
+        try (Connection conexao = Conexao.getConexao();
+             PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+            
+            // Configurar os parâmetros da declaração
+            preparedStatement.setInt(1, quantidade);
+            preparedStatement.setInt(2, idDieta);
+            
+            // Executar a atualização
+            int linhasAfetadas = preparedStatement.executeUpdate();
+            
+            // Retorna true se pelo menos uma linha foi afetada
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+ public int obterIdDieta(int idFinalizada) {
+        String query = "SELECT idDieta FROM Finalizada WHERE idFinalizada = ?";
+        try (Connection conexao = Conexao.getConexao();
+             PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+            
+            // Configurar o parâmetro da consulta
+            preparedStatement.setInt(1, idFinalizada);
+
+            // Executar a consulta
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Retornar o idDieta se encontrado
+                    return resultSet.getInt("idDieta");
+                } else {
+                    // Retornar um valor especial (por exemplo, -1) se não for encontrado
+                    return -1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Retornar um valor especial em caso de erro
+            return -1;
+        }
+    }
+
+ //fim descontar dietas
 }
+
  
 
