@@ -37,6 +37,65 @@ public class PacienteController {
             return false;
         }
     }*/
+    
+    //metodo novo para criar presquicão apartir do nome da dieta
+  
+public Deposito buscarDietaNoDeposito(String nomeDieta) {
+    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, nomeDieta);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            Deposito deposito = new Deposito();
+            deposito.setIdDieta(resultSet.getInt("idDieta"));
+            deposito.setNomedieta(resultSet.getString("nomedieta"));
+            return deposito;
+        } else {
+            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
+            return null;
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
+        return null;
+    }
+}
+public Deposito buscarDietaNoDeposito2(String nomeDieta) {
+    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, nomeDieta);  // Passa o nome da dieta como parâmetro
+        
+        // Executa a consulta e obtém os resultados
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        // Verifica se a dieta foi encontrada
+        if (resultSet.next()) {
+            // Cria um novo objeto Deposito e popula com os dados retornados
+            Deposito deposito = new Deposito();
+            deposito.setIdDieta(resultSet.getInt("idDieta"));
+            deposito.setNomedieta(resultSet.getString("nomedieta"));
+            return deposito;  // Retorna o objeto Deposito com a dieta encontrada
+        } else {
+            // Caso a dieta não seja encontrada, exibe mensagem de erro
+            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
+            return null;  // Retorna null se não encontrar a dieta
+        }
+    } catch (SQLException e) {
+        // Trata erros de banco de dados
+        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
+        return null;  // Retorna null em caso de erro
+    }
+}
+
+
+// fim do metodo nome dieta
+
 
     // Método para obter uma lista de pacientes
     public List<Paciente> listarPacientes() {
@@ -164,25 +223,69 @@ public class PacienteController {
     } // fim do catch
 } // fim editarPaciente
 */
+    
+    
    // Método para atualizar informações da dieta do paciente
-public boolean atualizarDietasPac(Paciente paciente) {
+public boolean atualizarDietasPac(String nomePaciente, String nomeDieta) {
+    // Primeiro, buscar a dieta no depósito com base no nome
+   PacienteController controller = new PacienteController();
+Deposito deposito = controller.buscarDietaNoDeposito(nomeDieta);
+
+
+    // Se a dieta não for encontrada, exibe uma mensagem
+    if (deposito == null) {
+        System.err.println("Dieta não encontrada para o paciente.");
+        return false;
+    }
+
+    // Se a dieta for encontrada, agora fazemos a atualização do paciente
     String query = "UPDATE Paciente SET idDieta=? WHERE nomePaciente=?";
-    // Conexão com o banco de dados
+
     try (Connection connection = Conexao.getConexao();
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-        
-        // Enviar o novo idDieta para o banco
-        preparedStatement.setInt(1, paciente.getIdDieta());
-        preparedStatement.setString(2, paciente.getNomePaciente());
-        
+
+        preparedStatement.setInt(1, deposito.getIdDieta()); // Atualizar com o idDieta
+        preparedStatement.setString(2, nomePaciente); // Nome do paciente
+
         int atualizou = preparedStatement.executeUpdate();
-        return atualizou > 0;
-        
+        return atualizou > 0; // Se atualizou, retorna true
+
     } catch (SQLException e) {
         System.err.println("Erro ao atualizar a dieta do paciente! " + e);
         return false;
     }
 }
+
+   /* public Deposito buscarDietaNoDeposito(String nomeDieta) {
+    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+        
+        preparedStatement.setString(1, nomeDieta);  // Passa o nome da dieta como parâmetro
+        
+        // Executa a consulta e obtém os resultados
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        // Verifica se a dieta foi encontrada
+        if (resultSet.next()) {
+            // Cria um novo objeto Deposito e popula com os dados retornados
+            Deposito deposito = new Deposito();
+            deposito.setIdDieta(resultSet.getInt("idDieta"));
+            deposito.setNomedieta(resultSet.getString("nomedieta"));
+            return deposito;  // Retorna o objeto Deposito com a dieta encontrada
+        } else {
+            // Caso a dieta não seja encontrada, exibe mensagem de erro
+            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
+            return null;  // Retorna null se não encontrar a dieta
+        }
+    } catch (SQLException e) {
+        // Trata erros de banco de dados
+        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
+        return null;  // Retorna null em caso de erro
+    }
+}
+*/
 
 //listagem para pesquisa de paciente para tabela 
 public List<InformacaoPaciente> ListarInformacaoPacientesView(String nomePaciente) throws SQLException {

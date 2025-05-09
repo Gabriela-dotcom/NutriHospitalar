@@ -146,7 +146,7 @@ public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente
  // fim  cadastrar por nome   
     */
 //metodo novo para criar presquicão apartir do nome da dieta
-    public int obterIdDietaPorNome(String nomeDieta) {
+ /*   public int obterIdDietaPorNome(String nomeDieta) {
     String query = "SELECT idDieta FROM Dieta WHERE nomeDieta = ?";
     try (Connection conexao = Conexao.getConexao();
          PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
@@ -162,7 +162,7 @@ public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente
         e.printStackTrace();
     }
     return -1; // Retorna -1 se não encontrar a dieta
-}
+}*/
     // fim do metodo nome dieta
 
 

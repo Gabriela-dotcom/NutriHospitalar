@@ -7,6 +7,7 @@ package VIEW1;
 import CONTROLLER.Conexao;
 import CONTROLLER.DietasController;
 import CONTROLLER.PacienteController;
+import MODEL.Deposito;
 import MODEL.Finalizadas;
 import MODEL.InformacaoPaciente;
 import MODEL.Paciente;
@@ -27,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author devmat
+ * @author devmat'
  */
 public class TelaNutricionista extends javax.swing.JFrame {
 
@@ -1002,7 +1003,7 @@ if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty(
         // TODO add your handling code here:
   // Capturando os dados dos campos de entrada
 // Capturando os dados dos campos de entrada
-String nomePaciente = campoPacienteA.getText();
+/*String nomePaciente = campoPacienteA.getText();
 int idDieta = Integer.parseInt(campoDietaA.getText()); // Captura o ID da Dieta a partir do campo campoDieta
 
 try {
@@ -1025,6 +1026,23 @@ try {
     System.err.print("Erro ao atualizar: " + e);  
 }
 
+*/
+// Suponha que os dados do paciente e da dieta sejam inseridos em campos de texto
+// Captura os valores dos campos
+String nomePaciente = campoPacienteA.getText().trim();  // Nome do paciente
+String nomeDieta = campoDietaA.getText().trim();  // Nome da dieta
+
+// Chama o método do controller para atualizar a dieta
+PacienteController pacienteController = new PacienteController();
+boolean atualizado = pacienteController.atualizarDietasPac(nomePaciente, nomeDieta);
+
+if (atualizado) {
+    JOptionPane.showMessageDialog(null, "Dieta do paciente atualizada com sucesso!");
+    ListagemAT();  // Método para atualizar a lista de pacientes, se necessário
+    limparCamposAt();  // Limpa os campos da interface
+} else {
+    JOptionPane.showMessageDialog(null, "Erro ao atualizar a dieta. Verifique o nome do paciente ou dieta.");
+}
 
 
 
