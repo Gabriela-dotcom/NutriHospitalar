@@ -51,7 +51,7 @@ public class DietasController {
     }
 }
 */
-    //buscar dieta
+    //buscar dieta-----------------------------------------------
     public Deposito buscarDietaNoDeposito(String nomeDieta) {
     String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
     
@@ -75,6 +75,9 @@ public class DietasController {
         return null;
     }
 }
+    //-------------------------------------------------------------------------
+    
+//Cadastro por dieta-------------------------------------------------------------
 public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente, String leito, String ala) {
     Deposito deposito = buscarDietaNoDeposito(nomeDieta); // Obtém os dados da dieta no depósito
     
@@ -109,7 +112,7 @@ public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente
         return false;
     }
 }
-
+//-------------------------------------------------------------------------
 
 //fim metodo cadastrar
    // cadastrar finalizada por nome
@@ -214,7 +217,7 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
             info.setIdFinalizada(resultSet.getInt("IdFinalizada"));
             info.setNome(resultSet.getString("Nome"));
             info.setLeito(resultSet.getString("Leito"));
-            info.setIdDieta(resultSet.getInt("IdDieta"));
+            info.setNomedieta(resultSet.getInt("nomedieta"));
             info.setAla(resultSet.getString("Ala"));
             info.setTurno(resultSet.getBoolean("Turno"));
             info.setQualFuncionario(resultSet.getBoolean("QualFuncionario"));
@@ -229,12 +232,12 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
 
     return lista;
 }
+//------------------------------------------------------------------
 
 
 
 
-
-
+//dados de finalizada----------------------------------------------------
  public List<Object[]> getDadosFinalizada() throws SQLException {
     List<Object[]> dadosFinalizada = new ArrayList<>();
 
@@ -262,13 +265,11 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
             dadosFinalizada.add(linha);
         }
     }
-    
-    
-    
+
 //fim metodo do pdf
     return dadosFinalizada;
 }
-
+//------------------------------------------------------------------------
     // Método para atualizar informações finalizadas
    public List<Paciente> pesquisarPacientePorNome(String nome) {
     List<Paciente> pacientes = new ArrayList<>();

@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package VIEW1;
+//import para tabela mudar cor
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+
+//-----------------
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,14 +89,16 @@ public void listarInformacaoPacientesFim() {
     
     // Limpar a tabela antes de adicionar novos dados
     modeloTabela.setRowCount(0);
-    
+    // Supondo que sua JTable se chama informacaoPacienteNutri:
+informacaoPacienteNutri.getColumnModel().getColumn(7).setCellRenderer(new StatusCellRenderer());
+
     // Adicionar cada linha de dados à tabela
     for (InformacaoPacienteFim paciente : dadosInformacao) {
         modeloTabela.addRow(new Object[]{
             paciente.getIdFinalizada(),
             paciente.getNome(),
             paciente.getLeito(),
-            paciente.getIdDieta(),
+            paciente.getNomedieta(),
             paciente.getAla(),
             paciente.isTurno(),
             paciente.isQualFuncionario(),
@@ -100,11 +109,36 @@ public void listarInformacaoPacientesFim() {
 
 
 
+//CÓDIGO PARA ALTERAR COR DA TABELA ONDE STATUS SIM/NÃO ---------------------
+public class StatusCellRenderer extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
 
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
+        if (value != null) {
+            String status = value.toString().toLowerCase();
 
+            if (status.equals("sim")) {
+                c.setBackground(Color.GREEN);
+                c.setForeground(Color.BLACK);
+            } else if (status.equals("não") || status.equals("nao")) {
+                c.setBackground(Color.RED);
+                c.setForeground(Color.WHITE);
+            } else {
+                c.setBackground(Color.WHITE);
+                c.setForeground(Color.BLACK);
+            }
+        } else {
+            c.setBackground(Color.WHITE);
+            c.setForeground(Color.BLACK);
+        }
 
-
+        return c;
+    }
+}
+//-----------------------------------------------------------------------------
 
 
 

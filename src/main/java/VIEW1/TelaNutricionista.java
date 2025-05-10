@@ -36,6 +36,7 @@ public class TelaNutricionista extends javax.swing.JFrame {
      * Creates new form TelaNutricionista
      */
     public TelaNutricionista() {
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         initComponents();
         Listagem();
@@ -49,12 +50,12 @@ public class TelaNutricionista extends javax.swing.JFrame {
 
     }
     
-   // Método sem argumento, lista todos os pacientes
+ // Método sem argumento, lista todos os pacientes
 public void ListagemDePacientes() {
     ListagemDePacientes(""); // Chama a versão do método com filtro passando uma string vazia
 }
 
-// Método com filtro por nome do paciente
+// Método com filtro por nome do paciente-------------------------------
 public void ListagemDePacientes(String nomePaciente) {
     // Chamando o controlador que obtém os dados dos pacientes com o filtro
     PacienteController controller = new PacienteController();
@@ -82,8 +83,8 @@ public void ListagemDePacientes(String nomePaciente) {
             Object[] linha = {
                 paciente.getNome(),
                 paciente.getLeito(),
-                paciente.getIdDieta(),
-                paciente.getStatus()
+                paciente.getDieta(), // Troca idDieta por nomeDieta
+                paciente.getStatus(),
             };
             // Adicionando a linha ao modelo da tabela
             modeloTabela.addRow(linha);
@@ -92,6 +93,10 @@ public void ListagemDePacientes(String nomePaciente) {
         JOptionPane.showMessageDialog(this, "Nenhum paciente encontrado.");
     }
 }
+
+//-----------------------------------------------------------------------
+
+//Metodo de pesquisa-----------------------------------------------------
 public void PesquisaPacientes() {
     pesquisarPaciente.getDocument().addDocumentListener(
         new DocumentListener() {
@@ -118,7 +123,7 @@ public void PesquisaPacientes() {
         }
     );
 }
-
+//------------------------------------------------------------------------------
     
     
     // Método para limpar os campos de cadastro do paciente
@@ -165,7 +170,8 @@ public void Listagem() {
                
                 paciente.getNomePaciente(),
                 paciente.getLeito(),
-                paciente.getIdDieta(),
+                paciente.getNomeDieta(),
+
                 paciente.getAla()
             };
             // Adicionando a linha ao modelo da tabela
@@ -443,10 +449,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         imgFundoPresquicap1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 800));
-        setMinimumSize(new java.awt.Dimension(1000, 800));
-        setPreferredSize(new java.awt.Dimension(1000, 800));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setPreferredSize(new java.awt.Dimension(2147483647, 2147483647));
 
         prescreverNutricionista.setMaximumSize(new java.awt.Dimension(1000, 800));
         prescreverNutricionista.setMinimumSize(new java.awt.Dimension(1000, 800));
@@ -548,7 +551,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome Paciente", "Leito", "ID Dieta", "Ala"
+                "Nome Paciente", "Leito", "Dieta", "Ala"
             }
         ) {
             Class[] types = new Class [] {
@@ -640,8 +643,6 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         imgFundoPresquicap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         prescreverNutricionista.add(imgFundoPresquicap, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 860, 800));
-
-        getContentPane().add(prescreverNutricionista, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1028, 800));
 
         dietasAt.setBackground(new java.awt.Color(51, 102, 0));
         dietasAt.setForeground(new java.awt.Color(51, 102, 0));
@@ -769,8 +770,6 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         imgAtualDiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         dietasAt.add(imgAtualDiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, -4, 840, 800));
 
-        getContentPane().add(dietasAt, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         tabelaPresStatus.setBackground(new java.awt.Color(51, 102, 0));
         tabelaPresStatus.setMaximumSize(new java.awt.Dimension(1000, 800));
         tabelaPresStatus.setMinimumSize(new java.awt.Dimension(1000, 800));
@@ -871,9 +870,17 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome do paciente", "Leito", "ID Dieta", "Status"
+                "Nome do paciente", "Leito", "Dieta", "Status"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tabelaNutriTudo1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaNutriTudo1MouseClicked(evt);
@@ -887,7 +894,20 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         imgFundoPresquicap1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         tabelaPresStatus.add(imgFundoPresquicap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 860, 800));
 
-        getContentPane().add(tabelaPresStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dietasAt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(tabelaPresStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(prescreverNutricionista, javax.swing.GroupLayout.PREFERRED_SIZE, 1028, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dietasAt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(tabelaPresStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(prescreverNutricionista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -901,22 +921,23 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
     }//GEN-LAST:event_campoNomeLeitoPActionPerformed
 
     private void cadastrarPresquicaoDia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarPresquicaoDia1ActionPerformed
-if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty() ||
-    campoAlaP.getText().isEmpty() || dietaCampoP.getText().isEmpty()) {
-    
-    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar.");
-} else {
-    String nomePaciente = campoNomePacienteP.getText().trim();
-    String leito = campoNomeLeitoP.getText().trim();
-    String nomeDieta = dietaCampoP.getText().trim();
-    String ala = campoAlaP.getText().trim();
+// Remove espaços em branco e valida
+String nomePaciente = campoNomePacienteP.getText().trim();
+String leito = campoNomeLeitoP.getText().trim();
+String nomeDieta = dietaCampoP.getText().trim();
+String ala = campoAlaP.getText().trim();
 
+if (nomePaciente.isEmpty() || leito.isEmpty() || nomeDieta.isEmpty() || ala.isEmpty()) {
+    JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios. Preencha corretamente.");
+} else {
     DietasController dao = new DietasController();
     boolean sucesso = dao.cadastrarPrescricaoPorDieta(nomeDieta, nomePaciente, leito, ala);
 
     if (sucesso) {
         Listagem();
         limparCampos();
+    } else {
+        JOptionPane.showMessageDialog(null, "Erro ao cadastrar. Verifique os dados e tente novamente.");
     }
 }
 
@@ -964,24 +985,27 @@ if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty(
             limparCamposReservas(); // Se falhar, limpa os campos
         }
     }*/
-if (campoNomePacienteP.getText().isEmpty() || campoNomeLeitoP.getText().isEmpty() ||
-    campoAlaP.getText().isEmpty() || dietaCampoP.getText().isEmpty()) {
-    
+// Captura os textos removendo espaços em branco
+String nomePaciente = campoNomePacienteP.getText().trim();
+String leito = campoNomeLeitoP.getText().trim();
+String ala = campoAlaP.getText().trim();
+String nomeDieta = dietaCampoP.getText().trim();
+
+// Verifica se algum campo está vazio
+if (nomePaciente.isEmpty() || leito.isEmpty() || ala.isEmpty() || nomeDieta.isEmpty()) {
     JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar.");
 } else {
-    String nomePaciente = campoNomePacienteP.getText().trim();
-    String leito = campoNomeLeitoP.getText().trim();
-    String nomeDieta = dietaCampoP.getText().trim();
-    String ala = campoAlaP.getText().trim();
-
     PacienteController dao = new PacienteController();
     boolean sucesso = dao.cadastrarPaciente(nomePaciente, leito, ala, nomeDieta);
 
     if (sucesso) {
         Listagem();
         limparCampos();
+    } else {
+        JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente. Verifique os dados.");
     }
 }
+
 
 
 

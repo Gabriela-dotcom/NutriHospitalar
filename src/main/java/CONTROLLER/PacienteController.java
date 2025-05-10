@@ -98,27 +98,32 @@ public Deposito buscarDietaNoDeposito2(String nomeDieta) {
 
 
     // Método para obter uma lista de pacientes
-    public List<Paciente> listarPacientes() {
-        List<Paciente> lista = new ArrayList<>();
-        String query = "SELECT idPaciente, nomePaciente, leito, ala, idDieta FROM Paciente";
-        try (Connection conexao = Conexao.getConexao();
-             PreparedStatement pstmt = conexao.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                Paciente p = new Paciente();
-                p.setIdPaciente(rs.getInt("idPaciente"));
-                p.setNomePaciente(rs.getString("nomePaciente"));
-                p.setLeito(rs.getString("leito"));
-                p.setAla(rs.getString("ala"));
-                p.setIdDieta(rs.getInt("idDieta"));
-                lista.add(p);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return lista;
-    }
+public List<Paciente> listarPacientes() {
+    List<Paciente> lista = new ArrayList<>();
+    String query = """
+    SELECT p.idPaciente, p.nomePaciente, p.leito, p.ala, p.nomeDieta
+    FROM Paciente p
+    """;
     
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement pstmt = conexao.prepareStatement(query);
+         ResultSet rs = pstmt.executeQuery()) {
+        while (rs.next()) {
+            Paciente p = new Paciente();
+            p.setIdPaciente(rs.getInt("idPaciente"));
+            p.setNomePaciente(rs.getString("nomePaciente"));
+            p.setLeito(rs.getString("leito"));
+            p.setAla(rs.getString("ala"));
+            p.setNomeDieta(rs.getString("nomeDieta")); // Pegando diretamente da tabela Paciente
+            lista.add(p);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return lista;
+}
+
+//-------------------------------------------------------------------------------   
     public Deposito buscarDietaPorNome(String nomeDieta) {
     String query = "SELECT nomedieta FROM Deposito WHERE nomedieta = ?";
     
@@ -302,7 +307,7 @@ public List<InformacaoPaciente> ListarInformacaoPacientesView(String nomePacient
                 InformacaoPaciente paciente = new InformacaoPaciente();
                 paciente.setNome(rs.getString("Nome"));
                 paciente.setLeito(rs.getString("Leito"));
-                paciente.setIdDieta(rs.getInt("IdDieta"));
+                paciente.setDieta(rs.getString("Dieta")); // Agora pegando o nomeDieta em vez de idDieta
 
                 // Converte o status para "Sim" ou "Não"
                 boolean status = rs.getBoolean("Status");
@@ -316,6 +321,34 @@ public List<InformacaoPaciente> ListarInformacaoPacientesView(String nomePacient
     return dadosInformacao;
 }
 
+/*public List<InformacaoPaciente> ListarInformacaoPacientesView(String nomePaciente) throws SQLException {
+    List<InformacaoPaciente> dadosInformacao = new ArrayList<>();
+    String sql = "SELECT * FROM InformacaoPacientes WHERE Nome LIKE ?;";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+
+        pstmt.setString(1, "%" + nomePaciente + "%");  // '%' para busca parcial
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                InformacaoPaciente paciente = new InformacaoPaciente();
+                paciente.setNome(rs.getString("Nome"));
+                paciente.setLeito(rs.getString("Leito"));
+                paciente.setIdDieta(rs.getInt("IdDieta"));
+
+                // Converte o status para "Sim" ou "Não"
+                boolean status = rs.getBoolean("Status");
+                paciente.setStatus(status ? "Sim" : "Não");
+
+                dadosInformacao.add(paciente);
+            }
+        }
+    }
+
+    return dadosInformacao;
+}
+*/
 
 // fim da listagem
 

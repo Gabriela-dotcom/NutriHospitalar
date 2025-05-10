@@ -9,10 +9,11 @@ package MODEL;
  * @author devmat
  */
 public class InformacaoPacienteFim {
+
     private int idFinalizada;
     private String nome;
     private String leito;
-    private int idDieta;
+    private int nomedieta;
     private String ala;
     private boolean turno;
     private boolean qualFuncionario;  // Responsável
@@ -21,21 +22,21 @@ public class InformacaoPacienteFim {
     public InformacaoPacienteFim() {
     }
 
-    public InformacaoPacienteFim(String nome, String leito, int idDieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(String nome, String leito, int nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
         this.nome = nome;
         this.leito = leito;
-        this.idDieta = idDieta;
+        this.nomedieta = nomedieta;
         this.ala = ala;
         this.turno = turno;
         this.qualFuncionario = qualFuncionario;
         this.status = status;
     }
 
-    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, int idDieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, int nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
         this.idFinalizada = idFinalizada;
         this.nome = nome;
         this.leito = leito;
-        this.idDieta = idDieta;
+        this.nomedieta = nomedieta;
         this.ala = ala;
         this.turno = turno;
         this.qualFuncionario = qualFuncionario;
@@ -66,13 +67,15 @@ public class InformacaoPacienteFim {
         this.leito = leito;
     }
 
-    public int getIdDieta() {
-        return idDieta;
+    public int getNomedieta() {
+        return nomedieta;
     }
 
-    public void setIdDieta(int idDieta) {
-        this.idDieta = idDieta;
+    public void setNomedieta(int nomedieta) {
+        this.nomedieta = nomedieta;
     }
+
+   
 
     public String getAla() {
         return ala;
@@ -107,6 +110,3 @@ public class InformacaoPacienteFim {
     }
 
 }
-
-
-

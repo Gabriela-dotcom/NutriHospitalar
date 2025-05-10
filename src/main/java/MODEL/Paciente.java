@@ -14,27 +14,30 @@ public class Paciente {
     private String leito;
     private int idDieta; // Atualizado para referenciar a tabela Dieta
     private String ala;
+    private String nomeDieta; // + getter e setter
 
     // Construtor padrão
     public Paciente() {
     }
 
-    // Construtor sem idPaciente (se necessário)
-    public Paciente(String nomePaciente, String leito, int idDieta, String ala) {
+    public Paciente(String nomePaciente, String leito, int idDieta, String ala, String nomeDieta) {
         this.nomePaciente = nomePaciente;
         this.leito = leito;
         this.idDieta = idDieta;
         this.ala = ala;
+        this.nomeDieta = nomeDieta;
     }
 
-    // Construtor completo
-    public Paciente(int idPaciente, String nomePaciente, String leito, int idDieta, String ala) {
+    public Paciente(int idPaciente, String nomePaciente, String leito, int idDieta, String ala, String nomeDieta) {
         this.idPaciente = idPaciente;
         this.nomePaciente = nomePaciente;
         this.leito = leito;
         this.idDieta = idDieta;
         this.ala = ala;
+        this.nomeDieta = nomeDieta;
     }
+
+   
 
     public int getIdPaciente() {
         return idPaciente;
@@ -74,6 +77,14 @@ public class Paciente {
 
     public void setAla(String ala) {
         this.ala = ala;
+    }
+
+    public String getNomeDieta() {
+        return nomeDieta;
+    }
+
+    public void setNomeDieta(String nomeDieta) {
+        this.nomeDieta = nomeDieta;
     }
 
    
