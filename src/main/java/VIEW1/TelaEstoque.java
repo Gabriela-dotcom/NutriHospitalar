@@ -429,7 +429,7 @@ public void listarFinalizadaDeposito() {
         painelRetiradaDieta.setMinimumSize(new java.awt.Dimension(1000, 800));
         painelRetiradaDieta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel19.setText("TABELA DE RETIRADA:");
         painelRetiradaDieta.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 369, -1));
 
@@ -472,7 +472,7 @@ public void listarFinalizadaDeposito() {
         jLabel2.setText("Finalizar");
         painelRetiradaDieta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 281, -1));
 
-        botaofinal.setBackground(new java.awt.Color(51, 102, 0));
+        botaofinal.setBackground(new java.awt.Color(0, 102, 255));
         botaofinal.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         botaofinal.setForeground(new java.awt.Color(255, 255, 255));
         botaofinal.setText("CONCLUIR");
@@ -481,12 +481,13 @@ public void listarFinalizadaDeposito() {
                 botaofinalActionPerformed(evt);
             }
         });
-        painelRetiradaDieta.add(botaofinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 700, 262, 48));
+        painelRetiradaDieta.add(botaofinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 690, 262, 48));
 
-        menuEstoquista1.setBackground(new java.awt.Color(0, 102, 0));
+        menuEstoquista1.setBackground(new java.awt.Color(0, 102, 255));
         menuEstoquista1.setForeground(new java.awt.Color(51, 102, 0));
 
         bEstoqueDeDietas1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bEstoqueDeDietas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/retirada icon.png"))); // NOI18N
         bEstoqueDeDietas1.setText("Recebimento");
         bEstoqueDeDietas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,6 +512,7 @@ public void listarFinalizadaDeposito() {
         jLabel14.setText("ESTOQUISTA");
 
         infoDeposito.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        infoDeposito.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/estoque.png"))); // NOI18N
         infoDeposito.setText("Estoque");
         infoDeposito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -532,18 +534,21 @@ public void listarFinalizadaDeposito() {
         menuEstoquista1Layout.setHorizontalGroup(
             menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
-                .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuEstoquista1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14)
-                            .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(menuEstoquista1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(saida)))
+                .addGap(15, 15, 15)
+                .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
                 .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(menuEstoquista1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(infoDeposito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEstoquista1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(saida)
+                .addGap(47, 47, 47))
         );
         menuEstoquista1Layout.setVerticalGroup(
             menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -552,13 +557,13 @@ public void listarFinalizadaDeposito() {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jLabel14)
-                .addGap(119, 119, 119)
+                .addGap(105, 105, 105)
                 .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(57, 57, 57)
                 .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                 .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addGap(79, 79, 79))
         );
 
         painelRetiradaDieta.add(menuEstoquista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
@@ -576,8 +581,6 @@ public void listarFinalizadaDeposito() {
 
         finalizarSim1.setText("Sim");
         painelRetiradaDieta.add(finalizarSim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
-
-        imgFundo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         painelRetiradaDieta.add(imgFundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, -2, 840, 800));
 
         painelDoEstoqueDietas.setBackground(new java.awt.Color(255, 255, 255));
