@@ -322,7 +322,7 @@ public void listarFinalizadaDeposito() {
         });
         PainelcadastrosDeDietas.add(loteD, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 291, 251, 29));
 
-        BcadastrarDieta.setBackground(new java.awt.Color(0, 102, 0));
+        BcadastrarDieta.setBackground(new java.awt.Color(0, 102, 255));
         BcadastrarDieta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         BcadastrarDieta.setForeground(new java.awt.Color(255, 255, 255));
         BcadastrarDieta.setText("CADASTRAR DIETA");
@@ -331,11 +331,11 @@ public void listarFinalizadaDeposito() {
                 BcadastrarDietaActionPerformed(evt);
             }
         });
-        PainelcadastrosDeDietas.add(BcadastrarDieta, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 732, 200, 39));
+        PainelcadastrosDeDietas.add(BcadastrarDieta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 700, 200, 39));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setText("Cadastro De Dietas Interais");
-        PainelcadastrosDeDietas.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 130, -1, -1));
+        PainelcadastrosDeDietas.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 72, 340, 40));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Conforme:");
@@ -345,12 +345,13 @@ public void listarFinalizadaDeposito() {
         jLabel10.setText("Quantidade:");
         PainelcadastrosDeDietas.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 488, -1, -1));
 
-        menuEstoquista2.setBackground(new java.awt.Color(0, 102, 0));
-        menuEstoquista2.setForeground(new java.awt.Color(51, 102, 0));
+        menuEstoquista2.setBackground(new java.awt.Color(0, 102, 255));
+        menuEstoquista2.setForeground(new java.awt.Color(0, 102, 255));
         menuEstoquista2.setMaximumSize(new java.awt.Dimension(178, 686));
         menuEstoquista2.setMinimumSize(new java.awt.Dimension(178, 686));
 
         bRetirada2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        bRetirada2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/receptor (1).png"))); // NOI18N
         bRetirada2.setText("Retirar Dieta");
         bRetirada2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -375,6 +376,7 @@ public void listarFinalizadaDeposito() {
         jLabel15.setText("ESTOQUISTA");
 
         infoDeposito1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        infoDeposito1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/estoque.png"))); // NOI18N
         infoDeposito1.setText("Estoque");
         infoDeposito1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,13 +389,22 @@ public void listarFinalizadaDeposito() {
         menuEstoquista2Layout.setHorizontalGroup(
             menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEstoquista2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(bRetirada2)
-                    .addComponent(infoDeposito1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuEstoquista2Layout.createSequentialGroup()
+                        .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(menuEstoquista2Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel15)))
+                            .addGroup(menuEstoquista2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(bRetirada2)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(menuEstoquista2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(infoDeposito1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         menuEstoquista2Layout.setVerticalGroup(
             menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,14 +413,14 @@ public void listarFinalizadaDeposito() {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel15)
-                .addGap(71, 71, 71)
+                .addGap(53, 53, 53)
                 .addComponent(bRetirada2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(70, 70, 70)
                 .addComponent(infoDeposito1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(381, Short.MAX_VALUE))
+                .addContainerGap(355, Short.MAX_VALUE))
         );
 
-        PainelcadastrosDeDietas.add(menuEstoquista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, 806));
+        PainelcadastrosDeDietas.add(menuEstoquista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 180, 806));
 
         fornecedorD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CAvisks", "Chavinsks", "Babinsks", "Stravinsks", "Chololisks", " " }));
         PainelcadastrosDeDietas.add(fornecedorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 250, 30));
@@ -420,8 +431,6 @@ public void listarFinalizadaDeposito() {
 
         quantidadeD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150", "151", "152", "153", "154", "155", "156", "157", "158", "159", "160", "161", "162", "163", "164", "165", "166", "167", "168", "169", "170", "171", "172", "173", "174", "175", "176", "177", "178", "179", "180", "181", "182", "183", "184", "185", "186", "187", "188", "189", "190", "191", "192", "193", "194", "195", "196", "197", "198", "199", "200", " " }));
         PainelcadastrosDeDietas.add(quantidadeD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 520, 120, 30));
-
-        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         PainelcadastrosDeDietas.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 6, 820, 792));
 
         painelRetiradaDieta.setBackground(new java.awt.Color(255, 255, 255));
@@ -617,15 +626,16 @@ public void listarFinalizadaDeposito() {
         });
         jScrollPane1.setViewportView(TabelaDeDeposito);
 
-        painelDoEstoqueDietas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 988, 476));
+        painelDoEstoqueDietas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 980, 476));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel6.setText("ESTOQUE DE DIETAS");
         painelDoEstoqueDietas.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 22, -1, -1));
 
-        bVoltar.setBackground(new java.awt.Color(0, 102, 0));
+        bVoltar.setBackground(new java.awt.Color(0, 102, 255));
         bVoltar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         bVoltar.setForeground(new java.awt.Color(255, 255, 255));
+        bVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/voltar.png"))); // NOI18N
         bVoltar.setText("Voltar");
         bVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -654,7 +664,7 @@ public void listarFinalizadaDeposito() {
         });
         painelDoEstoqueDietas.add(pesquisaDieta, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 415, -1));
 
-        imgFundo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
+        imgFundo2.setBackground(new java.awt.Color(255, 255, 255));
         painelDoEstoqueDietas.add(imgFundo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 792));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
