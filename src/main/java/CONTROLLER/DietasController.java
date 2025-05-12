@@ -6,7 +6,7 @@ package CONTROLLER;
 //import MODEl.Dieta;
 import MODEL.Deposito;
 import MODEL.Dieta;
-import MODEL.Finalizadas;
+import MODEL.Finalizada;
 import MODEL.InformacaoPaciente;
 import MODEL.InformacaoPacienteFim;
 import MODEL.Paciente;
@@ -29,7 +29,7 @@ public class DietasController {
 
    //cadastra uma finalizada, preenchendo  apenas o nome, leito, ala, dieta e
    // deixando o Status "False" no cao "Não".
-   /* public boolean cadastrarFinalizada(Finalizadas finalizada) {
+   /* public boolean cadastrarFinalizada(Finalizada finalizada) {
     String query = "INSERT INTO finalizada (nomePaciente, leito, ala, idDieta, nomedieta, status) VALUES (?, ?, ?, ?, ?, ?)";
 
     try (Connection conexao = Conexao.getConexao();
@@ -116,7 +116,7 @@ public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente
 
 //fim metodo cadastrar
    // cadastrar finalizada por nome
-   /* public boolean cadastrarFinalizada(Finalizadas finalizada) {
+   /* public boolean cadastrarFinalizada(Finalizada finalizada) {
     // Obtém o ID da dieta a partir do nome
     int idDieta = obterIdDietaPorNome(finalizada.getNomeDieta());
 
@@ -171,16 +171,16 @@ public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente
 
    
       // Método para listar detalhes de reservas não entregues
-    public List<Finalizadas> listaReservaDetalhesNaoEntregue() {
+    public List<Finalizada> listaReservaDetalhesNaoEntregue() {
         String query = "SELECT * FROM finalizada WHERE status = false;";
-        List<Finalizadas> lista = new ArrayList<>();
+        List<Finalizada> lista = new ArrayList<>();
         
         try (Connection conexao = Conexao.getConexao();
              PreparedStatement pstm = conexao.prepareStatement(query);
              ResultSet resultset = pstm.executeQuery()) {
 
             while (resultset.next()) {
-                Finalizadas r = new Finalizadas();
+                Finalizada r = new Finalizada();
                 r.setIdFinalizada(resultset.getInt("idFinalizada"));
                 r.setQualFuncionario(resultset.getString("qualFuncionario"));
                 r.setTurno(resultset.getBoolean("turno"));
@@ -459,8 +459,8 @@ public boolean excluirFinalizacao(int idFinalizada) {
 //fim codigo combobox
 
 //lista de infos finalizada deposito
- public List<Finalizadas> listarFinalizadas() {
-        List<Finalizadas> listaFinalizadas = new ArrayList<>();
+ public List<Finalizada> listarFinalizadas() {
+        List<Finalizada> listaFinalizadas = new ArrayList<>();
 
         String query = "SELECT f.idFinalizada, p.nomePaciente, p.leito, f.idDieta, p.ala, f.turno, f.qualFuncionario, f.status " +
                        "FROM finalizada f " +
@@ -471,7 +471,7 @@ public boolean excluirFinalizacao(int idFinalizada) {
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                Finalizadas finalizada = new Finalizadas();
+                Finalizada finalizada = new Finalizada();
                 finalizada.setIdFinalizada(rs.getInt("idFinalizada"));
                 finalizada.setQualFuncionario(rs.getString("qualFuncionario"));
                 finalizada.setIdDieta(rs.getInt("idDieta"));
@@ -588,11 +588,11 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
 }
  //fim da criacao de dietas
  
- //listagem de Finalizadas e Deposito
+ //listagem de Finalizada e Deposito
  // Método para listar os dados da view v_finalizada_deposito
-public List<Finalizadas> listarFinDeposito() {
+public List<Finalizada> listarFinDeposito() {
     String query = "SELECT idFinalizada, qualFuncionario, turno, status, idPaciente, idDeposito, idDieta, nomePaciente, leito, ala FROM finalizada";
-    List<Finalizadas> lista = new ArrayList<>();
+    List<Finalizada> lista = new ArrayList<>();
 
     // Usando try-with-resources para garantir o fechamento dos recursos automaticamente
     try (Connection connection = Conexao.getConexao();
@@ -601,7 +601,7 @@ public List<Finalizadas> listarFinDeposito() {
 
         // Iterando sobre o ResultSet para preencher a lista
         while (resultSet.next()) {
-            Finalizadas item = new Finalizadas();
+            Finalizada item = new Finalizada();
             item.setIdFinalizada(resultSet.getInt("idFinalizada"));
             item.setQualFuncionario(resultSet.getString("qualFuncionario"));
             item.setTurno(resultSet.getBoolean("turno"));
@@ -668,32 +668,69 @@ public List<Finalizadas> listarFinDeposito() {
             return false;
         }
     }
- public int obterIdDieta(int idFinalizada) {
-        String query = "SELECT idDieta FROM Finalizada WHERE idFinalizada = ?";
-        try (Connection conexao = Conexao.getConexao();
-             PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
-            
-            // Configurar o parâmetro da consulta
-            preparedStatement.setInt(1, idFinalizada);
+//fim descontar dietas------------------------------------------
+ public int obterQuantidadeDeposito(int idDieta) {
+    String query = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(query)) {
+        
+        stmt.setInt(1, idDieta);
+        ResultSet rs = stmt.executeQuery();
 
-            // Executar a consulta
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    // Retornar o idDieta se encontrado
-                    return resultSet.getInt("idDieta");
-                } else {
-                    // Retornar um valor especial (por exemplo, -1) se não for encontrado
-                    return -1;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Retornar um valor especial em caso de erro
-            return -1;
+        if (rs.next()) {
+            return rs.getInt("quantidade");
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return -1;
+}
+    //obter quantidade do deposito
+   public boolean verificarDisponibilidadeEstoque(int idDieta, int quantidadeNecessaria) {
+    String query = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(query)) {
+        
+        stmt.setInt(1, idDieta);
+        ResultSet rs = stmt.executeQuery();
 
- //fim descontar dietas
+        if (rs.next()) {
+            int quantidadeAtual = rs.getInt("quantidade");
+            return quantidadeAtual >= quantidadeNecessaria;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    
+    return false; // Retorna false se não encontrar ou se der erro
+}
+
+    //------------------------------------------------------------
+//verificar se há dietas sufucientes no estoque
+    
+    
+ //------------------------------------------------------------
+ //Obter Dieta
+public int obterIdDieta(int idFinalizada) {
+    String query = "SELECT idDieta FROM Finalizada WHERE idFinalizada = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(query)) {
+        
+        stmt.setInt(1, idFinalizada);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt("idDieta");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return -1; // Retorna -1 se não encontrar ou em caso de erro
+}
+//---------------------------------------------------------------------
 }
 
  

@@ -8,7 +8,7 @@ import CONTROLLER.Conexao;
 import CONTROLLER.DietasController;
 import CONTROLLER.PacienteController;
 import MODEL.Deposito;
-import MODEL.Finalizadas;
+import MODEL.Finalizada;
 import MODEL.InformacaoPaciente;
 import MODEL.Paciente;
 import java.awt.event.ActionEvent;

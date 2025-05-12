@@ -8,7 +8,7 @@ package MODEL;
  *
  * @author edi
  */
-public class Finalizadas {
+public class Finalizada {
     private int idFinalizada;
     private String qualFuncionario; 
     private boolean turno;
@@ -21,10 +21,10 @@ public class Finalizadas {
     private String ala; // Novo campo adicionado
     private String nomedieta;
     // Construtor padrão
-    public Finalizadas() {
+    public Finalizada() {
     }
 
-    public Finalizadas(String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
+    public Finalizada(String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
         this.qualFuncionario = qualFuncionario;
         this.turno = turno;
         this.status = status;
@@ -37,7 +37,7 @@ public class Finalizadas {
         this.nomedieta = nomedieta;
     }
 
-    public Finalizadas(int idFinalizada, String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
+    public Finalizada(int idFinalizada, String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
         this.idFinalizada = idFinalizada;
         this.qualFuncionario = qualFuncionario;
         this.turno = turno;

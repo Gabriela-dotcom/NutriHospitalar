@@ -7,7 +7,9 @@ package VIEW1;
 import CONTROLLER.DietasController;
 import MODEL.Deposito;
 import MODEL.FinalizadaDeposito;
-import MODEL.Finalizadas;
+import MODEL.Finalizada;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +23,9 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -104,6 +108,40 @@ private void limparCampos() {
     
 }// fim limpar campos
 
+
+
+//CÓDIGO PARA ALTERAR COR DA TABELA ONDE STATUS SIM/NÃO ---------------------
+public class StatusCellRenderer extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        if (value != null) {
+            String status = value.toString().toLowerCase();
+
+            if (status.equals("sim")) {
+                c.setBackground(Color.GREEN);
+                c.setForeground(Color.BLACK);
+            } else if (status.equals("não") || status.equals("nao")) {
+                c.setBackground(Color.RED);
+                c.setForeground(Color.WHITE);
+            } else {
+                c.setBackground(Color.WHITE);
+                c.setForeground(Color.BLACK);
+            }
+        } else {
+            c.setBackground(Color.WHITE);
+            c.setForeground(Color.BLACK);
+        }
+
+        return c;
+    }
+}
+//-----------------------------------------------------------------------------
+
+
 //listagem de deposito(o que tem armazenado)
 public void listarDepositoTudo() { 
     try { 
@@ -161,7 +199,7 @@ public void listarFinalizadaDeposito() {
         DietasController dietasController = new DietasController(); 
         
         // Obter os dados da tabela finalizada
-        List<Finalizadas> dadosInformacao = dietasController.listarFinDeposito(); 
+        List<Finalizada> dadosInformacao = dietasController.listarFinDeposito(); 
         
         // Obter o modelo da tabela
         DefaultTableModel modeloTabela = (DefaultTableModel) tabelaRetiradaDieta.getModel(); 
@@ -183,9 +221,9 @@ public void listarFinalizadaDeposito() {
         
         // Limpar a tabela antes de adicionar novos dados
         modeloTabela.setRowCount(0); 
-        
+        tabelaRetiradaDieta.getColumnModel().getColumn(7).setCellRenderer(new StatusCellRenderer());
         // Adicionar cada linha de dados à tabela
-        for (Finalizadas linha : dadosInformacao) { 
+        for (Finalizada linha : dadosInformacao) { 
             modeloTabela.addRow(new Object[] {
                 linha.getIdFinalizada(),
                 linha.getIdDieta(),
@@ -741,29 +779,67 @@ boolean conforme = conformeD.isSelected();
 
 
     try {
-        DietasController adicionarDeposito = new DietasController();
-        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme);
-        
-        if (adicionou) {
-            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
-            
-            // Atualiza a tabela com a listagem atualizada
-            listarFinalizadaDeposito();
-            
-            // Limpa os campos do formulário
-            limparCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
-            listarFinalizadaDeposito();
-            
-            // Limpa os campos do formulário
-            limparCampos();
-        }
-    } catch (Exception e) {
-        System.err.print("Erro ao adicionar ao depósito: " + e);
-    }
-}
+    boolean finalizarSim = finalizarSim1.isSelected();
+    int idFinalizada = Integer.parseInt(qualFinalizada.getText());
 
+    if (!finalizarSim) {
+        JOptionPane.showMessageDialog(null, "Marque a opção para finalizar antes de prosseguir.");
+        return;
+    }
+
+    DietasController dietasController = new DietasController();
+    boolean atualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, true);
+
+    if (!atualizado) {
+        JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
+        return;
+    }
+
+    int idDieta = dietasController.obterIdDieta(idFinalizada);
+
+    if (idDieta == -1) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada para esta finalização.");
+        return;
+    }
+
+    int estoqueAtual = dietasController.obterQuantidadeDeposito(idDieta);
+
+    if (estoqueAtual < 1) {
+        JOptionPane.showMessageDialog(null, "Estoque insuficiente para essa dieta.");
+        return;
+    }
+
+    boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
+
+    if (!estoqueAtualizado) {
+        JOptionPane.showMessageDialog(null, "Falha ao descontar o estoque.");
+        return;
+    }
+
+    JOptionPane.showMessageDialog(null, "Finalização e estoque atualizados com sucesso!");
+
+    // Gerar o PDF
+    gerarPDF();
+
+    // Abrir o PDF
+    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Prescrição Nutricional.pdf";
+    File arquivoPdf = new File(caminhoDoPdf);
+
+    if (arquivoPdf.exists()) {
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().open(arquivoPdf);
+        } else {
+            JOptionPane.showMessageDialog(null, "Abertura de PDF não suportada.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
+    }
+
+} catch (Exception ex) {
+    ex.printStackTrace();
+    JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
+}
+}
 
     }//GEN-LAST:event_BcadastrarDietaActionPerformed
 
@@ -884,6 +960,8 @@ try {
     } else {
         JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
     }
+    //ATUALIZA A TABELA
+    listarFinalizadaDeposito();
 } catch (Exception ex) {
     ex.printStackTrace();
     JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());

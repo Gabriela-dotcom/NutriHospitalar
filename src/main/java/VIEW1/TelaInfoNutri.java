@@ -23,7 +23,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import CONTROLLER.DietasController;
-import MODEL.Finalizadas;
+import MODEL.Finalizada;
 import MODEL.InformacaoPacienteFim;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
