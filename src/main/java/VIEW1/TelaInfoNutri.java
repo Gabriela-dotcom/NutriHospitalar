@@ -80,9 +80,9 @@ public void listarInformacaoPacientesFim() {
         modeloTabela.addColumn("ID Finalizada");
         modeloTabela.addColumn("Nome");
         modeloTabela.addColumn("Leito");
-        modeloTabela.addColumn("Dieta");
+        modeloTabela.addColumn("nomedieta");
         modeloTabela.addColumn("Ala");
-        modeloTabela.addColumn("Turno");
+        modeloTabela.addColumn("turno");
         modeloTabela.addColumn("Responsável");
         modeloTabela.addColumn("Status");
     }
@@ -222,7 +222,7 @@ private void atualizarTableActionPerformed() {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Finalizada", "Nome do Paciente", "leito", "ID Dieta", "Ala", "Turno", "Responsavel", "Status"
+                "ID Finalizada", "Nome do Paciente", "leito", "Nome Dieta", "Ala", "Turno", "Responsavel", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {

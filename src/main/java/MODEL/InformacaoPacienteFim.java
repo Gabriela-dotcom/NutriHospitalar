@@ -13,7 +13,7 @@ public class InformacaoPacienteFim {
     private int idFinalizada;
     private String nome;
     private String leito;
-    private int nomedieta;
+    private String nomedieta;
     private String ala;
     private boolean turno;
     private boolean qualFuncionario;  // Responsável
@@ -22,7 +22,7 @@ public class InformacaoPacienteFim {
     public InformacaoPacienteFim() {
     }
 
-    public InformacaoPacienteFim(String nome, String leito, int nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(String nome, String leito, String nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
         this.nome = nome;
         this.leito = leito;
         this.nomedieta = nomedieta;
@@ -32,7 +32,7 @@ public class InformacaoPacienteFim {
         this.status = status;
     }
 
-    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, int nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, String nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
         this.idFinalizada = idFinalizada;
         this.nome = nome;
         this.leito = leito;
@@ -42,6 +42,7 @@ public class InformacaoPacienteFim {
         this.qualFuncionario = qualFuncionario;
         this.status = status;
     }
+
 
     public int getIdFinalizada() {
         return idFinalizada;
@@ -67,11 +68,11 @@ public class InformacaoPacienteFim {
         this.leito = leito;
     }
 
-    public int getNomedieta() {
+    public String getNomedieta() {
         return nomedieta;
     }
 
-    public void setNomedieta(int nomedieta) {
+    public void setNomedieta(String nomedieta) {
         this.nomedieta = nomedieta;
     }
 

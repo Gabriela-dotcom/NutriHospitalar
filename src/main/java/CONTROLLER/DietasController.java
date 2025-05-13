@@ -183,7 +183,7 @@ public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente
                 Finalizada r = new Finalizada();
                 r.setIdFinalizada(resultset.getInt("idFinalizada"));
                 r.setQualFuncionario(resultset.getString("qualFuncionario"));
-                r.setTurno(resultset.getBoolean("turno"));
+                r.setTurno(resultset.getString("turno"));
                 r.setStatus(resultset.getBoolean("status"));
                 r.setIdPaciente(resultset.getInt("idPaciente"));
                 r.setIdDeposito(resultset.getInt("idDeposito"));
@@ -217,9 +217,9 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
             info.setIdFinalizada(resultSet.getInt("IdFinalizada"));
             info.setNome(resultSet.getString("Nome"));
             info.setLeito(resultSet.getString("Leito"));
-            info.setNomedieta(resultSet.getInt("nomedieta"));
+            info.setNomedieta(resultSet.getString("nomedieta"));
             info.setAla(resultSet.getString("Ala"));
-            info.setTurno(resultSet.getBoolean("Turno"));
+            info.setTurno(resultSet.getBoolean("turno"));
             info.setQualFuncionario(resultSet.getBoolean("QualFuncionario"));
             info.setStatus(resultSet.getBoolean("Status"));
             lista.add(info);
@@ -420,14 +420,14 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
     //fim Atualizar Deita paciete
     
 //codigo para converter dados da combo box de deposito para booleanos
-public boolean finalizarAtualizacao(String nomePaciente, boolean qualFuncionario, boolean turno, boolean status) {
+public boolean finalizarAtualizacao(String nomePaciente, String qualFuncionario, String turno, boolean status) {
     String query = "UPDATE finalizada SET qualFuncionario=?, turno=?, status=? WHERE nomePaciente=?";
     try (Connection connection = Conexao.getConexao();
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
         
         // Definir os parâmetros da consulta
-        preparedStatement.setBoolean(1, qualFuncionario);
-        preparedStatement.setBoolean(2, turno);
+        preparedStatement.setString(1, qualFuncionario);
+        preparedStatement.setString(2, turno);
         preparedStatement.setBoolean(3, status);
         preparedStatement.setString(4, nomePaciente);
         
@@ -439,6 +439,47 @@ public boolean finalizarAtualizacao(String nomePaciente, boolean qualFuncionario
         return false;
     }
 }
+
+//ATUALIZA O RESPONSAVEL E O TURNO
+public boolean atualizarTurnoEResponsavel(int idFinalizada, String turno, String responsavel) {
+    String sql = "UPDATE finalizada SET turno = ?, qualFuncionario = ? WHERE idFinalizada = ?";
+
+    try (Connection conn = Conexao.getConexao();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, turno);
+        stmt.setString(2, responsavel);
+        stmt.setInt(3, idFinalizada);
+
+        int linhasAfetadas = stmt.executeUpdate();
+        return linhasAfetadas > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao atualizar turno e responsável: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
+
+//-------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public boolean excluirFinalizacao(int idFinalizada) {
     String query = "DELETE FROM finalizada WHERE idFinalizada=?";
     try (Connection connection = Conexao.getConexao();
@@ -478,7 +519,7 @@ public boolean excluirFinalizacao(int idFinalizada) {
                 finalizada.setIdPaciente(rs.getInt("idPaciente"));
                 finalizada.setLeito(rs.getString("leito"));
                 finalizada.setAla(rs.getString("ala"));
-                finalizada.setTurno(rs.getBoolean("turno"));
+                finalizada.setTurno(rs.getString("turno"));
                 finalizada.setStatus(rs.getBoolean("status"));
                 listaFinalizadas.add(finalizada);
             }
@@ -590,6 +631,37 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
  
  //listagem de Finalizada e Deposito
  // Método para listar os dados da view v_finalizada_deposito
+ public List<Finalizada> listarFinDeposito() {
+    List<Finalizada> lista = new ArrayList<>();
+    String sql = "SELECT * FROM Finalizada WHERE status = false"; // Filtra apenas as pendentes
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Finalizada f = new Finalizada();
+            f.setIdFinalizada(rs.getInt("idFinalizada"));
+            f.setIdDieta(rs.getInt("idDieta"));
+            f.setNomePaciente(rs.getString("nomePaciente"));
+            f.setLeito(rs.getString("leito"));
+            f.setAla(rs.getString("ala"));
+            f.setTurno(rs.getString("turno"));
+            f.setQualFuncionario(rs.getString("qualFuncionario"));
+            f.setStatus(rs.getBoolean("status"));
+            f.setIdPaciente(rs.getInt("idPaciente"));
+            f.setIdDeposito(rs.getInt("idDeposito"));
+
+            lista.add(f);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return lista;
+}
+ /*
 public List<Finalizada> listarFinDeposito() {
     String query = "SELECT idFinalizada, qualFuncionario, turno, status, idPaciente, idDeposito, idDieta, nomePaciente, leito, ala FROM finalizada";
     List<Finalizada> lista = new ArrayList<>();
@@ -622,7 +694,7 @@ public List<Finalizada> listarFinDeposito() {
 
     return lista;
 }
-
+*/
 
  //fim listagem finalizadas+deposito
 
@@ -648,7 +720,38 @@ public List<Finalizada> listarFinDeposito() {
  //fim do metodo atualizar finalizada de não para sim
  
  //descontar dietas
-    public boolean descontarEstoque(int idDieta, int quantidade) {
+ public boolean descontarEstoque(int idDieta, int quantidade) {
+    String selectQuery = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
+    String updateQuery = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement selectStmt = conexao.prepareStatement(selectQuery)) {
+
+        selectStmt.setInt(1, idDieta);
+        ResultSet rs = selectStmt.executeQuery();
+
+        if (rs.next()) {
+            int quantidadeAtual = rs.getInt("quantidade");
+
+            if (quantidadeAtual < quantidade) {
+                // Quantidade insuficiente
+                return false;
+            }
+
+            try (PreparedStatement updateStmt = conexao.prepareStatement(updateQuery)) {
+                updateStmt.setInt(1, quantidade);
+                updateStmt.setInt(2, idDieta);
+                int linhasAfetadas = updateStmt.executeUpdate();
+                return linhasAfetadas > 0;
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return false;
+}
+   /* public boolean descontarEstoque(int idDieta, int quantidade) {
         String query = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
         
         try (Connection conexao = Conexao.getConexao();
@@ -667,7 +770,7 @@ public List<Finalizada> listarFinDeposito() {
             e.printStackTrace();
             return false;
         }
-    }
+    }*/
 //fim descontar dietas------------------------------------------
  public int obterQuantidadeDeposito(int idDieta) {
     String query = "SELECT quantidade FROM Deposito WHERE idDieta = ?";

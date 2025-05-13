@@ -11,7 +11,7 @@ package MODEL;
 public class Finalizada {
     private int idFinalizada;
     private String qualFuncionario; 
-    private boolean turno;
+    private String turno;
     private boolean status;
     private int idPaciente;
     private int idDeposito;
@@ -24,7 +24,7 @@ public class Finalizada {
     public Finalizada() {
     }
 
-    public Finalizada(String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
+    public Finalizada(String qualFuncionario, String turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
         this.qualFuncionario = qualFuncionario;
         this.turno = turno;
         this.status = status;
@@ -37,7 +37,7 @@ public class Finalizada {
         this.nomedieta = nomedieta;
     }
 
-    public Finalizada(int idFinalizada, String qualFuncionario, boolean turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
+    public Finalizada(int idFinalizada, String qualFuncionario, String turno, boolean status, int idPaciente, int idDeposito, int idDieta, String nomePaciente, String leito, String ala, String nomedieta) {
         this.idFinalizada = idFinalizada;
         this.qualFuncionario = qualFuncionario;
         this.turno = turno;
@@ -50,6 +50,8 @@ public class Finalizada {
         this.ala = ala;
         this.nomedieta = nomedieta;
     }
+
+   
 
   
 
@@ -70,11 +72,11 @@ public class Finalizada {
         this.qualFuncionario = qualFuncionario;
     }
 
-    public boolean isTurno() {
+    public String isTurno() {
         return turno;
     }
 
-    public void setTurno(boolean turno) {
+    public void setTurno(String turno) {
         this.turno = turno;
     }
 

@@ -294,7 +294,11 @@ public void listarFinalizadaDeposito() {
         qualFinalizada = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         finalizarSim1 = new javax.swing.JCheckBox();
-        imgFundo1 = new javax.swing.JLabel();
+        turnoBox = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        responsavelBox1 = new javax.swing.JComboBox<>();
+        responsavelBox = new javax.swing.JLabel();
         painelDoEstoqueDietas = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaDeDeposito = new javax.swing.JTable();
@@ -585,7 +589,7 @@ public void listarFinalizadaDeposito() {
                 .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -623,12 +627,31 @@ public void listarFinalizadaDeposito() {
         painelRetiradaDieta.add(qualFinalizada, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 130, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("Qual Finalizada");
-        painelRetiradaDieta.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 281, -1));
+        jLabel4.setText("Responsavel");
+        painelRetiradaDieta.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, 281, -1));
 
         finalizarSim1.setText("Sim");
         painelRetiradaDieta.add(finalizarSim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
-        painelRetiradaDieta.add(imgFundo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, -2, 840, 800));
+
+        turnoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespetino", " " }));
+        turnoBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                turnoBoxActionPerformed(evt);
+            }
+        });
+        painelRetiradaDieta.add(turnoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 390, 200, 30));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setText("Qual Finalizada");
+        painelRetiradaDieta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 281, -1));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setText("Turno");
+        painelRetiradaDieta.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 281, -1));
+
+        responsavelBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enfermeiro", "Medico", " " }));
+        painelRetiradaDieta.add(responsavelBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 450, 200, 30));
+        painelRetiradaDieta.add(responsavelBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, -2, 840, 800));
 
         painelDoEstoqueDietas.setBackground(new java.awt.Color(255, 255, 255));
         painelDoEstoqueDietas.setMaximumSize(new java.awt.Dimension(1000, 800));
@@ -915,58 +938,90 @@ public void gerarPDF() {
 
     private void botaofinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofinalActionPerformed
 try {
-    // Obtenha o valor da JCheckBox (se está marcada ou não)
-    boolean finalizarSim = finalizarSim1.isSelected();  // Usando isSelected() em vez de getSelectedItem()
+    // Verificar se a opção de finalização está marcada
+    boolean finalizarSim = finalizarSim1.isSelected();
+    if (!finalizarSim) {
+        JOptionPane.showMessageDialog(null, "Marque a opção para finalizar antes de prosseguir.");
+        return;
+    }
 
-    // Obtenha o ID da finalização do campo de texto
+    // Obter o ID da finalização
     int idFinalizada = Integer.parseInt(qualFinalizada.getText());
 
-    // Atualize o status na tabela finalizada
+    // Obter valores selecionados nos comboBoxes
+    String turnoSelecionado = (String) turnoBox.getSelectedItem();
+    String responsavelSelecionado = (String) responsavelBox1.getSelectedItem();
+
+    // Validar se algo foi selecionado
+    if (turnoSelecionado == null || turnoSelecionado.isEmpty() ||
+        responsavelSelecionado == null || responsavelSelecionado.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Selecione o turno e o responsável.");
+        return;
+    }
+
+    // Atualizar o status da finalização
     DietasController dietasController = new DietasController();
-    boolean atualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, finalizarSim);
+    boolean statusAtualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, true);
 
-    if (atualizado) {
-        // Supondo que você tenha um método para obter o ID da dieta com base no ID da finalização
-        int idDieta = dietasController.obterIdDieta(idFinalizada); // Substitua isso com o método adequado
+    if (!statusAtualizado) {
+        JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
+        return;
+    }
 
-        // Faça o desconto no estoque
-        boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
+    // Atualizar turno e responsável no banco
+    boolean atualizadoTurnoResp = dietasController.atualizarTurnoEResponsavel(idFinalizada, turnoSelecionado, responsavelSelecionado);
+    if (!atualizadoTurnoResp) {
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar turno e responsável.");
+        return;
+    }
 
-        if (estoqueAtualizado) {
-            JOptionPane.showMessageDialog(null, "Estoque atualizado com sucesso!");
+    // Obter o ID da dieta associada
+    int idDieta = dietasController.obterIdDieta(idFinalizada);
+    if (idDieta == -1) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada para esta finalização.");
+        return;
+    }
+
+    // Verificar se há dieta suficiente no estoque
+    if (!dietasController.verificarDisponibilidadeEstoque(idDieta, 1)) {
+        JOptionPane.showMessageDialog(null, "Sem esta dieta no estoque!");
+        return;
+    }
+
+    // Descontar 1 unidade do estoque
+    boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
+    if (!estoqueAtualizado) {
+        JOptionPane.showMessageDialog(null, "Falha ao atualizar o estoque.");
+        return;
+    }
+
+    JOptionPane.showMessageDialog(null, "Finalização e estoque atualizados com sucesso!");
+
+    // Gerar o PDF
+    gerarPDF();
+
+    // Caminho do PDF
+    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Prescrição Nutricional.pdf";
+    File arquivoPdf = new File(caminhoDoPdf);
+
+    // Abrir o PDF se existir
+    if (arquivoPdf.exists()) {
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().open(arquivoPdf);
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o estoque.");
-        }
-
-        JOptionPane.showMessageDialog(null, "Status atualizado com sucesso!");
-
-        // Gere o PDF
-        gerarPDF();
-
-        // Caminho do arquivo PDF
-        String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
-
-        // Abrir o PDF
-        File arquivoPdf = new File(caminhoDoPdf);
-        if (arquivoPdf.exists()) {
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(arquivoPdf);
-            } else {
-                JOptionPane.showMessageDialog(null, "Abertura de PDF não suportada.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
+            JOptionPane.showMessageDialog(null, "Abertura de PDF não suportada.");
         }
     } else {
-        JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
+        JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
     }
-    //ATUALIZA A TABELA
+
+    // Atualizar a tabela na tela
     listarFinalizadaDeposito();
+
 } catch (Exception ex) {
     ex.printStackTrace();
     JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
 }
-
 
 
         
@@ -994,6 +1049,10 @@ try {
 
 
     }//GEN-LAST:event_saidaActionPerformed
+
+    private void turnoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnoBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_turnoBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1045,12 +1104,12 @@ try {
     private javax.swing.JTextField idCha1;
     private javax.swing.JTextField idFun1;
     private javax.swing.JLabel imgFundo;
-    private javax.swing.JLabel imgFundo1;
     private javax.swing.JLabel imgFundo2;
     private javax.swing.JToggleButton infoDeposito;
     private javax.swing.JToggleButton infoDeposito1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1058,6 +1117,7 @@ try {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1076,8 +1136,11 @@ try {
     private javax.swing.JTextField pesquisaDieta;
     private javax.swing.JTextField qualFinalizada;
     private javax.swing.JComboBox<String> quantidadeD;
+    private javax.swing.JLabel responsavelBox;
+    private javax.swing.JComboBox<String> responsavelBox1;
     private javax.swing.JButton saida;
     private javax.swing.JTable tabelaRetiradaDieta;
+    private javax.swing.JComboBox<String> turnoBox;
     private javax.swing.JTextField validadeD;
     // End of variables declaration//GEN-END:variables
 }

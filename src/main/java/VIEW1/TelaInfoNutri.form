@@ -110,7 +110,7 @@
                     <Column editable="false" title="ID Finalizada" type="java.lang.Object"/>
                     <Column editable="true" title="Nome do Paciente" type="java.lang.Object"/>
                     <Column editable="true" title="leito" type="java.lang.Object"/>
-                    <Column editable="true" title="ID Dieta" type="java.lang.Object"/>
+                    <Column editable="true" title="Nome Dieta" type="java.lang.Object"/>
                     <Column editable="true" title="Ala" type="java.lang.Object"/>
                     <Column editable="true" title="Turno" type="java.lang.Object"/>
                     <Column editable="true" title="Responsavel" type="java.lang.Object"/>
