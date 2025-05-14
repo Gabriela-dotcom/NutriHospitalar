@@ -122,7 +122,42 @@ public List<Paciente> listarPacientes() {
     }
     return lista;
 }
+//----------------------------------------------------------
 
+//Verifica se paciente já existe
+public boolean pacienteExiste(String nomePaciente) {
+    // Aqui você vai verificar no banco de dados ou lista se o paciente já existe
+    // Exemplo com banco de dados (suponha que você use JDBC):
+
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    boolean existe = false;
+
+    try {
+        conn = Conexao.getConexao(); // Método que retorna a conexão com o BD
+        String sql = "SELECT COUNT(*) FROM pacientes WHERE nome = ?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setString(1, nomePaciente);
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            existe = rs.getInt(1) > 0;
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Fechar conexão, statement e resultset
+        try { if (rs != null) rs.close(); } catch (SQLException e) {}
+        try { if (stmt != null) stmt.close(); } catch (SQLException e) {}
+        try { if (conn != null) conn.close(); } catch (SQLException e) {}
+    }
+
+    return existe;
+}
+
+
+//-----------------------------------------------------------------------------
 //-------------------------------------------------------------------------------   
     public Deposito buscarDietaPorNome(String nomeDieta) {
     String query = "SELECT nomedieta FROM Deposito WHERE nomedieta = ?";
@@ -230,8 +265,8 @@ public List<Paciente> listarPacientes() {
 */
     
     
-   // Método para atualizar informações da dieta do paciente
-public boolean atualizarDietasPac(String nomePaciente, String nomeDieta) {
+   // Método para atualizar informações da dieta do paciente-------------------
+/*public boolean atualizarDietasPac(String nomePaciente, String nomeDieta) {
     // Primeiro, buscar a dieta no depósito com base no nome
    PacienteController controller = new PacienteController();
 Deposito deposito = controller.buscarDietaNoDeposito(nomeDieta);
@@ -259,8 +294,38 @@ Deposito deposito = controller.buscarDietaNoDeposito(nomeDieta);
         System.err.println("Erro ao atualizar a dieta do paciente! " + e);
         return false;
     }
+}*/
+    public boolean atualizarPaciente(String nomePaciente, String nomeDieta, String ala, String leito) {
+    // Primeiro, buscar a dieta no depósito com base no nome
+    Deposito deposito = buscarDietaNoDeposito(nomeDieta);
+
+    // Se a dieta não for encontrada, exibe uma mensagem
+    if (deposito == null) {
+        System.err.println("Dieta não encontrada para o paciente.");
+        return false;
+    }
+
+    // Atualiza os campos: idDieta, ala, leito
+    String query = "UPDATE Paciente SET idDieta = ?, ala = ?, leito = ? WHERE nomePaciente = ?";
+
+    try (Connection connection = Conexao.getConexao();
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        preparedStatement.setInt(1, deposito.getIdDieta());
+        preparedStatement.setString(2, ala);
+        preparedStatement.setString(3, leito);
+        preparedStatement.setString(4, nomePaciente);
+
+        int atualizado = preparedStatement.executeUpdate();
+        return atualizado > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao atualizar dados do paciente: " + e);
+        return false;
+    }
 }
 
+//---------------------------------------------------------------------------
    /* public Deposito buscarDietaNoDeposito(String nomeDieta) {
     String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
     

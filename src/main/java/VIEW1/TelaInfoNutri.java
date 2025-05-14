@@ -100,8 +100,8 @@ informacaoPacienteNutri.getColumnModel().getColumn(7).setCellRenderer(new Status
             paciente.getLeito(),
             paciente.getNomedieta(),
             paciente.getAla(),
-            paciente.isTurno(),
-            paciente.isQualFuncionario(),
+            paciente.getTurno(),
+            paciente.getQualFuncionario(),
             paciente.isStatus() ? "Sim" : "Não"
         });
     }

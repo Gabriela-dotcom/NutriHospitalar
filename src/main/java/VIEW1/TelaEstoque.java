@@ -801,68 +801,30 @@ int quantidade = Integer.parseInt(quantidadeD.getSelectedItem().toString()); // 
 boolean conforme = conformeD.isSelected();
 
 
-    try {
-    boolean finalizarSim = finalizarSim1.isSelected();
-    int idFinalizada = Integer.parseInt(qualFinalizada.getText());
-
-    if (!finalizarSim) {
-        JOptionPane.showMessageDialog(null, "Marque a opção para finalizar antes de prosseguir.");
-        return;
-    }
-
-    DietasController dietasController = new DietasController();
-    boolean atualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, true);
-
-    if (!atualizado) {
-        JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
-        return;
-    }
-
-    int idDieta = dietasController.obterIdDieta(idFinalizada);
-
-    if (idDieta == -1) {
-        JOptionPane.showMessageDialog(null, "Dieta não encontrada para esta finalização.");
-        return;
-    }
-
-    int estoqueAtual = dietasController.obterQuantidadeDeposito(idDieta);
-
-    if (estoqueAtual < 1) {
-        JOptionPane.showMessageDialog(null, "Estoque insuficiente para essa dieta.");
-        return;
-    }
-
-    boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
-
-    if (!estoqueAtualizado) {
-        JOptionPane.showMessageDialog(null, "Falha ao descontar o estoque.");
-        return;
-    }
-
-    JOptionPane.showMessageDialog(null, "Finalização e estoque atualizados com sucesso!");
-
-    // Gerar o PDF
-    gerarPDF();
-
-    // Abrir o PDF
-    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Prescrição Nutricional.pdf";
-    File arquivoPdf = new File(caminhoDoPdf);
-
-    if (arquivoPdf.exists()) {
-        if (Desktop.isDesktopSupported()) {
-            Desktop.getDesktop().open(arquivoPdf);
+   try {
+        DietasController adicionarDeposito = new DietasController();
+        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme);
+        
+        if (adicionou) {
+            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
+            
+            // Atualiza a tabela com a listagem atualizada
+            listarFinalizadaDeposito();
+            
+            // Limpa os campos do formulário
+            limparCampos();
         } else {
-            JOptionPane.showMessageDialog(null, "Abertura de PDF não suportada.");
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
+            listarFinalizadaDeposito();
+            
+            // Limpa os campos do formulário
+            limparCampos();
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
+    } catch (Exception e) {
+        System.err.print("Erro ao adicionar ao depósito: " + e);
     }
+}
 
-} catch (Exception ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
-}
-}
 
     }//GEN-LAST:event_BcadastrarDietaActionPerformed
 
@@ -937,7 +899,7 @@ public void gerarPDF() {
 }
 
     private void botaofinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofinalActionPerformed
-try {
+/*try {
     // Verificar se a opção de finalização está marcada
     boolean finalizarSim = finalizarSim1.isSelected();
     if (!finalizarSim) {
@@ -1022,7 +984,84 @@ try {
     ex.printStackTrace();
     JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
 }
+*/
+try {
+    // Verificar se a opção de finalização está marcada
+    boolean finalizarSim = finalizarSim1.isSelected();
+    if (!finalizarSim) {
+        JOptionPane.showMessageDialog(null, "Marque a opção para finalizar antes de prosseguir.");
+        return;
+    }
 
+    int idFinalizada = Integer.parseInt(qualFinalizada.getText());
+
+    String turnoSelecionado = (String) turnoBox.getSelectedItem();
+    String responsavelSelecionado = (String) responsavelBox1.getSelectedItem();
+
+    if (turnoSelecionado == null || turnoSelecionado.isEmpty() ||
+        responsavelSelecionado == null || responsavelSelecionado.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Selecione o turno e o responsável.");
+        return;
+    }
+
+    DietasController dietasController = new DietasController();
+
+    // Atualiza o status de finalização
+    boolean statusAtualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, true);
+    if (!statusAtualizado) {
+        JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
+        return;
+    }
+
+    // Atualiza turno e responsável
+    boolean atualizadoTurnoResp = dietasController.atualizarTurnoEResponsavel(idFinalizada, turnoSelecionado, responsavelSelecionado);
+    if (!atualizadoTurnoResp) {
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar turno e responsável.");
+        return;
+    }
+
+    // Obter o ID da dieta associada à finalização
+    int idDieta = dietasController.obterIdDieta(idFinalizada);
+    if (idDieta == -1) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada para esta finalização.");
+        return;
+    }
+
+    // Verifica se a dieta existe no estoque com quantidade suficiente
+    boolean disponivel = dietasController.verificarDisponibilidadeEstoque(idDieta, 1);
+    if (!disponivel) {
+        JOptionPane.showMessageDialog(null, "Sem esta dieta no estoque!");
+        return;
+    }
+
+    // Descontar 1 unidade da dieta no estoque
+    boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
+    if (!estoqueAtualizado) {
+        JOptionPane.showMessageDialog(null, "Falha ao atualizar o estoque.");
+        return;
+    }
+
+    // Confirmação final
+    JOptionPane.showMessageDialog(null, "Finalização e estoque atualizados com sucesso!");
+
+    gerarPDF(); // Gerar PDF
+
+    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Prescrição Nutricional.pdf";
+    File arquivoPdf = new File(caminhoDoPdf);
+
+    if (arquivoPdf.exists() && Desktop.isDesktopSupported()) {
+        Desktop.getDesktop().open(arquivoPdf);
+    } else {
+        JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado ou abertura não suportada.");
+    }
+
+    // Atualiza tabela da tela
+    listarFinalizadaDeposito();
+
+} catch (Exception ex) {
+    ex.printStackTrace();
+    JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
+}
 
         
     }//GEN-LAST:event_botaofinalActionPerformed

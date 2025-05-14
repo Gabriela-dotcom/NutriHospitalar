@@ -219,8 +219,8 @@ public List<InformacaoPacienteFim> getDadosInformacaoPacienteFim() {
             info.setLeito(resultSet.getString("Leito"));
             info.setNomedieta(resultSet.getString("nomedieta"));
             info.setAla(resultSet.getString("Ala"));
-            info.setTurno(resultSet.getBoolean("turno"));
-            info.setQualFuncionario(resultSet.getBoolean("QualFuncionario"));
+            info.setTurno(resultSet.getString("turno"));
+            info.setQualFuncionario(resultSet.getString("QualFuncionario"));
             info.setStatus(resultSet.getBoolean("Status"));
             lista.add(info);
         }
@@ -720,7 +720,7 @@ public List<Finalizada> listarFinDeposito() {
  //fim do metodo atualizar finalizada de não para sim
  
  //descontar dietas
- public boolean descontarEstoque(int idDieta, int quantidade) {
+ /*public boolean descontarEstoque(int idDieta, int quantidade) {
     String selectQuery = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
     String updateQuery = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
 
@@ -750,7 +750,45 @@ public List<Finalizada> listarFinDeposito() {
     }
 
     return false;
+}*/
+ public boolean descontarEstoque(int idDieta, int quantidade) {
+    String selectQuery = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
+    String updateQuery = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement selectStmt = conexao.prepareStatement(selectQuery)) {
+
+        selectStmt.setInt(1, idDieta);
+        ResultSet rs = selectStmt.executeQuery();
+
+        // Verifica se a dieta existe no depósito
+        if (!rs.next()) {
+            System.err.println("Erro: Dieta não encontrada no depósito. ID: " + idDieta);
+            return false;
+        }
+
+        int quantidadeAtual = rs.getInt("quantidade");
+
+        // Verifica se tem quantidade suficiente
+        if (quantidadeAtual < quantidade) {
+            System.err.println("Erro: Estoque insuficiente. Quantidade atual: " + quantidadeAtual);
+            return false;
+        }
+
+        // Atualiza o estoque
+        try (PreparedStatement updateStmt = conexao.prepareStatement(updateQuery)) {
+            updateStmt.setInt(1, quantidade);
+            updateStmt.setInt(2, idDieta);
+            int linhasAfetadas = updateStmt.executeUpdate();
+            return linhasAfetadas > 0;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
 }
+
    /* public boolean descontarEstoque(int idDieta, int quantidade) {
         String query = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
         
@@ -790,7 +828,7 @@ public List<Finalizada> listarFinDeposito() {
     return -1;
 }
     //obter quantidade do deposito
-   public boolean verificarDisponibilidadeEstoque(int idDieta, int quantidadeNecessaria) {
+  /* public boolean verificarDisponibilidadeEstoque(int idDieta, int quantidadeNecessaria) {
     String query = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
     
     try (Connection conexao = Conexao.getConexao();
@@ -808,7 +846,30 @@ public List<Finalizada> listarFinDeposito() {
     }
     
     return false; // Retorna false se não encontrar ou se der erro
+}*/
+public boolean verificarDisponibilidadeEstoque(int idDieta, int quantidadeNecessaria) {
+    String query = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(query)) {
+        
+        stmt.setInt(1, idDieta);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            int quantidadeAtual = rs.getInt("quantidade");
+            return quantidadeAtual >= quantidadeNecessaria;
+        } else {
+            System.err.println("Dieta não existe no depósito. ID: " + idDieta);
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return false;
 }
+
 
     //------------------------------------------------------------
 //verificar se há dietas sufucientes no estoque

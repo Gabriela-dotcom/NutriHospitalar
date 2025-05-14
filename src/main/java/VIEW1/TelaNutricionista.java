@@ -135,7 +135,7 @@ private void limparCampos() {
 }
 private void limparCamposAt() {
    campoPacienteA.setText("");  // Limpa o campo de nome do paciente
-    campoDietaA.setText("");         // Limpa o campo de ID da dieta
+    campoAlaA.setText("");         // Limpa o campo de ID da dieta
 }
 // Método para limpar os campos de reserva (caso haja campos específicos para isso)
 private void limparCamposReservas() {
@@ -199,13 +199,13 @@ public void ListagemAT() {
         // Jogando os dados para dentro da minha tabela
         for (Paciente paciente : listaPacientes) {
             // Criando uma nova linha para a tabela
-            Object[] linha = {
-                
-                paciente.getNomePaciente(),
-                paciente.getLeito(),
-                paciente.getIdDieta(),
-                paciente.getAla()
-            };
+           Object[] linha = {
+    paciente.getNomePaciente(),
+    paciente.getLeito(),
+    paciente.getNomeDieta(), // ✅ Agora mostra o nome da dieta corretamente
+    paciente.getAla()
+};
+
             // Adicionando a linha ao modelo da tabela
             modeloTabela.addRow(linha);
         }
@@ -424,7 +424,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel21 = new javax.swing.JLabel();
         campoPacienteA = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        campoDietaA = new javax.swing.JTextField();
+        campoAlaA = new javax.swing.JTextField();
         atualizarBT = new javax.swing.JButton();
         menuEsquerda1 = new javax.swing.JPanel();
         listaDeDietas1 = new javax.swing.JButton();
@@ -432,6 +432,10 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel17 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaAtualizarPrescricao = new javax.swing.JTable();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        campoLeitoA = new javax.swing.JTextField();
+        campoDietaA2 = new javax.swing.JTextField();
         imgAtualDiet = new javax.swing.JLabel();
         tabelaPresStatus = new javax.swing.JPanel();
         menuEsquerda2 = new javax.swing.JPanel();
@@ -657,7 +661,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setText("Nome do Paciente:");
-        dietasAt.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 44, 199, -1));
+        dietasAt.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 199, -1));
 
         campoPacienteA.setBackground(new java.awt.Color(238, 236, 236));
         campoPacienteA.addActionListener(new java.awt.event.ActionListener() {
@@ -665,19 +669,19 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 campoPacienteAActionPerformed(evt);
             }
         });
-        dietasAt.add(campoPacienteA, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 81, 217, 28));
+        dietasAt.add(campoPacienteA, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 217, 28));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel19.setText("Dieta:");
-        dietasAt.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 121, 199, -1));
+        jLabel19.setText("Leito");
+        dietasAt.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 199, 20));
 
-        campoDietaA.setBackground(new java.awt.Color(238, 236, 236));
-        campoDietaA.addActionListener(new java.awt.event.ActionListener() {
+        campoAlaA.setBackground(new java.awt.Color(238, 236, 236));
+        campoAlaA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoDietaAActionPerformed(evt);
+                campoAlaAActionPerformed(evt);
             }
         });
-        dietasAt.add(campoDietaA, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 155, 217, 28));
+        dietasAt.add(campoAlaA, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 217, 28));
 
         atualizarBT.setBackground(new java.awt.Color(51, 102, 0));
         atualizarBT.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -726,7 +730,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(menuEsquerda1Layout.createSequentialGroup()
                         .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(7, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(menuEsquerda1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel17)
@@ -741,7 +745,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         dietasAt.add(menuEsquerda1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 180, 770));
@@ -755,9 +759,17 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 {null, null, null, null}
             },
             new String [] {
-                "Nomedo Paciente", "Leito", "ID Dieta", "Ala"
+                "Nomedo Paciente", "Leito", "Dieta", "Ala"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         tabelaAtualizarPrescricao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaAtualizarPrescricaoMouseClicked(evt);
@@ -766,6 +778,30 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jScrollPane2.setViewportView(tabelaAtualizarPrescricao);
 
         dietasAt.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 763, 263));
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel23.setText("Ala");
+        dietasAt.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 199, -1));
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel22.setText("Dieta:");
+        dietasAt.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 199, -1));
+
+        campoLeitoA.setBackground(new java.awt.Color(238, 236, 236));
+        campoLeitoA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoLeitoAActionPerformed(evt);
+            }
+        });
+        dietasAt.add(campoLeitoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 217, 28));
+
+        campoDietaA2.setBackground(new java.awt.Color(238, 236, 236));
+        campoDietaA2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoDietaA2ActionPerformed(evt);
+            }
+        });
+        dietasAt.add(campoDietaA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 217, 28));
 
         imgAtualDiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
         dietasAt.add(imgAtualDiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, -4, 840, 800));
@@ -985,6 +1021,8 @@ if (nomePaciente.isEmpty() || leito.isEmpty() || nomeDieta.isEmpty() || ala.isEm
             limparCamposReservas(); // Se falhar, limpa os campos
         }
     }*/
+
+/*
 // Captura os textos removendo espaços em branco
 String nomePaciente = campoNomePacienteP.getText().trim();
 String leito = campoNomeLeitoP.getText().trim();
@@ -1005,9 +1043,32 @@ if (nomePaciente.isEmpty() || leito.isEmpty() || ala.isEmpty() || nomeDieta.isEm
         JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente. Verifique os dados.");
     }
 }
+*/
 
 
+String nomePaciente = campoNomePacienteP.getText().trim();
+String leito = campoNomeLeitoP.getText().trim();
+String ala = campoAlaP.getText().trim();
+String nomeDieta = dietaCampoP.getText().trim();
 
+if (nomePaciente.isEmpty() || leito.isEmpty() || ala.isEmpty() || nomeDieta.isEmpty()) {
+    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de cadastrar.");
+} else {
+    PacienteController dao = new PacienteController();
+
+    if (dao.pacienteExiste(nomePaciente)) {
+        JOptionPane.showMessageDialog(null, "Paciente com este nome já está cadastrado.");
+    } else {
+        boolean sucesso = dao.cadastrarPaciente(nomePaciente, leito, ala, nomeDieta);
+
+        if (sucesso) {
+            Listagem();
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar paciente. Verifique os dados.");
+        }
+    }
+}
 
 
 
@@ -1019,9 +1080,9 @@ if (nomePaciente.isEmpty() || leito.isEmpty() || ala.isEmpty() || nomeDieta.isEm
         // TODO add your handling code here:
     }//GEN-LAST:event_campoPacienteAActionPerformed
 
-    private void campoDietaAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDietaAActionPerformed
+    private void campoAlaAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoAlaAActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoDietaAActionPerformed
+    }//GEN-LAST:event_campoAlaAActionPerformed
 
     private void atualizarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarBTActionPerformed
         // TODO add your handling code here:
@@ -1053,8 +1114,8 @@ try {
 */
 // Suponha que os dados do paciente e da dieta sejam inseridos em campos de texto
 // Captura os valores dos campos
-String nomePaciente = campoPacienteA.getText().trim();  // Nome do paciente
-String nomeDieta = campoDietaA.getText().trim();  // Nome da dieta
+/*String nomePaciente = campoPacienteA.getText().trim();  // Nome do paciente
+String nomeDieta = campoAlaA.getText().trim();  // Nome da dieta
 
 // Chama o método do controller para atualizar a dieta
 PacienteController pacienteController = new PacienteController();
@@ -1073,7 +1134,25 @@ if (atualizado) {
        
  Listagem();
         ListagemAT();
-      
+      */
+String nomePaciente = campoPacienteA.getText().trim();  // Nome do paciente
+String nomeDieta = campoDietaA2.getText().trim();          // Nome da dieta
+String ala = campoAlaA.getText().trim();                // Campo novo
+String leito = campoLeitoA.getText().trim();            // Campo novo
+
+PacienteController pacienteController = new PacienteController();
+boolean atualizado = pacienteController.atualizarPaciente(nomePaciente, nomeDieta, ala, leito);
+
+if (atualizado) {
+    JOptionPane.showMessageDialog(null, "Informações do paciente atualizadas com sucesso!");
+    Listagem();    // Atualiza a lista se necessário
+    ListagemAT();  // Atualiza outra lista, se usada
+    limparCamposAt();  // Limpa os campos da interface
+    
+} else {
+    JOptionPane.showMessageDialog(null, "Erro ao atualizar. Verifique o nome do paciente ou a dieta.");
+}
+
 
     }//GEN-LAST:event_atualizarBTActionPerformed
 
@@ -1223,7 +1302,7 @@ if (atualizado) {
 
     private void tabelaAtualizarPrescricaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAtualizarPrescricaoMouseClicked
         // TODO add your handling code here:
-         int linhaSelecionada = tabelaAtualizarPrescricao.getSelectedRow();
+     /*    int linhaSelecionada = tabelaAtualizarPrescricao.getSelectedRow();
         
         // Verificando se alguma linha foi selecionada
         if(linhaSelecionada >= 0){
@@ -1233,12 +1312,28 @@ if (atualizado) {
             // Jogando os dados da tabela para os campos de texto
             campoPacienteA.setText(modelotabela.getValueAt(linhaSelecionada, 0).toString()); // Nome
            
-            campoDietaA.setText(modelotabela.getValueAt(linhaSelecionada, 2).toString()); // Ala
+            campoAlaA.setText(modelotabela.getValueAt(linhaSelecionada, 2).toString()); // Ala
             
             // Adicione outros campos conforme necessário
         } // fim do if
     
+        */
+      int linhaSelecionada = tabelaAtualizarPrescricao.getSelectedRow();
         
+        // Verificando se alguma linha foi selecionada
+        if(linhaSelecionada >= 0){
+            // Definir modelo default para a tabela
+            DefaultTableModel modelotabela = (DefaultTableModel)tabelaAtualizarPrescricao.getModel();
+            
+            // Jogando os dados da tabela para os campos de texto
+            campoPacienteA.setText(modelotabela.getValueAt(linhaSelecionada, 0).toString()); // Nome
+           campoLeitoA.setText(modelotabela.getValueAt(linhaSelecionada, 1).toString()); // Leito
+            campoDietaA2.setText(modelotabela.getValueAt(linhaSelecionada, 2).toString()); // Dieta (ID Dieta)
+            campoAlaA.setText(modelotabela.getValueAt(linhaSelecionada, 3).toString()); // Ala
+            
+            // Adicione outros campos conforme necessário
+        } // fim do if
+
     }//GEN-LAST:event_tabelaAtualizarPrescricaoMouseClicked
 
     private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
@@ -1278,6 +1373,14 @@ if (atualizado) {
     }
         
     }//GEN-LAST:event_tabelaNutriTudo1MouseClicked
+
+    private void campoLeitoAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoLeitoAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoLeitoAActionPerformed
+
+    private void campoDietaA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDietaA2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoDietaA2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1319,8 +1422,10 @@ if (atualizado) {
     private javax.swing.JButton atualizarDietas2;
     private javax.swing.JButton atualizarDietas4;
     private javax.swing.JButton cadastrarPresquicaoDia1;
+    private javax.swing.JTextField campoAlaA;
     private javax.swing.JTextField campoAlaP;
-    private javax.swing.JTextField campoDietaA;
+    private javax.swing.JTextField campoDietaA2;
+    private javax.swing.JTextField campoLeitoA;
     private javax.swing.JTextField campoNomeLeitoP;
     private javax.swing.JTextField campoNomePacienteP;
     private javax.swing.JTextField campoPacienteA;
@@ -1340,6 +1445,8 @@ if (atualizado) {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

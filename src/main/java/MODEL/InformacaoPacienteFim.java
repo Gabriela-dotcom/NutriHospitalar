@@ -15,14 +15,14 @@ public class InformacaoPacienteFim {
     private String leito;
     private String nomedieta;
     private String ala;
-    private boolean turno;
-    private boolean qualFuncionario;  // Responsável
+    private String turno;
+    private String qualFuncionario;  // Responsável
     private boolean status;
 
     public InformacaoPacienteFim() {
     }
 
-    public InformacaoPacienteFim(String nome, String leito, String nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(String nome, String leito, String nomedieta, String ala, String turno, String qualFuncionario, boolean status) {
         this.nome = nome;
         this.leito = leito;
         this.nomedieta = nomedieta;
@@ -32,7 +32,7 @@ public class InformacaoPacienteFim {
         this.status = status;
     }
 
-    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, String nomedieta, String ala, boolean turno, boolean qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, String nomedieta, String ala, String turno, String qualFuncionario, boolean status) {
         this.idFinalizada = idFinalizada;
         this.nome = nome;
         this.leito = leito;
@@ -42,6 +42,8 @@ public class InformacaoPacienteFim {
         this.qualFuncionario = qualFuncionario;
         this.status = status;
     }
+
+   
 
 
     public int getIdFinalizada() {
@@ -86,21 +88,23 @@ public class InformacaoPacienteFim {
         this.ala = ala;
     }
 
-    public boolean isTurno() {
+    public String getTurno() {
         return turno;
     }
 
-    public void setTurno(boolean turno) {
+    public void setTurno(String turno) {
         this.turno = turno;
     }
 
-    public boolean isQualFuncionario() {
+    public String getQualFuncionario() {
         return qualFuncionario;
     }
 
-    public void setQualFuncionario(boolean qualFuncionario) {
+    public void setQualFuncionario(String qualFuncionario) {
         this.qualFuncionario = qualFuncionario;
     }
+
+  
 
     public boolean isStatus() {
         return status;
