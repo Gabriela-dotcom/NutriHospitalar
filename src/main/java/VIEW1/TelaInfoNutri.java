@@ -392,6 +392,7 @@ private void atualizarTableActionPerformed() {
 
     private void atualizarTabelaBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBTActionPerformed
         // TODO add your handling code here:
+        
         atualizarTabelaBT.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -399,6 +400,7 @@ private void atualizarTableActionPerformed() {
          listarInformacaoPacientesFim();
     }
 });
+        listarInformacaoPacientesFim();
     }//GEN-LAST:event_atualizarTabelaBTActionPerformed
 
     /**
