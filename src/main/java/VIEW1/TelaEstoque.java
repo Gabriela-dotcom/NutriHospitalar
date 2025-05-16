@@ -8,6 +8,7 @@ import CONTROLLER.DietasController;
 import MODEL.Deposito;
 import MODEL.FinalizadaDeposito;
 import MODEL.Finalizada;
+import MODEL.InformacaoPacienteFim;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -195,46 +196,34 @@ public void listarDepositoTudo() {
 //meetodo de lisatagem para Tabela de retirada deposito
 public void listarFinalizadaDeposito() { 
     try { 
-        // Criar o controlador para acessar os dados da tabela finalizada
         DietasController dietasController = new DietasController(); 
-        
-        // Obter os dados da tabela finalizada
-        List<Finalizada> dadosInformacao = dietasController.listarFinDeposito(); 
-        
-        // Obter o modelo da tabela
+        List<InformacaoPacienteFim> dadosInformacao = dietasController.listarFinDeposito(); 
         DefaultTableModel modeloTabela = (DefaultTableModel) tabelaRetiradaDieta.getModel(); 
-        
-        // Verificando se o modelo da tabela já tem o número correto de colunas
+
         if (modeloTabela.getColumnCount() == 0) {
             modeloTabela.addColumn("ID Finalizada");
-            modeloTabela.addColumn("ID Dieta");
+            modeloTabela.addColumn("Nome Dieta");
             modeloTabela.addColumn("Nome Paciente");
             modeloTabela.addColumn("Leito");
             modeloTabela.addColumn("Ala");
             modeloTabela.addColumn("Turno");
             modeloTabela.addColumn("Responsável");
             modeloTabela.addColumn("Status");
-            modeloTabela.addColumn("ID Paciente");
-            modeloTabela.addColumn("ID Depósito");
-            
         }
-        
-        // Limpar a tabela antes de adicionar novos dados
+
         modeloTabela.setRowCount(0); 
         tabelaRetiradaDieta.getColumnModel().getColumn(7).setCellRenderer(new StatusCellRenderer());
-        // Adicionar cada linha de dados à tabela
-        for (Finalizada linha : dadosInformacao) { 
+
+        for (InformacaoPacienteFim linha : dadosInformacao) { 
             modeloTabela.addRow(new Object[] {
                 linha.getIdFinalizada(),
-                linha.getIdDieta(),
-                linha.getNomePaciente(),
+                linha.getNomedieta(),
+                linha.getNome(),
                 linha.getLeito(),
                 linha.getAla(),
-                linha.isTurno() ,
+                linha.getTurno(),
                 linha.getQualFuncionario(),
-                linha.isStatus()? "Sim": "Não" ,
-                linha.getIdPaciente(),
-                linha.getIdDeposito()
+                linha.isStatus() ? "Sim" : "Não"
             }); 
         } 
     } catch (Exception e) { 
@@ -242,6 +231,7 @@ public void listarFinalizadaDeposito() {
         JOptionPane.showMessageDialog(this, "Erro ao atualizar a tabela: " + e.getMessage()); 
     } 
 }
+
 
 
 
@@ -492,7 +482,7 @@ public void listarFinalizadaDeposito() {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Qual Finalizada", "ID Dieta", "Nome Paciente", "Leito", "Ala", "Turno", "Responsavel", "Status"
+                "Qual Finalizada", "Dieta", "Nome Paciente", "Leito", "Ala", "Turno", "Responsavel", "Status"
             }
         ) {
             Class[] types = new Class [] {

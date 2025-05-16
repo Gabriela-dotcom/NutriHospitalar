@@ -10,10 +10,10 @@ package MODEL;
  */
 public class InformacaoPacienteFim {
 
-    private int idFinalizada;
+   private int idFinalizada;
+    private String nomedieta;
     private String nome;
     private String leito;
-    private String nomedieta;
     private String ala;
     private String turno;
     private String qualFuncionario;  // Responsável
@@ -22,29 +22,26 @@ public class InformacaoPacienteFim {
     public InformacaoPacienteFim() {
     }
 
-    public InformacaoPacienteFim(String nome, String leito, String nomedieta, String ala, String turno, String qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(String nomedieta, String nome, String leito, String ala, String turno, String qualFuncionario, boolean status) {
+        this.nomedieta = nomedieta;
         this.nome = nome;
         this.leito = leito;
-        this.nomedieta = nomedieta;
         this.ala = ala;
         this.turno = turno;
         this.qualFuncionario = qualFuncionario;
         this.status = status;
     }
 
-    public InformacaoPacienteFim(int idFinalizada, String nome, String leito, String nomedieta, String ala, String turno, String qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(int idFinalizada, String nomedieta, String nome, String leito, String ala, String turno, String qualFuncionario, boolean status) {
         this.idFinalizada = idFinalizada;
+        this.nomedieta = nomedieta;
         this.nome = nome;
         this.leito = leito;
-        this.nomedieta = nomedieta;
         this.ala = ala;
         this.turno = turno;
         this.qualFuncionario = qualFuncionario;
         this.status = status;
     }
-
-   
-
 
     public int getIdFinalizada() {
         return idFinalizada;
@@ -52,6 +49,14 @@ public class InformacaoPacienteFim {
 
     public void setIdFinalizada(int idFinalizada) {
         this.idFinalizada = idFinalizada;
+    }
+
+    public String getNomedieta() {
+        return nomedieta;
+    }
+
+    public void setNomedieta(String nomedieta) {
+        this.nomedieta = nomedieta;
     }
 
     public String getNome() {
@@ -69,16 +74,6 @@ public class InformacaoPacienteFim {
     public void setLeito(String leito) {
         this.leito = leito;
     }
-
-    public String getNomedieta() {
-        return nomedieta;
-    }
-
-    public void setNomedieta(String nomedieta) {
-        this.nomedieta = nomedieta;
-    }
-
-   
 
     public String getAla() {
         return ala;
@@ -104,8 +99,6 @@ public class InformacaoPacienteFim {
         this.qualFuncionario = qualFuncionario;
     }
 
-  
-
     public boolean isStatus() {
         return status;
     }
@@ -113,5 +106,7 @@ public class InformacaoPacienteFim {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    
 
 }

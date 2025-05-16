@@ -78,8 +78,8 @@ public class DietasController {
     //-------------------------------------------------------------------------
     
 //Cadastro por dieta-------------------------------------------------------------
-public boolean cadastrarPrescricaoPorDieta(String nomeDieta, String nomePaciente, String leito, String ala) {
-    Deposito deposito = buscarDietaNoDeposito(nomeDieta); // Obtém os dados da dieta no depósito
+public boolean cadastrarPrescricaoPorDieta(String nomedieta, String nomePaciente, String leito, String ala) {
+    Deposito deposito = buscarDietaNoDeposito(nomedieta); // Obtém os dados da dieta no depósito
     
     if (deposito == null) {
         JOptionPane.showMessageDialog(null, "Dieta não encontrada no depósito! Verifique o nome.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -631,28 +631,26 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
  
  //listagem de Finalizada e Deposito
  // Método para listar os dados da view v_finalizada_deposito
- public List<Finalizada> listarFinDeposito() {
-    List<Finalizada> lista = new ArrayList<>();
-    String sql = "SELECT * FROM Finalizada WHERE status = false"; // Filtra apenas as pendentes
+ public List<InformacaoPacienteFim> listarFinDeposito() {
+    List<InformacaoPacienteFim> lista = new ArrayList<>();
+    String sql = "SELECT * FROM InformacaoPacientesFim WHERE status = false"; // Apenas pendentes
 
     try (Connection conexao = Conexao.getConexao();
          PreparedStatement stmt = conexao.prepareStatement(sql);
          ResultSet rs = stmt.executeQuery()) {
 
         while (rs.next()) {
-            Finalizada f = new Finalizada();
-            f.setIdFinalizada(rs.getInt("idFinalizada"));
-            f.setIdDieta(rs.getInt("idDieta"));
-            f.setNomePaciente(rs.getString("nomePaciente"));
-            f.setLeito(rs.getString("leito"));
-            f.setAla(rs.getString("ala"));
-            f.setTurno(rs.getString("turno"));
-            f.setQualFuncionario(rs.getString("qualFuncionario"));
-            f.setStatus(rs.getBoolean("status"));
-            f.setIdPaciente(rs.getInt("idPaciente"));
-            f.setIdDeposito(rs.getInt("idDeposito"));
+            InformacaoPacienteFim info = new InformacaoPacienteFim();
+            info.setIdFinalizada(rs.getInt("idFinalizada"));
+            info.setNomedieta(rs.getString("nomedieta"));
+            info.setNome(rs.getString("nome"));
+            info.setLeito(rs.getString("leito"));
+            info.setAla(rs.getString("ala"));
+            info.setTurno(rs.getString("turno"));
+            info.setQualFuncionario(rs.getString("qualFuncionario"));
+            info.setStatus(rs.getBoolean("status"));
 
-            lista.add(f);
+            lista.add(info);
         }
 
     } catch (SQLException e) {
@@ -661,6 +659,7 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
 
     return lista;
 }
+
  /*
 public List<Finalizada> listarFinDeposito() {
     String query = "SELECT idFinalizada, qualFuncionario, turno, status, idPaciente, idDeposito, idDieta, nomePaciente, leito, ala FROM finalizada";
