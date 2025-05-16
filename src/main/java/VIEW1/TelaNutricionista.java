@@ -419,6 +419,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         saida = new javax.swing.JButton();
         usuario1 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        atualizarTabelaBT2 = new javax.swing.JButton();
         imgFundoPresquicap = new javax.swing.JLabel();
         dietasAt = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -438,6 +439,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel22 = new javax.swing.JLabel();
         campoLeitoA = new javax.swing.JTextField();
         campoDietaA2 = new javax.swing.JTextField();
+        atualizarTabelaBT1 = new javax.swing.JButton();
         imgAtualDiet = new javax.swing.JLabel();
         tabelaPresStatus = new javax.swing.JPanel();
         menuEsquerda2 = new javax.swing.JPanel();
@@ -452,6 +454,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         pdfTudo = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelaNutriTudo1 = new javax.swing.JTable();
+        atualizarTabelaBT = new javax.swing.JButton();
         imgAtualDiet1 = new javax.swing.JLabel();
         imgFundoPresquicap1 = new javax.swing.JLabel();
 
@@ -611,8 +614,6 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         });
 
         usuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/imagem-do-usuario-com-fundo-preto.png"))); // NOI18N
-        usuario1.setMaximumSize(new java.awt.Dimension(128, 128));
-        usuario1.setMinimumSize(new java.awt.Dimension(128, 128));
 
         javax.swing.GroupLayout menuEsquerda3Layout = new javax.swing.GroupLayout(menuEsquerda3);
         menuEsquerda3.setLayout(menuEsquerda3Layout);
@@ -661,6 +662,13 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel20.setText("Ala:");
         prescreverNutricionista.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
+
+        atualizarTabelaBT2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarTabelaBT2ActionPerformed(evt);
+            }
+        });
+        prescreverNutricionista.add(atualizarTabelaBT2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 630, 40, 30));
         prescreverNutricionista.add(imgFundoPresquicap, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 830, 800));
 
         dietasAt.setBackground(new java.awt.Color(255, 255, 255));
@@ -825,6 +833,13 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         });
         dietasAt.add(campoDietaA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 217, 28));
 
+        atualizarTabelaBT1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarTabelaBT1ActionPerformed(evt);
+            }
+        });
+        dietasAt.add(atualizarTabelaBT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 560, 40, 30));
+
         imgAtualDiet.setBackground(new java.awt.Color(255, 255, 255));
         dietasAt.add(imgAtualDiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, -4, 820, 800));
 
@@ -955,6 +970,13 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jScrollPane3.setViewportView(tabelaNutriTudo1);
 
         tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 719, 324));
+
+        atualizarTabelaBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarTabelaBTActionPerformed(evt);
+            }
+        });
+        tabelaPresStatus.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 530, 40, 30));
 
         imgAtualDiet1.setMaximumSize(new java.awt.Dimension(128, 128));
         imgAtualDiet1.setMinimumSize(new java.awt.Dimension(128, 128));
@@ -1413,6 +1435,45 @@ if (atualizado) {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoDietaA2ActionPerformed
 
+    private void atualizarTabelaBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBTActionPerformed
+        // TODO add your handling code here:
+
+        atualizarTabelaBT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Chama o método que atualiza a tabela
+                ListagemDePacientes();
+            }
+        });
+        ListagemDePacientes();
+    }//GEN-LAST:event_atualizarTabelaBTActionPerformed
+
+    private void atualizarTabelaBT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBT1ActionPerformed
+        // TODO add your handling code here:
+
+        atualizarTabelaBT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Chama o método que atualiza a tabela
+                ListagemAT();
+            }
+        });
+        ListagemAT();
+    }//GEN-LAST:event_atualizarTabelaBT1ActionPerformed
+
+    private void atualizarTabelaBT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBT2ActionPerformed
+        // TODO add your handling code here:
+        atualizarTabelaBT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Chama o método que atualiza a tabela
+                Listagem();
+            }
+        });
+        Listagem();
+       
+    }//GEN-LAST:event_atualizarTabelaBT2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1452,6 +1513,9 @@ if (atualizado) {
     private javax.swing.JButton atualizarBT;
     private javax.swing.JButton atualizarDietas2;
     private javax.swing.JButton atualizarDietas4;
+    private javax.swing.JButton atualizarTabelaBT;
+    private javax.swing.JButton atualizarTabelaBT1;
+    private javax.swing.JButton atualizarTabelaBT2;
     private javax.swing.JButton cadastrarPresquicaoDia1;
     private javax.swing.JTextField campoAlaA;
     private javax.swing.JTextField campoAlaP;

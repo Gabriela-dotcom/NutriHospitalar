@@ -18,6 +18,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import java.util.List;
@@ -83,8 +85,7 @@ setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
     
     
-    
-    
+  
 
     // Método para configurar o evento do botão de sair
     private void configurarBotaoDeSair() {
@@ -141,6 +142,35 @@ public class StatusCellRenderer extends DefaultTableCellRenderer {
     }
 }
 //-----------------------------------------------------------------------------
+ // Aqui você coloca a classe renderer
+    class ValidadeCellRenderer extends DefaultTableCellRenderer {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            try {
+                String dataStr = value.toString();
+                LocalDate validade = LocalDate.parse(dataStr, formatter);
+                LocalDate hoje = LocalDate.now();
+
+                if (validade.isBefore(hoje)) {
+                    c.setBackground(Color.RED);
+                } else if (!validade.isBefore(hoje) && validade.isBefore(hoje.plusDays(7))) {
+                    c.setBackground(Color.YELLOW);
+                } else {
+                    c.setBackground(Color.GREEN);
+                }
+            } catch (Exception e) {
+                c.setBackground(Color.WHITE); // caso dê erro na data
+            }
+
+            return c;
+        }
+    }
 
 
 //listagem de deposito(o que tem armazenado)
@@ -183,7 +213,7 @@ public void listarDepositoTudo() {
                 linha.getNomedieta()
             }); 
         } // **Aqui o try é corretamente fechado**
-        
+        TabelaDeDeposito.getColumnModel().getColumn(4).setCellRenderer(new ValidadeCellRenderer());
     } catch (Exception e) {  // **Agora o catch está no lugar correto**
         e.printStackTrace(); 
         JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela: " + e.getMessage()); 
@@ -200,31 +230,35 @@ public void listarFinalizadaDeposito() {
         List<InformacaoPacienteFim> dadosInformacao = dietasController.listarFinDeposito(); 
         DefaultTableModel modeloTabela = (DefaultTableModel) tabelaRetiradaDieta.getModel(); 
 
-        if (modeloTabela.getColumnCount() == 0) {
-            modeloTabela.addColumn("ID Finalizada");
-            modeloTabela.addColumn("Nome Dieta");
-            modeloTabela.addColumn("Nome Paciente");
-            modeloTabela.addColumn("Leito");
-            modeloTabela.addColumn("Ala");
-            modeloTabela.addColumn("Turno");
-            modeloTabela.addColumn("Responsável");
-            modeloTabela.addColumn("Status");
-        }
+       if (modeloTabela.getColumnCount() == 0) {
+    modeloTabela.addColumn("ID Finalizada");
+    modeloTabela.addColumn("Nome Dieta");
+    modeloTabela.addColumn("Nome Paciente");
+    modeloTabela.addColumn("Leito");
+    modeloTabela.addColumn("Ala");
+    modeloTabela.addColumn("Turno");
+    modeloTabela.addColumn("Responsável");
+    modeloTabela.addColumn("Status");
+    modeloTabela.addColumn("ID Dieta"); // <-- adiciona o ID da dieta
+}
+
 
         modeloTabela.setRowCount(0); 
         tabelaRetiradaDieta.getColumnModel().getColumn(7).setCellRenderer(new StatusCellRenderer());
 
         for (InformacaoPacienteFim linha : dadosInformacao) { 
-            modeloTabela.addRow(new Object[] {
-                linha.getIdFinalizada(),
-                linha.getNomedieta(),
-                linha.getNome(),
-                linha.getLeito(),
-                linha.getAla(),
-                linha.getTurno(),
-                linha.getQualFuncionario(),
-                linha.isStatus() ? "Sim" : "Não"
-            }); 
+           modeloTabela.addRow(new Object[] {
+    linha.getIdFinalizada(),
+    linha.getNomedieta(),
+    linha.getNome(),
+    linha.getLeito(),
+    linha.getAla(),
+    linha.getTurno(),
+    linha.getQualFuncionario(),
+    linha.isStatus() ? "Sim" : "Não",
+    linha.getIdDieta() // <-- adicionado
+});
+
         } 
     } catch (Exception e) { 
         e.printStackTrace(); 
@@ -266,13 +300,13 @@ public void listarFinalizadaDeposito() {
         infoDeposito1 = new javax.swing.JToggleButton();
         fornecedorD = new javax.swing.JComboBox<>();
         conformeD = new javax.swing.JCheckBox();
-        validadeD = new javax.swing.JTextField();
         quantidadeD = new javax.swing.JComboBox<>();
+        validadeD = new javax.swing.JFormattedTextField();
         imgFundo = new javax.swing.JLabel();
         painelRetiradaDieta = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tabelaRetiradaDieta = new javax.swing.JTable();
+        jLabel19 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         botaofinal = new javax.swing.JButton();
         menuEstoquista1 = new javax.swing.JPanel();
@@ -281,15 +315,18 @@ public void listarFinalizadaDeposito() {
         jLabel14 = new javax.swing.JLabel();
         infoDeposito = new javax.swing.JToggleButton();
         saida = new javax.swing.JButton();
-        qualFinalizada = new javax.swing.JTextField();
+        qualIDqualFinalizada1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         finalizarSim1 = new javax.swing.JCheckBox();
         turnoBox = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         responsavelBox1 = new javax.swing.JComboBox<>();
-        responsavelBox = new javax.swing.JLabel();
+        qualID1 = new javax.swing.JTextField();
+        atualizarTabelaBT1 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
         painelDoEstoqueDietas = new javax.swing.JPanel();
+        atualizarTabelaBT = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaDeDeposito = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
@@ -459,10 +496,18 @@ public void listarFinalizadaDeposito() {
 
         conformeD.setText("Sim\n\n");
         PainelcadastrosDeDietas.add(conformeD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, -1, -1));
-        PainelcadastrosDeDietas.add(validadeD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 452, 260, 30));
 
         quantidadeD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128", "129", "130", "131", "132", "133", "134", "135", "136", "137", "138", "139", "140", "141", "142", "143", "144", "145", "146", "147", "148", "149", "150", "151", "152", "153", "154", "155", "156", "157", "158", "159", "160", "161", "162", "163", "164", "165", "166", "167", "168", "169", "170", "171", "172", "173", "174", "175", "176", "177", "178", "179", "180", "181", "182", "183", "184", "185", "186", "187", "188", "189", "190", "191", "192", "193", "194", "195", "196", "197", "198", "199", "200", " " }));
         PainelcadastrosDeDietas.add(quantidadeD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 520, 120, 30));
+
+        validadeD.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
+        try {
+            validadeD.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/#### ")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        validadeD.setToolTipText("");
+        PainelcadastrosDeDietas.add(validadeD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 250, 30));
         PainelcadastrosDeDietas.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 6, 820, 792));
 
         painelRetiradaDieta.setBackground(new java.awt.Color(255, 255, 255));
@@ -470,34 +515,23 @@ public void listarFinalizadaDeposito() {
         painelRetiradaDieta.setMinimumSize(new java.awt.Dimension(1000, 800));
         painelRetiradaDieta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel19.setText("TABELA DE RETIRADA:");
-        painelRetiradaDieta.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 369, -1));
-
         tabelaRetiradaDieta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Qual Finalizada", "Dieta", "Nome Paciente", "Leito", "Ala", "Turno", "Responsavel", "Status"
+                "Qual Finalizada", "Dieta", "Nome Paciente", "Leito", "Ala", "Turno", "Responsavel", "Status", "Id Dieta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, true, true, true, true, true
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         tabelaRetiradaDieta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -508,6 +542,10 @@ public void listarFinalizadaDeposito() {
         jScrollPane6.setViewportView(tabelaRetiradaDieta);
 
         painelRetiradaDieta.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 768, 262));
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel19.setText("TABELA DE RETIRADA:");
+        painelRetiradaDieta.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 369, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Finalizar");
@@ -609,12 +647,12 @@ public void listarFinalizadaDeposito() {
 
         painelRetiradaDieta.add(menuEstoquista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
 
-        qualFinalizada.addActionListener(new java.awt.event.ActionListener() {
+        qualIDqualFinalizada1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                qualFinalizadaActionPerformed(evt);
+                qualIDqualFinalizada1ActionPerformed(evt);
             }
         });
-        painelRetiradaDieta.add(qualFinalizada, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 130, 30));
+        painelRetiradaDieta.add(qualIDqualFinalizada1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 130, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Responsavel");
@@ -632,8 +670,8 @@ public void listarFinalizadaDeposito() {
         painelRetiradaDieta.add(turnoBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 390, 200, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setText("Qual Finalizada");
-        painelRetiradaDieta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 281, -1));
+        jLabel5.setText("ID Dieta");
+        painelRetiradaDieta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 281, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setText("Turno");
@@ -641,13 +679,37 @@ public void listarFinalizadaDeposito() {
 
         responsavelBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enfermeiro", "Medico", " " }));
         painelRetiradaDieta.add(responsavelBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 450, 200, 30));
-        painelRetiradaDieta.add(responsavelBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, -2, 840, 800));
+
+        qualID1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qualID1ActionPerformed(evt);
+            }
+        });
+        painelRetiradaDieta.add(qualID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 400, 130, 30));
+
+        atualizarTabelaBT1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarTabelaBT1ActionPerformed(evt);
+            }
+        });
+        painelRetiradaDieta.add(atualizarTabelaBT1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 330, 40, 30));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel12.setText("Qual Finalizada");
+        painelRetiradaDieta.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 281, -1));
 
         painelDoEstoqueDietas.setBackground(new java.awt.Color(255, 255, 255));
         painelDoEstoqueDietas.setMaximumSize(new java.awt.Dimension(1000, 800));
         painelDoEstoqueDietas.setMinimumSize(new java.awt.Dimension(1000, 800));
         painelDoEstoqueDietas.setPreferredSize(new java.awt.Dimension(1000, 800));
         painelDoEstoqueDietas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        atualizarTabelaBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarTabelaBTActionPerformed(evt);
+            }
+        });
+        painelDoEstoqueDietas.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, 40, 30));
 
         TabelaDeDeposito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -863,12 +925,13 @@ boolean conforme = conformeD.isSelected();
          listarFinalizadaDeposito();
     }//GEN-LAST:event_infoDeposito1ActionPerformed
 
-    private void qualFinalizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualFinalizadaActionPerformed
+    private void qualIDqualFinalizada1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualIDqualFinalizada1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_qualFinalizadaActionPerformed
+    }//GEN-LAST:event_qualIDqualFinalizada1ActionPerformed
 
     private void tabelaRetiradaDietaselecionarFuncionarioDaTabela(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaRetiradaDietaselecionarFuncionarioDaTabela
 // Obtém a linha selecionada na tabelaRetiradaDieta
+/*
 int linhaSelecionada = tabelaRetiradaDieta.getSelectedRow();
 
 // Verifica se alguma linha foi selecionada
@@ -877,10 +940,25 @@ if (linhaSelecionada >= 0) {
     DefaultTableModel modeloTabela = (DefaultTableModel) tabelaRetiradaDieta.getModel();
     
     // Joga os dados da tabela para os campos de texto
-    qualFinalizada.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString()); // Nome Paciente
+    qualIDqualFinalizada1.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString()); // Nome Paciente
    
     // Adicione outros campos conforme necessário
 } // fim do if
+*/
+// Obtém a linha selecionada na tabelaRetiradaDieta
+int linhaSelecionada = tabelaRetiradaDieta.getSelectedRow();
+
+// Verifica se alguma linha foi selecionada
+if (linhaSelecionada >= 0) {
+    // Define o modelo padrão para a tabela
+    DefaultTableModel modeloTabela = (DefaultTableModel) tabelaRetiradaDieta.getModel();
+ qualIDqualFinalizada1.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString()); 
+    // Pega o valor da última coluna (índice 8)
+    qualID1.setText(modeloTabela.getValueAt(linhaSelecionada, 8).toString());
+
+    // Se quiser pegar outras colunas, exemplo da primeira:
+    // qualID.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString());
+}
 
     }//GEN-LAST:event_tabelaRetiradaDietaselecionarFuncionarioDaTabela
 public void gerarPDF() {
@@ -983,7 +1061,7 @@ try {
         return;
     }
 
-    int idFinalizada = Integer.parseInt(qualFinalizada.getText());
+    int idFinalizada = Integer.parseInt(qualIDqualFinalizada1.getText());
 
     String turnoSelecionado = (String) turnoBox.getSelectedItem();
     String responsavelSelecionado = (String) responsavelBox1.getSelectedItem();
@@ -996,7 +1074,28 @@ try {
 
     DietasController dietasController = new DietasController();
 
-    // Atualiza o status de finalização
+    // Obter o ID da dieta associada à finalização
+    int idDieta = dietasController.obterIdDieta(idFinalizada);
+    if (idDieta == -1) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada para esta finalização.");
+        return;
+    }
+
+    // Verifica se a dieta existe no estoque com quantidade suficiente **ANTES** de atualizar status
+    boolean disponivel = dietasController.verificarDisponibilidadeEstoque(idDieta, 1);
+    if (!disponivel) {
+        JOptionPane.showMessageDialog(null, "Sem esta dieta no estoque! Finalização cancelada.");
+        return;
+    }
+
+    // Descontar 1 unidade da dieta no estoque
+    boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
+    if (!estoqueAtualizado) {
+        JOptionPane.showMessageDialog(null, "Falha ao atualizar o estoque. Finalização cancelada.");
+        return;
+    }
+
+    // **Agora sim, atualiza o status de finalização**
     boolean statusAtualizado = dietasController.atualizarStatusFinalizacao(idFinalizada, true);
     if (!statusAtualizado) {
         JOptionPane.showMessageDialog(null, "Não foi possível atualizar o status.");
@@ -1007,27 +1106,6 @@ try {
     boolean atualizadoTurnoResp = dietasController.atualizarTurnoEResponsavel(idFinalizada, turnoSelecionado, responsavelSelecionado);
     if (!atualizadoTurnoResp) {
         JOptionPane.showMessageDialog(null, "Erro ao atualizar turno e responsável.");
-        return;
-    }
-
-    // Obter o ID da dieta associada à finalização
-    int idDieta = dietasController.obterIdDieta(idFinalizada);
-    if (idDieta == -1) {
-        JOptionPane.showMessageDialog(null, "Dieta não encontrada para esta finalização.");
-        return;
-    }
-
-    // Verifica se a dieta existe no estoque com quantidade suficiente
-    boolean disponivel = dietasController.verificarDisponibilidadeEstoque(idDieta, 1);
-    if (!disponivel) {
-        JOptionPane.showMessageDialog(null, "Sem esta dieta no estoque!");
-        return;
-    }
-
-    // Descontar 1 unidade da dieta no estoque
-    boolean estoqueAtualizado = dietasController.descontarEstoque(idDieta, 1);
-    if (!estoqueAtualizado) {
-        JOptionPane.showMessageDialog(null, "Falha ao atualizar o estoque.");
         return;
     }
 
@@ -1053,6 +1131,9 @@ try {
     JOptionPane.showMessageDialog(null, "Erro ao concluir a operação: " + ex.getMessage());
 }
 
+
+
+System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText());
         
     }//GEN-LAST:event_botaofinalActionPerformed
 
@@ -1082,6 +1163,37 @@ try {
     private void turnoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_turnoBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_turnoBoxActionPerformed
+
+    private void qualID1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualID1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_qualID1ActionPerformed
+
+    private void atualizarTabelaBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBTActionPerformed
+        // TODO add your handling code here:
+
+        atualizarTabelaBT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Chama o método que atualiza a tabela
+                listarDepositoTudo();
+            }
+        });
+        listarDepositoTudo();
+    }//GEN-LAST:event_atualizarTabelaBTActionPerformed
+
+    private void atualizarTabelaBT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBT1ActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+
+        atualizarTabelaBT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Chama o método que atualiza a tabela
+                listarFinalizadaDeposito();
+            }
+        });
+        listarFinalizadaDeposito();
+    }//GEN-LAST:event_atualizarTabelaBT1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1122,6 +1234,8 @@ try {
     private javax.swing.JButton BcadastrarDieta;
     private javax.swing.JPanel PainelcadastrosDeDietas;
     private javax.swing.JTable TabelaDeDeposito;
+    private javax.swing.JButton atualizarTabelaBT;
+    private javax.swing.JButton atualizarTabelaBT1;
     private javax.swing.JToggleButton bEstoqueDeDietas1;
     private javax.swing.JToggleButton bRetirada2;
     private javax.swing.JButton bVoltar;
@@ -1139,6 +1253,7 @@ try {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1163,13 +1278,13 @@ try {
     private javax.swing.JPanel painelDoEstoqueDietas;
     private javax.swing.JPanel painelRetiradaDieta;
     private javax.swing.JTextField pesquisaDieta;
-    private javax.swing.JTextField qualFinalizada;
+    private javax.swing.JTextField qualID1;
+    private javax.swing.JTextField qualIDqualFinalizada1;
     private javax.swing.JComboBox<String> quantidadeD;
-    private javax.swing.JLabel responsavelBox;
     private javax.swing.JComboBox<String> responsavelBox1;
     private javax.swing.JButton saida;
     private javax.swing.JTable tabelaRetiradaDieta;
     private javax.swing.JComboBox<String> turnoBox;
-    private javax.swing.JTextField validadeD;
+    private javax.swing.JFormattedTextField validadeD;
     // End of variables declaration//GEN-END:variables
 }

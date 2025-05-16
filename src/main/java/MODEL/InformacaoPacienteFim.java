@@ -18,11 +18,12 @@ public class InformacaoPacienteFim {
     private String turno;
     private String qualFuncionario;  // Responsável
     private boolean status;
+    private int idDieta; // Novo campo adicionado
 
     public InformacaoPacienteFim() {
     }
 
-    public InformacaoPacienteFim(String nomedieta, String nome, String leito, String ala, String turno, String qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(String nomedieta, String nome, String leito, String ala, String turno, String qualFuncionario, boolean status, int idDieta) {
         this.nomedieta = nomedieta;
         this.nome = nome;
         this.leito = leito;
@@ -30,9 +31,10 @@ public class InformacaoPacienteFim {
         this.turno = turno;
         this.qualFuncionario = qualFuncionario;
         this.status = status;
+        this.idDieta = idDieta;
     }
 
-    public InformacaoPacienteFim(int idFinalizada, String nomedieta, String nome, String leito, String ala, String turno, String qualFuncionario, boolean status) {
+    public InformacaoPacienteFim(int idFinalizada, String nomedieta, String nome, String leito, String ala, String turno, String qualFuncionario, boolean status, int idDieta) {
         this.idFinalizada = idFinalizada;
         this.nomedieta = nomedieta;
         this.nome = nome;
@@ -41,6 +43,7 @@ public class InformacaoPacienteFim {
         this.turno = turno;
         this.qualFuncionario = qualFuncionario;
         this.status = status;
+        this.idDieta = idDieta;
     }
 
     public int getIdFinalizada() {
@@ -105,6 +108,14 @@ public class InformacaoPacienteFim {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public int getIdDieta() {
+        return idDieta;
+    }
+
+    public void setIdDieta(int idDieta) {
+        this.idDieta = idDieta;
     }
 
     

@@ -15,6 +15,7 @@ public class Paciente {
     private int idDieta; // Atualizado para referenciar a tabela Dieta
     private String ala;
     private String nomeDieta; // + getter e setter
+    
 
     // Construtor padrão
     public Paciente() {
@@ -36,8 +37,6 @@ public class Paciente {
         this.ala = ala;
         this.nomeDieta = nomeDieta;
     }
-
-   
 
     public int getIdPaciente() {
         return idPaciente;

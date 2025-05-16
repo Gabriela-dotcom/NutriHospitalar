@@ -63,35 +63,6 @@ public Deposito buscarDietaNoDeposito(String nomeDieta) {
         return null;
     }
 }
-public Deposito buscarDietaNoDeposito2(String nomeDieta) {
-    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
-    
-    try (Connection conexao = Conexao.getConexao();
-         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
-        
-        preparedStatement.setString(1, nomeDieta);  // Passa o nome da dieta como parâmetro
-        
-        // Executa a consulta e obtém os resultados
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        // Verifica se a dieta foi encontrada
-        if (resultSet.next()) {
-            // Cria um novo objeto Deposito e popula com os dados retornados
-            Deposito deposito = new Deposito();
-            deposito.setIdDieta(resultSet.getInt("idDieta"));
-            deposito.setNomedieta(resultSet.getString("nomedieta"));
-            return deposito;  // Retorna o objeto Deposito com a dieta encontrada
-        } else {
-            // Caso a dieta não seja encontrada, exibe mensagem de erro
-            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
-            return null;  // Retorna null se não encontrar a dieta
-        }
-    } catch (SQLException e) {
-        // Trata erros de banco de dados
-        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
-        return null;  // Retorna null em caso de erro
-    }
-}
 
 
 // fim do metodo nome dieta
@@ -159,18 +130,19 @@ public boolean pacienteExiste(String nomePaciente) {
 
 //-----------------------------------------------------------------------------
 //-------------------------------------------------------------------------------   
-    public Deposito buscarDietaPorNome(String nomeDieta) {
-    String query = "SELECT nomedieta FROM Deposito WHERE nomedieta = ?";
-    
+  public Deposito buscarDietaPorNome(String nomeDieta) {
+    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ? LIMIT 1";
+
     try (Connection conexao = Conexao.getConexao();
          PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
-        
+
         preparedStatement.setString(1, nomeDieta);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
             Deposito deposito = new Deposito();
-            deposito.setNomedieta(resultSet.getString("nomedieta"));
+            deposito.setIdDieta(resultSet.getInt("idDieta")); // ID da dieta garantido
+            deposito.setNomedieta(resultSet.getString("nomedieta")); // Nome da dieta garantido
             return deposito;
         } else {
             System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
@@ -181,6 +153,8 @@ public boolean pacienteExiste(String nomePaciente) {
         return null;
     }
 }
+
+
 
     
     
@@ -214,7 +188,8 @@ public boolean pacienteExiste(String nomePaciente) {
         return false;
     }
 
-    String query = "INSERT INTO Paciente (nomePaciente, leito, ala, nomedieta) VALUES (?, ?, ?, ?)";
+    // Agora incluindo o campo idDieta
+    String query = "INSERT INTO Paciente (nomePaciente, leito, ala, idDieta, nomedieta) VALUES (?, ?, ?, ?, ?)";
 
     try (Connection conexao = Conexao.getConexao();
          PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
@@ -222,7 +197,8 @@ public boolean pacienteExiste(String nomePaciente) {
         preparedStatement.setString(1, nomePaciente);
         preparedStatement.setString(2, leito);
         preparedStatement.setString(3, ala);
-        preparedStatement.setString(4, deposito.getNomedieta()); // Usa o nome da dieta
+        preparedStatement.setInt(4, deposito.getIdDieta()); // idDieta como referência correta
+        preparedStatement.setString(5, deposito.getNomedieta());
 
         int resultado = preparedStatement.executeUpdate();
         if (resultado > 0) {
@@ -238,6 +214,7 @@ public boolean pacienteExiste(String nomePaciente) {
         return false;
     }
 }
+
 
     
     
@@ -295,26 +272,27 @@ Deposito deposito = controller.buscarDietaNoDeposito(nomeDieta);
         return false;
     }
 }*/
-    public boolean atualizarPaciente(String nomePaciente, String nomeDieta, String ala, String leito) {
-    // Primeiro, buscar a dieta no depósito com base no nome
-    Deposito deposito = buscarDietaNoDeposito(nomeDieta);
+   public boolean atualizarPaciente(String nomePaciente, String nomeDieta, String ala, String leito) {
+    // Buscar a dieta no depósito com base no nome
+    Deposito deposito = buscarDietaPorNome(nomeDieta); // Alterado o método correto
 
     // Se a dieta não for encontrada, exibe uma mensagem
     if (deposito == null) {
-        System.err.println("Dieta não encontrada para o paciente.");
+        System.err.println("Dieta não encontrada: " + nomeDieta);
         return false;
     }
 
-    // Atualiza os campos: idDieta, ala, leito
-    String query = "UPDATE Paciente SET idDieta = ?, ala = ?, leito = ? WHERE nomePaciente = ?";
+    // Atualiza os campos: idDieta, nomedieta, ala, leito
+    String query = "UPDATE Paciente SET idDieta = ?, nomedieta = ?, ala = ?, leito = ? WHERE nomePaciente = ?";
 
     try (Connection connection = Conexao.getConexao();
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
         preparedStatement.setInt(1, deposito.getIdDieta());
-        preparedStatement.setString(2, ala);
-        preparedStatement.setString(3, leito);
-        preparedStatement.setString(4, nomePaciente);
+        preparedStatement.setString(2, deposito.getNomedieta()); // Nome da dieta incluído
+        preparedStatement.setString(3, ala);
+        preparedStatement.setString(4, leito);
+        preparedStatement.setString(5, nomePaciente);
 
         int atualizado = preparedStatement.executeUpdate();
         return atualizado > 0;
@@ -324,6 +302,7 @@ Deposito deposito = controller.buscarDietaNoDeposito(nomeDieta);
         return false;
     }
 }
+
 
 //---------------------------------------------------------------------------
    /* public Deposito buscarDietaNoDeposito(String nomeDieta) {

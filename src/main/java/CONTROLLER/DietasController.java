@@ -51,30 +51,51 @@ public class DietasController {
     }
 }
 */
-    //buscar dieta-----------------------------------------------
-    public Deposito buscarDietaNoDeposito(String nomeDieta) {
-    String query = "SELECT idDieta, nomedieta FROM Deposito WHERE nomedieta = ?";
-    
-    try (Connection conexao = Conexao.getConexao();
-         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
-        
-        preparedStatement.setString(1, nomeDieta);
-        ResultSet resultSet = preparedStatement.executeQuery();
+    public String obterNomeDieta(int idDieta) {
+    String query = "SELECT nomedieta FROM Deposito WHERE idDieta = ? LIMIT 1";
 
-        if (resultSet.next()) {
-            Deposito deposito = new Deposito();
-            deposito.setIdDieta(resultSet.getInt("idDieta"));
-            deposito.setNomedieta(resultSet.getString("nomedieta"));
-            return deposito;
-        } else {
-            System.err.println("Dieta não encontrada no depósito: " + nomeDieta);
-            return null;
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(query)) {
+
+        stmt.setInt(1, idDieta);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getString("nomedieta");
         }
     } catch (SQLException e) {
-        System.err.println("Erro ao buscar dieta no depósito: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return null;
+}
+
+    //buscar dieta-----------------------------------------------
+   public Deposito buscarDietaNoDeposito(String nomedieta) {
+    String query = "SELECT * FROM Deposito WHERE nomedieta = ? ORDER BY idDeposito DESC LIMIT 1"; // pega o mais recente
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement stmt = conexao.prepareStatement(query)) {
+        
+        stmt.setString(1, nomedieta);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            Deposito deposito = new Deposito();
+            deposito.setIdDieta(rs.getInt("idDieta")); // aqui é o valor que vai pra finalizada
+            deposito.setNomedieta(rs.getString("nomedieta"));
+            // adicionar outros campos se necessário
+            return deposito;
+        } else {
+            return null; // não encontrou
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
         return null;
     }
 }
+
     //-------------------------------------------------------------------------
     
 //Cadastro por dieta-------------------------------------------------------------
@@ -563,7 +584,8 @@ public boolean excluirFinalizacao(int idFinalizada) {
     return lista;
 }
 //fim deposito tudo
- 
+
+
  
 public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme) {
     int idDieta = criarDieta(tipoDieta); // Cria a dieta se necessário e obtém o ID
@@ -607,7 +629,8 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
 
 //fim controller infor deposito
  
- // cria dieta no banco de dados
+ // cria dieta no banco de dados?
+
  public int criarDieta(String tipoDieta) {
     String query = "INSERT INTO Dieta (tipoDieta) VALUES (?) RETURNING idDieta";
     
@@ -649,7 +672,7 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
             info.setTurno(rs.getString("turno"));
             info.setQualFuncionario(rs.getString("qualFuncionario"));
             info.setStatus(rs.getBoolean("status"));
-
+            info.setIdDieta(rs.getInt("idDieta")); // <-- adicionado
             lista.add(info);
         }
 
@@ -750,36 +773,36 @@ public List<Finalizada> listarFinDeposito() {
 
     return false;
 }*/
- public boolean descontarEstoque(int idDieta, int quantidade) {
-    String selectQuery = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
-    String updateQuery = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
+ 
+public boolean descontarEstoque(int idDieta, int quantidade) {
+     String consultaEstoque = "SELECT quantidade FROM Deposito WHERE idDieta = ?";
+    String atualizaEstoque = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";
+
 
     try (Connection conexao = Conexao.getConexao();
-         PreparedStatement selectStmt = conexao.prepareStatement(selectQuery)) {
+         PreparedStatement psConsulta = conexao.prepareStatement(consultaEstoque);
+         PreparedStatement psAtualiza = conexao.prepareStatement(atualizaEstoque)) {
 
-        selectStmt.setInt(1, idDieta);
-        ResultSet rs = selectStmt.executeQuery();
+        // Consulta a quantidade atual
+        psConsulta.setInt(1, idDieta);
+        ResultSet rs = psConsulta.executeQuery();
 
-        // Verifica se a dieta existe no depósito
-        if (!rs.next()) {
-            System.err.println("Erro: Dieta não encontrada no depósito. ID: " + idDieta);
-            return false;
-        }
+        if (rs.next()) {
+            int estoqueAtual = rs.getInt("quantidade");
+            if (estoqueAtual < quantidade) {
+                System.err.println("Estoque insuficiente para o ID: " + idDieta);
+                return false;
+            }
 
-        int quantidadeAtual = rs.getInt("quantidade");
+            // Atualiza o estoque
+            psAtualiza.setInt(1, quantidade);
+            psAtualiza.setInt(2, idDieta);
+            int linhasAfetadas = psAtualiza.executeUpdate();
 
-        // Verifica se tem quantidade suficiente
-        if (quantidadeAtual < quantidade) {
-            System.err.println("Erro: Estoque insuficiente. Quantidade atual: " + quantidadeAtual);
-            return false;
-        }
-
-        // Atualiza o estoque
-        try (PreparedStatement updateStmt = conexao.prepareStatement(updateQuery)) {
-            updateStmt.setInt(1, quantidade);
-            updateStmt.setInt(2, idDieta);
-            int linhasAfetadas = updateStmt.executeUpdate();
             return linhasAfetadas > 0;
+        } else {
+            System.err.println("ID da dieta não encontrado no estoque: " + idDieta);
+            return false;
         }
 
     } catch (SQLException e) {
@@ -787,6 +810,8 @@ public List<Finalizada> listarFinDeposito() {
         return false;
     }
 }
+
+
 
    /* public boolean descontarEstoque(int idDieta, int quantidade) {
         String query = "UPDATE Deposito SET quantidade = quantidade - ? WHERE idDieta = ?";

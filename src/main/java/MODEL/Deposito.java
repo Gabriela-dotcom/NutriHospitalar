@@ -21,8 +21,8 @@ public class Deposito {
     public Deposito() {
     }
 
-    public Deposito(int idDeposito, String lote, String fornecedor, String validade, int quantidade, boolean conforme, String nomedieta) {
-        this.idDeposito = idDeposito;
+    public Deposito(int idDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, String nomedieta) {
+        this.idDieta = idDieta;
         this.lote = lote;
         this.fornecedor = fornecedor;
         this.validade = validade;
@@ -30,6 +30,8 @@ public class Deposito {
         this.conforme = conforme;
         this.nomedieta = nomedieta;
     }
+
+    
 
     public Deposito(int idDeposito, int idDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, String nomedieta) {
         this.idDeposito = idDeposito;
