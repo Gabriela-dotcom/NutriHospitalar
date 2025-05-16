@@ -417,6 +417,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         atualizarDietas4 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         saida = new javax.swing.JButton();
+        usuario1 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         imgFundoPresquicap = new javax.swing.JLabel();
         dietasAt = new javax.swing.JPanel();
@@ -430,6 +431,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         listaDeDietas1 = new javax.swing.JButton();
         presquicao2 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        usuario2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaAtualizarPrescricao = new javax.swing.JTable();
         jLabel23 = new javax.swing.JLabel();
@@ -442,6 +444,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         atualizarDietas2 = new javax.swing.JButton();
         presquicao3 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        usuario3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         criarLogin = new javax.swing.JButton();
@@ -491,7 +494,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         });
         prescreverNutricionista.add(campoNomeLeitoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 251, 29));
 
-        cadastrarPresquicaoDia1.setBackground(new java.awt.Color(51, 102, 0));
+        cadastrarPresquicaoDia1.setBackground(new java.awt.Color(51, 102, 255));
         cadastrarPresquicaoDia1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         cadastrarPresquicaoDia1.setForeground(new java.awt.Color(255, 255, 255));
         cadastrarPresquicaoDia1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/registro-online.png"))); // NOI18N
@@ -514,8 +517,8 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         prescreverNutricionista.add(campoAlaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 90, 240, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("Deita:");
-        prescreverNutricionista.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, -1, -1));
+        jLabel4.setText("Dieta:");
+        prescreverNutricionista.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, -1, -1));
 
         dietaCampoP.setBackground(new java.awt.Color(238, 236, 236));
         dietaCampoP.addActionListener(new java.awt.event.ActionListener() {
@@ -525,7 +528,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         });
         prescreverNutricionista.add(dietaCampoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 240, 30));
 
-        dietaBotao.setBackground(new java.awt.Color(51, 102, 0));
+        dietaBotao.setBackground(new java.awt.Color(51, 102, 255));
         dietaBotao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         dietaBotao.setForeground(new java.awt.Color(255, 255, 255));
         dietaBotao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/paciente (1).png"))); // NOI18N
@@ -544,7 +547,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel5.setText("Tabela de seleção do(a) Nutricionista");
         prescreverNutricionista.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
 
-        tabelaPresquicao.setBackground(new java.awt.Color(51, 102, 0));
+        tabelaPresquicao.setBackground(new java.awt.Color(204, 204, 204));
         tabelaPresquicao.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 102, 102)));
         tabelaPresquicao.setForeground(new java.awt.Color(255, 255, 255));
         tabelaPresquicao.setModel(new javax.swing.table.DefaultTableModel(
@@ -575,8 +578,8 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         prescreverNutricionista.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 740, 320));
 
-        menuEsquerda3.setBackground(new java.awt.Color(51, 102, 0));
-        menuEsquerda3.setForeground(new java.awt.Color(51, 102, 0));
+        menuEsquerda3.setBackground(new java.awt.Color(51, 102, 255));
+        menuEsquerda3.setForeground(new java.awt.Color(51, 102, 255));
 
         listaDeDietas3.setFont(new java.awt.Font("Modern No. 20", 0, 14)); // NOI18N
         listaDeDietas3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/extensao-de-arquivo.png"))); // NOI18N
@@ -607,6 +610,10 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
             }
         });
 
+        usuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/imagem-do-usuario-com-fundo-preto.png"))); // NOI18N
+        usuario1.setMaximumSize(new java.awt.Dimension(128, 128));
+        usuario1.setMinimumSize(new java.awt.Dimension(128, 128));
+
         javax.swing.GroupLayout menuEsquerda3Layout = new javax.swing.GroupLayout(menuEsquerda3);
         menuEsquerda3.setLayout(menuEsquerda3Layout);
         menuEsquerda3Layout.setHorizontalGroup(
@@ -614,27 +621,37 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
             .addGroup(menuEsquerda3Layout.createSequentialGroup()
                 .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel16)
-                            .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(saida)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                        .addGroup(menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(saida))
+                            .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel16))
+                            .addGroup(menuEsquerda3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 5, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         menuEsquerda3Layout.setVerticalGroup(
             menuEsquerda3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda3Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
+                .addGap(38, 38, 38)
+                .addComponent(usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel16)
-                .addGap(56, 56, 56)
-                .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81)
                 .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 332, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
                 .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70))
         );
@@ -643,12 +660,10 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel20.setText("Ala:");
-        prescreverNutricionista.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, -1, -1));
+        prescreverNutricionista.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
+        prescreverNutricionista.add(imgFundoPresquicap, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 830, 800));
 
-        imgFundoPresquicap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
-        prescreverNutricionista.add(imgFundoPresquicap, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 860, 800));
-
-        dietasAt.setBackground(new java.awt.Color(51, 102, 0));
+        dietasAt.setBackground(new java.awt.Color(255, 255, 255));
         dietasAt.setForeground(new java.awt.Color(51, 102, 0));
         dietasAt.setMaximumSize(new java.awt.Dimension(1000, 800));
         dietasAt.setMinimumSize(new java.awt.Dimension(1000, 800));
@@ -657,11 +672,11 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel18.setText("Atualizar Prescrição");
-        dietasAt.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 369, -1));
+        dietasAt.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 230, -1));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel21.setText("Nome do Paciente:");
-        dietasAt.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 199, -1));
+        dietasAt.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 199, -1));
 
         campoPacienteA.setBackground(new java.awt.Color(238, 236, 236));
         campoPacienteA.addActionListener(new java.awt.event.ActionListener() {
@@ -669,11 +684,11 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 campoPacienteAActionPerformed(evt);
             }
         });
-        dietasAt.add(campoPacienteA, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 217, 28));
+        dietasAt.add(campoPacienteA, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 217, 28));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel19.setText("Leito");
-        dietasAt.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 199, 20));
+        jLabel19.setText("Leito:");
+        dietasAt.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 199, 30));
 
         campoAlaA.setBackground(new java.awt.Color(238, 236, 236));
         campoAlaA.addActionListener(new java.awt.event.ActionListener() {
@@ -681,9 +696,9 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 campoAlaAActionPerformed(evt);
             }
         });
-        dietasAt.add(campoAlaA, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 217, 28));
+        dietasAt.add(campoAlaA, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 217, 30));
 
-        atualizarBT.setBackground(new java.awt.Color(51, 102, 0));
+        atualizarBT.setBackground(new java.awt.Color(51, 102, 255));
         atualizarBT.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         atualizarBT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/atualizar.png"))); // NOI18N
         atualizarBT.setText("Atualizar");
@@ -692,10 +707,10 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 atualizarBTActionPerformed(evt);
             }
         });
-        dietasAt.add(atualizarBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 580, 197, 50));
+        dietasAt.add(atualizarBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 580, 197, 50));
 
-        menuEsquerda1.setBackground(new java.awt.Color(51, 102, 0));
-        menuEsquerda1.setForeground(new java.awt.Color(51, 102, 0));
+        menuEsquerda1.setBackground(new java.awt.Color(51, 102, 255));
+        menuEsquerda1.setForeground(new java.awt.Color(255, 255, 255));
         menuEsquerda1.setPreferredSize(new java.awt.Dimension(205, 770));
 
         listaDeDietas1.setFont(new java.awt.Font("Modern No. 20", 0, 14)); // NOI18N
@@ -718,39 +733,46 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel17.setText("Nutricionista");
 
+        usuario2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/imagem-do-usuario-com-fundo-preto.png"))); // NOI18N
+
         javax.swing.GroupLayout menuEsquerda1Layout = new javax.swing.GroupLayout(menuEsquerda1);
         menuEsquerda1.setLayout(menuEsquerda1Layout);
         menuEsquerda1Layout.setHorizontalGroup(
             menuEsquerda1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEsquerda1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(menuEsquerda1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuEsquerda1Layout.createSequentialGroup()
-                        .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuEsquerda1Layout.createSequentialGroup()
-                        .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(menuEsquerda1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabel17)
+                        .addContainerGap()
+                        .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuEsquerda1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(menuEsquerda1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(menuEsquerda1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuEsquerda1Layout.setVerticalGroup(
             menuEsquerda1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda1Layout.createSequentialGroup()
-                .addGap(109, 109, 109)
+                .addGap(43, 43, 43)
+                .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel17)
-                .addGap(70, 70, 70)
-                .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        dietasAt.add(menuEsquerda1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 6, 180, 770));
+        dietasAt.add(menuEsquerda1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 180, 780));
 
-        tabelaAtualizarPrescricao.setBackground(new java.awt.Color(51, 102, 0));
+        tabelaAtualizarPrescricao.setBackground(new java.awt.Color(204, 204, 204));
         tabelaAtualizarPrescricao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -780,8 +802,8 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         dietasAt.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 763, 263));
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel23.setText("Ala");
-        dietasAt.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 199, -1));
+        jLabel23.setText("Ala:");
+        dietasAt.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 199, 30));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel22.setText("Dieta:");
@@ -793,7 +815,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 campoLeitoAActionPerformed(evt);
             }
         });
-        dietasAt.add(campoLeitoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 217, 28));
+        dietasAt.add(campoLeitoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 210, 217, 28));
 
         campoDietaA2.setBackground(new java.awt.Color(238, 236, 236));
         campoDietaA2.addActionListener(new java.awt.event.ActionListener() {
@@ -803,17 +825,17 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         });
         dietasAt.add(campoDietaA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 217, 28));
 
-        imgAtualDiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
-        dietasAt.add(imgAtualDiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, -4, 840, 800));
+        imgAtualDiet.setBackground(new java.awt.Color(255, 255, 255));
+        dietasAt.add(imgAtualDiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, -4, 820, 800));
 
-        tabelaPresStatus.setBackground(new java.awt.Color(51, 102, 0));
+        tabelaPresStatus.setBackground(new java.awt.Color(255, 255, 255));
         tabelaPresStatus.setMaximumSize(new java.awt.Dimension(1000, 800));
         tabelaPresStatus.setMinimumSize(new java.awt.Dimension(1000, 800));
         tabelaPresStatus.setPreferredSize(new java.awt.Dimension(1000, 800));
         tabelaPresStatus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        menuEsquerda2.setBackground(new java.awt.Color(51, 102, 0));
-        menuEsquerda2.setForeground(new java.awt.Color(51, 102, 0));
+        menuEsquerda2.setBackground(new java.awt.Color(51, 102, 255));
+        menuEsquerda2.setForeground(new java.awt.Color(51, 102, 255));
 
         atualizarDietas2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/atualizar.png"))); // NOI18N
         atualizarDietas2.setText("Atualizar Dietas");
@@ -834,6 +856,8 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel15.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel15.setText("Nutricionista");
 
+        usuario3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/imagem-do-usuario-com-fundo-preto.png"))); // NOI18N
+
         javax.swing.GroupLayout menuEsquerda2Layout = new javax.swing.GroupLayout(menuEsquerda2);
         menuEsquerda2.setLayout(menuEsquerda2Layout);
         menuEsquerda2Layout.setHorizontalGroup(
@@ -843,24 +867,30 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 .addGroup(menuEsquerda2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(presquicao3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(atualizarDietas2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(usuario3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuEsquerda2Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel15)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         menuEsquerda2Layout.setVerticalGroup(
             menuEsquerda2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda2Layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(usuario3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel15)
-                .addGap(36, 36, 36)
-                .addComponent(presquicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(atualizarDietas2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(232, 232, 232))
+                .addGap(24, 24, 24)
+                .addComponent(presquicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83)
+                .addComponent(atualizarDietas2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(316, 316, 316))
         );
 
-        tabelaPresStatus.add(menuEsquerda2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, -1, -1));
+        tabelaPresStatus.add(menuEsquerda2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 180, 800));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel7.setText("Dieta Entregues Do Dia");
@@ -868,7 +898,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Pesquisar:");
-        tabelaPresStatus.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
+        tabelaPresStatus.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
 
         criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
         criarLogin.setText("Presquisar Dieta");
@@ -877,14 +907,14 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 criarLoginActionPerformed(evt);
             }
         });
-        tabelaPresStatus.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 140, 20));
+        tabelaPresStatus.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 140, 20));
 
         pesquisarPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesquisarPacienteActionPerformed(evt);
             }
         });
-        tabelaPresStatus.add(pesquisarPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 433, -1));
+        tabelaPresStatus.add(pesquisarPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 433, -1));
 
         pdfTudo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         pdfTudo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pdf-file-format_15266347.png"))); // NOI18N
@@ -895,9 +925,9 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 pdfTudoActionPerformed(evt);
             }
         });
-        tabelaPresStatus.add(pdfTudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 670, 138, 42));
+        tabelaPresStatus.add(pdfTudo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 620, 138, 42));
 
-        tabelaNutriTudo1.setBackground(new java.awt.Color(236, 231, 231));
+        tabelaNutriTudo1.setBackground(new java.awt.Color(204, 204, 204));
         tabelaNutriTudo1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -924,11 +954,12 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         });
         jScrollPane3.setViewportView(tabelaNutriTudo1);
 
-        tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 719, 324));
-        tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 840, 800));
+        tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 719, 324));
 
-        imgFundoPresquicap1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/NutriHospitalar.png"))); // NOI18N
-        tabelaPresStatus.add(imgFundoPresquicap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 860, 800));
+        imgAtualDiet1.setMaximumSize(new java.awt.Dimension(128, 128));
+        imgAtualDiet1.setMinimumSize(new java.awt.Dimension(128, 128));
+        tabelaPresStatus.add(imgAtualDiet1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 830, 820));
+        tabelaPresStatus.add(imgFundoPresquicap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 860, 800));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1471,5 +1502,8 @@ if (atualizado) {
     private javax.swing.JTable tabelaNutriTudo1;
     private javax.swing.JPanel tabelaPresStatus;
     private javax.swing.JTable tabelaPresquicao;
+    private javax.swing.JLabel usuario1;
+    private javax.swing.JLabel usuario2;
+    private javax.swing.JLabel usuario3;
     // End of variables declaration//GEN-END:variables
 }
