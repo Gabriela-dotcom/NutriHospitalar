@@ -191,29 +191,31 @@ private void atualizarTableActionPerformed() {
         imagemFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximizedBounds(new java.awt.Rectangle(1000, 700, 700, 700));
-        setMaximumSize(new java.awt.Dimension(1000, 700));
-        setMinimumSize(new java.awt.Dimension(1000, 700));
+        setMaximizedBounds(new java.awt.Rectangle(2147483647, 2147483647, 2147483647, 2147483647));
+        setMaximumSize(new java.awt.Dimension(0, 0));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
         setResizable(false);
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(1000, 700));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1000, 700));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 700));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1920, 1080));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1920, 1080));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1920, 1080));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Presquições Infos");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 160, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 10, 270, 30));
 
-        topoLogo.setBackground(new java.awt.Color(51, 102, 0));
+        topoLogo.setBackground(new java.awt.Color(0, 102, 255));
         topoLogo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 topoLogoActionPerformed(evt);
             }
         });
-        jPanel1.add(topoLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-9, 0, 1000, 40));
+        jPanel1.add(topoLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-9, 0, 1930, 40));
 
+        informacaoPacienteNutri.setBackground(new java.awt.Color(204, 204, 204));
         informacaoPacienteNutri.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -240,9 +242,9 @@ private void atualizarTableActionPerformed() {
         });
         tabelaProduto.setViewportView(informacaoPacienteNutri);
 
-        jPanel1.add(tabelaProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 970, 440));
+        jPanel1.add(tabelaProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 1440, 440));
 
-        Fechar1.setBackground(new java.awt.Color(0, 102, 0));
+        Fechar1.setBackground(new java.awt.Color(0, 102, 255));
         Fechar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Fechar1.setForeground(new java.awt.Color(255, 255, 255));
         Fechar1.setText("FECHAR");
@@ -251,33 +253,43 @@ private void atualizarTableActionPerformed() {
                 Fechar1ActionPerformed(evt);
             }
         });
-        jPanel1.add(Fechar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 140, 50));
+        jPanel1.add(Fechar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 640, 140, 50));
 
+        pdff.setForeground(new java.awt.Color(204, 0, 0));
+        pdff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/pdf-file-format_15266347.png"))); // NOI18N
         pdff.setText(" Baixar PDF");
         pdff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pdffActionPerformed(evt);
             }
         });
-        jPanel1.add(pdff, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 550, 170, 40));
+        jPanel1.add(pdff, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 620, 170, 60));
 
         atualizarTabelaBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarTabelaBTActionPerformed(evt);
             }
         });
-        jPanel1.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 510, 40, 30));
+        jPanel1.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 510, 40, 30));
+
+        imagemFundo.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.add(imagemFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1000, 660));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

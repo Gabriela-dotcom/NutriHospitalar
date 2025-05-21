@@ -9,6 +9,10 @@ import MODEL.Deposito;
 import MODEL.FinalizadaDeposito;
 import MODEL.Finalizada;
 import MODEL.InformacaoPacienteFim;
+import com.itextpdf.awt.geom.Dimension;
+import java.awt.BorderLayout;
+
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -16,6 +20,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -50,7 +56,7 @@ setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
      PainelcadastrosDeDietas.setVisible(false);
         painelRetiradaDieta.setVisible(true);
         painelDoEstoqueDietas.setVisible(false);
-        
+         
     }
    // Método para fechar a tela
     public void fecharTela() {
@@ -83,7 +89,7 @@ setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
     }
     
-    
+ 
     
   
 
@@ -332,19 +338,17 @@ public void listarFinalizadaDeposito() {
         jLabel6 = new javax.swing.JLabel();
         bVoltar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        criarLogin = new javax.swing.JButton();
         pesquisaDieta = new javax.swing.JTextField();
         imgFundo2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 800));
-        setMinimumSize(new java.awt.Dimension(1000, 800));
-        setPreferredSize(new java.awt.Dimension(1000, 800));
+        setMinimumSize(new java.awt.Dimension(1920, 1080));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         PainelcadastrosDeDietas.setBackground(new java.awt.Color(255, 255, 255));
-        PainelcadastrosDeDietas.setMaximumSize(new java.awt.Dimension(1000, 800));
-        PainelcadastrosDeDietas.setMinimumSize(new java.awt.Dimension(1000, 800));
-        PainelcadastrosDeDietas.setPreferredSize(new java.awt.Dimension(1000, 800));
+        PainelcadastrosDeDietas.setMaximumSize(new java.awt.Dimension(1920, 1080));
+        PainelcadastrosDeDietas.setMinimumSize(new java.awt.Dimension(1920, 1080));
+        PainelcadastrosDeDietas.setPreferredSize(new java.awt.Dimension(1920, 1080));
         PainelcadastrosDeDietas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         idCha1.addActionListener(new java.awt.event.ActionListener() {
@@ -511,10 +515,12 @@ public void listarFinalizadaDeposito() {
         PainelcadastrosDeDietas.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 6, 820, 792));
 
         painelRetiradaDieta.setBackground(new java.awt.Color(255, 255, 255));
-        painelRetiradaDieta.setMaximumSize(new java.awt.Dimension(1000, 800));
-        painelRetiradaDieta.setMinimumSize(new java.awt.Dimension(1000, 800));
+        painelRetiradaDieta.setMaximumSize(new java.awt.Dimension(1920, 1080));
+        painelRetiradaDieta.setMinimumSize(new java.awt.Dimension(1920, 1080));
+        painelRetiradaDieta.setPreferredSize(new java.awt.Dimension(1920, 1080));
         painelRetiradaDieta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tabelaRetiradaDieta.setBackground(new java.awt.Color(204, 204, 204));
         tabelaRetiradaDieta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -699,9 +705,9 @@ public void listarFinalizadaDeposito() {
         painelRetiradaDieta.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 281, -1));
 
         painelDoEstoqueDietas.setBackground(new java.awt.Color(255, 255, 255));
-        painelDoEstoqueDietas.setMaximumSize(new java.awt.Dimension(1000, 800));
-        painelDoEstoqueDietas.setMinimumSize(new java.awt.Dimension(1000, 800));
-        painelDoEstoqueDietas.setPreferredSize(new java.awt.Dimension(1000, 800));
+        painelDoEstoqueDietas.setMaximumSize(new java.awt.Dimension(1920, 1080));
+        painelDoEstoqueDietas.setMinimumSize(new java.awt.Dimension(1920, 1080));
+        painelDoEstoqueDietas.setPreferredSize(new java.awt.Dimension(1920, 1080));
         painelDoEstoqueDietas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         atualizarTabelaBT.addActionListener(new java.awt.event.ActionListener() {
@@ -711,6 +717,7 @@ public void listarFinalizadaDeposito() {
         });
         painelDoEstoqueDietas.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, 40, 30));
 
+        TabelaDeDeposito.setBackground(new java.awt.Color(204, 204, 204));
         TabelaDeDeposito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -739,7 +746,7 @@ public void listarFinalizadaDeposito() {
         });
         jScrollPane1.setViewportView(TabelaDeDeposito);
 
-        painelDoEstoqueDietas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 980, 476));
+        painelDoEstoqueDietas.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 980, 476));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel6.setText("ESTOQUE DE DIETAS");
@@ -755,20 +762,11 @@ public void listarFinalizadaDeposito() {
                 bVoltarActionPerformed(evt);
             }
         });
-        painelDoEstoqueDietas.add(bVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 600, 246, 59));
+        painelDoEstoqueDietas.add(bVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 750, 246, 59));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Pesquisar:");
         painelDoEstoqueDietas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 55, -1, 30));
-
-        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
-        criarLogin.setText("Presquisar Dieta");
-        criarLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                criarLoginActionPerformed(evt);
-            }
-        });
-        painelDoEstoqueDietas.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 140, 20));
 
         pesquisaDieta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -784,12 +782,12 @@ public void listarFinalizadaDeposito() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1035, Short.MAX_VALUE)
+            .addGap(0, 1940, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(13, 13, 13)
                     .addComponent(PainelcadastrosDeDietas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(22, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(14, 14, 14)
@@ -803,7 +801,7 @@ public void listarFinalizadaDeposito() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 811, Short.MAX_VALUE)
+            .addGap(0, 1091, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(5, 5, 5)
@@ -1141,14 +1139,6 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
         // TODO add your handling code here:
     }//GEN-LAST:event_pesquisaDietaActionPerformed
 
-    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
-        // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso();
-        aviso.setVisible(true);
-        //login.setVisible(false);
-        dispose();
-    }//GEN-LAST:event_criarLoginActionPerformed
-
     private void saidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saidaActionPerformed
         // TODO add your handling code here:
         loginTela login = new loginTela();
@@ -1241,7 +1231,6 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     private javax.swing.JButton bVoltar;
     private javax.swing.JButton botaofinal;
     private javax.swing.JCheckBox conformeD;
-    private javax.swing.JButton criarLogin;
     private javax.swing.JCheckBox finalizarSim1;
     private javax.swing.JComboBox<String> fornecedorD;
     private javax.swing.JTextField idCha1;
