@@ -584,9 +584,42 @@ public boolean excluirFinalizacao(int idFinalizada) {
     return lista;
 }
 //fim deposito tudo
+//listar dieta por nome no deposito pesquisa
+ public List<Deposito> listarDepositoPorNome(String nomeDieta) {
+    String query = "SELECT idDeposito, idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta " +
+                   "FROM Deposito WHERE LOWER(nomedieta) LIKE LOWER(?)"; // Ignora maiúsculas/minúsculas
+    List<Deposito> lista = new ArrayList<>();
 
+    try (Connection connection = Conexao.getConexao();
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
- 
+        preparedStatement.setString(1, "%" + nomeDieta + "%"); // Permite buscar parte do nome
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            Deposito item = new Deposito();
+            item.setIdDeposito(resultSet.getInt("idDeposito"));
+            item.setIdDieta(resultSet.getInt("idDieta"));
+            item.setLote(resultSet.getString("lote"));
+            item.setFornecedor(resultSet.getString("fornecedor"));
+            item.setValidade(resultSet.getString("validade"));
+            item.setQuantidade(resultSet.getInt("quantidade"));
+            item.setConforme(resultSet.getBoolean("conforme"));
+            item.setNomedieta(resultSet.getString("nomedieta"));
+            lista.add(item);
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao pesquisar dados na tabela Deposito! " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return lista;
+}
+
+//--------------------------------------------
+
+ /*
 public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme) {
     int idDieta = criarDieta(tipoDieta); // Cria a dieta se necessário e obtém o ID
 
@@ -625,6 +658,184 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
         return false;
     }
 }
+*/
+ 
+public int criarOuBuscarDieta(String tipoDieta, boolean usarDietaExistente) {
+    if (usarDietaExistente) {
+        // Tenta buscar a dieta existente
+        String queryBusca = "SELECT idDieta FROM Dieta WHERE tipoDieta = ?";
+
+        try (Connection connection = Conexao.getConexao();
+             PreparedStatement stmt = connection.prepareStatement(queryBusca)) {
+
+            stmt.setString(1, tipoDieta);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("idDieta");
+            } else {
+                System.err.println("Dieta com nome '" + tipoDieta + "' não encontrada.");
+                return -1;
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar dieta existente: " + e.getMessage());
+            return -1;
+        }
+
+    } else {
+        // Tenta criar uma nova dieta (mesmo que já exista, pode ativar a trigger)
+        String queryCriar = "INSERT INTO Dieta (tipoDieta) VALUES (?) RETURNING idDieta";
+
+        try (Connection connection = Conexao.getConexao();
+             PreparedStatement stmt = connection.prepareStatement(queryCriar)) {
+
+            stmt.setString(1, tipoDieta);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new SQLException("Erro ao criar dieta: ID não retornado.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao criar nova dieta: " + e.getMessage());
+            return -1;
+        }
+    }
+}
+public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, boolean adicionarMais) {
+    // Usa a checkbox: se adicionarMais = true, tenta buscar dieta existente; senão, cria nova
+    int idDieta = criarOuBuscarDieta(tipoDieta, adicionarMais);
+
+    if (idDieta == -1) {
+        System.err.println("Erro ao obter ou criar id da dieta.");
+        return false;
+    }
+
+    try (Connection connection = Conexao.getConexao()) {
+
+        // Verifica se já existe um depósito com os mesmos dados
+        String selectQuery = """
+            SELECT idDeposito, quantidade FROM Deposito 
+            WHERE idDieta = ? AND lote = ? AND fornecedor = ? AND validade = ?
+        """;
+
+        try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
+            selectStmt.setInt(1, idDieta);
+            selectStmt.setString(2, lote);
+            selectStmt.setString(3, fornecedor);
+            selectStmt.setString(4, validade);
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // Já existe: atualiza a quantidade
+                int idDeposito = rs.getInt("idDeposito");
+                int quantidadeExistente = rs.getInt("quantidade");
+
+                int novaQuantidade = quantidadeExistente + quantidade;
+
+                String updateQuery = "UPDATE Deposito SET quantidade = ? WHERE idDeposito = ?";
+                try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+                    updateStmt.setInt(1, novaQuantidade);
+                    updateStmt.setInt(2, idDeposito);
+                    updateStmt.executeUpdate();
+                    return true;
+                }
+            } else {
+                // Não existe: insere novo
+                String insertQuery = """
+                    INSERT INTO Deposito (idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+                try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+                    insertStmt.setInt(1, idDieta);
+                    insertStmt.setString(2, lote);
+                    insertStmt.setString(3, fornecedor);
+                    insertStmt.setString(4, validade);
+                    insertStmt.setInt(5, quantidade);
+                    insertStmt.setBoolean(6, conforme);
+                    insertStmt.setString(7, tipoDieta);
+                    insertStmt.executeUpdate();
+                    return true;
+                }
+            }
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao adicionar no depósito! " + e.getMessage());
+        return false;
+    }
+}
+
+
+/*
+public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme) {
+    int idDieta = buscarIdDietaPorNome(tipoDieta); // ou criarDieta(tipoDieta) se for nova
+
+    if (idDieta == -1) {
+        System.err.println("Erro ao obter id da dieta.");
+        return false;
+    }
+
+    try (Connection connection = Conexao.getConexao()) {
+
+        // Verifica se já existe um depósito com os mesmos dados
+        String selectQuery = """
+            SELECT idDeposito, quantidade FROM Deposito 
+            WHERE idDieta = ? AND lote = ? AND fornecedor = ? AND validade = ?
+        """;
+
+        try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
+            selectStmt.setInt(1, idDieta);
+            selectStmt.setString(2, lote);
+            selectStmt.setString(3, fornecedor);
+            selectStmt.setString(4, validade);
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // Já existe: atualiza a quantidade
+                int idDeposito = rs.getInt("idDeposito");
+                int quantidadeExistente = rs.getInt("quantidade");
+
+                int novaQuantidade = quantidadeExistente + quantidade;
+
+                String updateQuery = "UPDATE Deposito SET quantidade = ? WHERE idDeposito = ?";
+                try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+                    updateStmt.setInt(1, novaQuantidade);
+                    updateStmt.setInt(2, idDeposito);
+                    updateStmt.executeUpdate();
+                    return true;
+                }
+            } else {
+                // Não existe: insere novo
+                String insertQuery = """
+                    INSERT INTO Deposito (idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+                try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+                    insertStmt.setInt(1, idDieta);
+                    insertStmt.setString(2, lote);
+                    insertStmt.setString(3, fornecedor);
+                    insertStmt.setString(4, validade);
+                    insertStmt.setInt(5, quantidade);
+                    insertStmt.setBoolean(6, conforme);
+                    insertStmt.setString(7, tipoDieta);
+                    insertStmt.executeUpdate();
+                    return true;
+                }
+            }
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao adicionar no depósito! " + e.getMessage());
+        return false;
+    }
+}
+*/
+
 
 
 //fim controller infor deposito

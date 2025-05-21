@@ -30,10 +30,13 @@ import java.util.Date;
 
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,6 +51,7 @@ public class TelaEstoque extends javax.swing.JFrame {
      */
     public TelaEstoque() {
         initComponents();
+        configurarPesquisaDieta();
         // Dentro do construtor da tela de depósito
 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -56,6 +60,7 @@ setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
      PainelcadastrosDeDietas.setVisible(false);
         painelRetiradaDieta.setVisible(true);
         painelDoEstoqueDietas.setVisible(false);
+        
          
     }
    // Método para fechar a tela
@@ -205,7 +210,7 @@ public void listarDepositoTudo() {
         
         // Limpar a tabela antes de adicionar novos dados
         modeloTabela.setRowCount(0); 
-        
+          TabelaDeDeposito.getColumnModel().getColumn(4).setCellRenderer(new ValidadeCellRenderer());
         // Adicionar cada linha de dados à tabela
         for (Deposito linha : dadosInformacao) { 
             modeloTabela.addRow(new Object[] {
@@ -219,7 +224,8 @@ public void listarDepositoTudo() {
                 linha.getNomedieta()
             }); 
         } // **Aqui o try é corretamente fechado**
-        TabelaDeDeposito.getColumnModel().getColumn(4).setCellRenderer(new ValidadeCellRenderer());
+      
+
     } catch (Exception e) {  // **Agora o catch está no lugar correto**
         e.printStackTrace(); 
         JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela: " + e.getMessage()); 
@@ -228,7 +234,64 @@ public void listarDepositoTudo() {
 
 
 //fim listagem deposito
+private void configurarPesquisaDieta() {
+    pesquisaDieta.getDocument().addDocumentListener(new DocumentListener() {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            pesquisar();
+        }
 
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            pesquisar();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            pesquisar();
+        }
+
+        private void pesquisar() {
+            String nomeDieta = pesquisaDieta.getText().trim();
+            listarDepositoPorNome(nomeDieta);
+        }
+    });
+}
+
+
+//Metodo para pesquisa no deposito
+public void listarDepositoPorNome(String nomeDieta) {
+    try { 
+        DietasController dietasController = new DietasController(); 
+        List<Deposito> dadosFiltrados = dietasController.listarDepositoPorNome(nomeDieta);
+
+        DefaultTableModel modeloTabela = (DefaultTableModel) TabelaDeDeposito.getModel(); 
+        
+        // Limpa os dados atuais antes de adicionar os filtrados
+        modeloTabela.setRowCount(0);
+
+        for (Deposito linha : dadosFiltrados) { 
+            modeloTabela.addRow(new Object[] {
+                linha.getIdDeposito(),
+                linha.getIdDieta(),
+                linha.getLote(),
+                linha.getFornecedor(),
+                linha.getValidade(),
+                linha.getQuantidade(),
+                linha.isConforme() ? "Sim" : "Não",
+                linha.getNomedieta()
+            });
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace(); 
+        JOptionPane.showMessageDialog(null, "Erro ao pesquisar na tabela: " + e.getMessage()); 
+    } 
+}
+//atualiza conforme o usuário digita no deposito
+
+
+//-------------------------------------------------------------------------------
 //meetodo de lisatagem para Tabela de retirada deposito
 public void listarFinalizadaDeposito() { 
     try { 
@@ -295,20 +358,24 @@ public void listarFinalizadaDeposito() {
         jLabel9 = new javax.swing.JLabel();
         jlabel2 = new javax.swing.JLabel();
         loteD = new javax.swing.JTextField();
-        BcadastrarDieta = new javax.swing.JButton();
+        atData = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         menuEstoquista2 = new javax.swing.JPanel();
         bRetirada2 = new javax.swing.JToggleButton();
-        jPanel5 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         infoDeposito1 = new javax.swing.JToggleButton();
+        usuario1 = new javax.swing.JLabel();
         fornecedorD = new javax.swing.JComboBox<>();
         conformeD = new javax.swing.JCheckBox();
         quantidadeD = new javax.swing.JComboBox<>();
         validadeD = new javax.swing.JFormattedTextField();
-        imgFundo = new javax.swing.JLabel();
+        adicionarMais = new javax.swing.JCheckBox();
+        jLabel16 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TabelaDeDeposito1 = new javax.swing.JTable();
+        BcadastrarDieta1 = new javax.swing.JButton();
         painelRetiradaDieta = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tabelaRetiradaDieta = new javax.swing.JTable();
@@ -317,10 +384,10 @@ public void listarFinalizadaDeposito() {
         botaofinal = new javax.swing.JButton();
         menuEstoquista1 = new javax.swing.JPanel();
         bEstoqueDeDietas1 = new javax.swing.JToggleButton();
-        jPanel4 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         infoDeposito = new javax.swing.JToggleButton();
         saida = new javax.swing.JButton();
+        usuario2 = new javax.swing.JLabel();
         qualIDqualFinalizada1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         finalizarSim1 = new javax.swing.JCheckBox();
@@ -339,6 +406,7 @@ public void listarFinalizadaDeposito() {
         bVoltar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         pesquisaDieta = new javax.swing.JTextField();
+        botaoPD = new javax.swing.JButton();
         imgFundo2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -395,24 +463,24 @@ public void listarFinalizadaDeposito() {
         });
         PainelcadastrosDeDietas.add(loteD, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 291, 251, 29));
 
-        BcadastrarDieta.setBackground(new java.awt.Color(0, 102, 255));
-        BcadastrarDieta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        BcadastrarDieta.setForeground(new java.awt.Color(255, 255, 255));
-        BcadastrarDieta.setText("CADASTRAR DIETA");
-        BcadastrarDieta.addActionListener(new java.awt.event.ActionListener() {
+        atData.setBackground(new java.awt.Color(0, 102, 255));
+        atData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        atData.setForeground(new java.awt.Color(255, 255, 255));
+        atData.setText("Atualizar Dieta");
+        atData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BcadastrarDietaActionPerformed(evt);
+                atDataActionPerformed(evt);
             }
         });
-        PainelcadastrosDeDietas.add(BcadastrarDieta, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 700, 200, 39));
+        PainelcadastrosDeDietas.add(atData, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 700, 200, 39));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setText("Cadastro De Dietas Interais");
         PainelcadastrosDeDietas.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 72, 340, 40));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Conforme:");
-        PainelcadastrosDeDietas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 581, 102, -1));
+        jLabel1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel1.setText("Adicionar mais da mesma Dieta.");
+        PainelcadastrosDeDietas.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 180, 290, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Quantidade:");
@@ -432,19 +500,6 @@ public void listarFinalizadaDeposito() {
             }
         });
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 135, Short.MAX_VALUE)
-        );
-
         jLabel15.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel15.setText("ESTOQUISTA");
 
@@ -457,6 +512,8 @@ public void listarFinalizadaDeposito() {
             }
         });
 
+        usuario1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/imagem-do-usuario-com-fundo-preto.png"))); // NOI18N
+
         javax.swing.GroupLayout menuEstoquista2Layout = new javax.swing.GroupLayout(menuEstoquista2);
         menuEstoquista2.setLayout(menuEstoquista2Layout);
         menuEstoquista2Layout.setHorizontalGroup(
@@ -466,14 +523,14 @@ public void listarFinalizadaDeposito() {
                     .addGroup(menuEstoquista2Layout.createSequentialGroup()
                         .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(menuEstoquista2Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel15)))
-                            .addGroup(menuEstoquista2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(bRetirada2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(bRetirada2))
+                            .addGroup(menuEstoquista2Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel15))))
+                        .addGap(0, 2, Short.MAX_VALUE))
                     .addGroup(menuEstoquista2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(infoDeposito1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -482,18 +539,18 @@ public void listarFinalizadaDeposito() {
         menuEstoquista2Layout.setVerticalGroup(
             menuEstoquista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEstoquista2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(25, 25, 25)
+                .addComponent(usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15)
                 .addGap(53, 53, 53)
                 .addComponent(bRetirada2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(infoDeposito1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(355, Short.MAX_VALUE))
+                .addContainerGap(619, Short.MAX_VALUE))
         );
 
-        PainelcadastrosDeDietas.add(menuEstoquista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 180, 806));
+        PainelcadastrosDeDietas.add(menuEstoquista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 180, 1070));
 
         fornecedorD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CAvisks", "Chavinsks", "Babinsks", "Stravinsks", "Chololisks", " " }));
         PainelcadastrosDeDietas.add(fornecedorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 250, 30));
@@ -512,7 +569,63 @@ public void listarFinalizadaDeposito() {
         }
         validadeD.setToolTipText("");
         PainelcadastrosDeDietas.add(validadeD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 250, 30));
-        PainelcadastrosDeDietas.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 6, 820, 792));
+
+        adicionarMais.setFont(new java.awt.Font("Consolas", 3, 18)); // NOI18N
+        adicionarMais.setForeground(new java.awt.Color(34, 23, 23));
+        adicionarMais.setText("Adicionar Mais");
+        adicionarMais.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        adicionarMais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adicionarMaisActionPerformed(evt);
+            }
+        });
+        PainelcadastrosDeDietas.add(adicionarMais, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 210, 270, 40));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel16.setText("Conforme:");
+        PainelcadastrosDeDietas.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 581, 102, -1));
+
+        TabelaDeDeposito1.setBackground(new java.awt.Color(204, 204, 204));
+        TabelaDeDeposito1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome Dieta", "Lote", "Fornecedor", "Validade", "Quantidade", "Conforme"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        TabelaDeDeposito1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaDeDeposito1tabelaSelecaoClick(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TabelaDeDeposito1);
+
+        PainelcadastrosDeDietas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 890, 230));
+
+        BcadastrarDieta1.setBackground(new java.awt.Color(0, 102, 255));
+        BcadastrarDieta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BcadastrarDieta1.setForeground(new java.awt.Color(255, 255, 255));
+        BcadastrarDieta1.setText("CADASTRAR DIETA");
+        BcadastrarDieta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BcadastrarDieta1ActionPerformed(evt);
+            }
+        });
+        PainelcadastrosDeDietas.add(BcadastrarDieta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 700, 200, 39));
 
         painelRetiradaDieta.setBackground(new java.awt.Color(255, 255, 255));
         painelRetiradaDieta.setMaximumSize(new java.awt.Dimension(1920, 1080));
@@ -580,19 +693,6 @@ public void listarFinalizadaDeposito() {
             }
         });
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 135, Short.MAX_VALUE)
-        );
-
         jLabel14.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel14.setText("ESTOQUISTA");
 
@@ -614,15 +714,15 @@ public void listarFinalizadaDeposito() {
             }
         });
 
+        usuario2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/imagem-do-usuario-com-fundo-preto.png"))); // NOI18N
+
         javax.swing.GroupLayout menuEstoquista1Layout = new javax.swing.GroupLayout(menuEstoquista1);
         menuEstoquista1.setLayout(menuEstoquista1Layout);
         menuEstoquista1Layout.setHorizontalGroup(
             menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
+                .addComponent(jLabel14)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -630,28 +730,32 @@ public void listarFinalizadaDeposito() {
                     .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(infoDeposito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEstoquista1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(menuEstoquista1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addComponent(saida)
-                .addGap(47, 47, 47))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(menuEstoquista1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuEstoquista1Layout.setVerticalGroup(
             menuEstoquista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addContainerGap()
+                .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel14)
                 .addGap(105, 105, 105)
                 .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
                 .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 521, Short.MAX_VALUE)
                 .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
+                .addGap(26, 26, 26))
         );
 
-        painelRetiradaDieta.add(menuEstoquista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 800));
+        painelRetiradaDieta.add(menuEstoquista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1080));
 
         qualIDqualFinalizada1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -693,6 +797,7 @@ public void listarFinalizadaDeposito() {
         });
         painelRetiradaDieta.add(qualID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 400, 130, 30));
 
+        atualizarTabelaBT1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/carregando.png"))); // NOI18N
         atualizarTabelaBT1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarTabelaBT1ActionPerformed(evt);
@@ -710,12 +815,13 @@ public void listarFinalizadaDeposito() {
         painelDoEstoqueDietas.setPreferredSize(new java.awt.Dimension(1920, 1080));
         painelDoEstoqueDietas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        atualizarTabelaBT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/carregando.png"))); // NOI18N
         atualizarTabelaBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarTabelaBTActionPerformed(evt);
             }
         });
-        painelDoEstoqueDietas.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 570, 40, 30));
+        painelDoEstoqueDietas.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 580, 40, 30));
 
         TabelaDeDeposito.setBackground(new java.awt.Color(204, 204, 204));
         TabelaDeDeposito.setModel(new javax.swing.table.DefaultTableModel(
@@ -774,6 +880,16 @@ public void listarFinalizadaDeposito() {
             }
         });
         painelDoEstoqueDietas.add(pesquisaDieta, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 415, -1));
+
+        botaoPD.setForeground(new java.awt.Color(255, 255, 255));
+        botaoPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/magnifier (1).png"))); // NOI18N
+        botaoPD.setBorder(null);
+        botaoPD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPDActionPerformed(evt);
+            }
+        });
+        painelDoEstoqueDietas.add(botaoPD, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 50, 50, 40));
 
         imgFundo2.setBackground(new java.awt.Color(255, 255, 255));
         painelDoEstoqueDietas.add(imgFundo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 792));
@@ -838,8 +954,9 @@ public void listarFinalizadaDeposito() {
         // TODO add your handling code here:
     }//GEN-LAST:event_loteDActionPerformed
 
-    private void BcadastrarDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcadastrarDietaActionPerformed
+    private void atDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atDataActionPerformed
 // Capturando os dados dos campos de entrada
+/*
 if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
     JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
 } else {
@@ -874,9 +991,42 @@ boolean conforme = conformeD.isSelected();
         System.err.print("Erro ao adicionar ao depósito: " + e);
     }
 }
+*/
+//Novo metodo para ser possível adicionar mais ietas
+
+// Suponha que essa checkbox já esteja na sua interface
+if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
+    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
+} else {
+    String tipoDieta = nomeDaDietaD.getText();
+    String lote = loteD.getText();
+    String fornecedor = fornecedorD.getSelectedItem().toString();
+    String validade = validadeD.getText();
+    int quantidade = Integer.parseInt(quantidadeD.getSelectedItem().toString());
+    boolean conforme = conformeD.isSelected();
+    boolean usarDietaExistente = adicionarMais.isSelected(); // <-- aqui usamos sua checkbox
+
+    try {
+        DietasController adicionarDeposito = new DietasController();
+        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme, usarDietaExistente);
+
+        if (adicionou) {
+            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
+            listarFinalizadaDeposito(); // Atualiza a tabela
+            limparCampos();             // Limpa os campos
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
+            listarFinalizadaDeposito();
+            limparCampos();
+        }
+
+    } catch (Exception e) {
+        System.err.print("Erro ao adicionar ao depósito: " + e);
+    }
+}
 
 
-    }//GEN-LAST:event_BcadastrarDietaActionPerformed
+    }//GEN-LAST:event_atDataActionPerformed
 
     private void TabelaDeDepositotabelaSelecaoClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaDeDepositotabelaSelecaoClick
        
@@ -1112,7 +1262,7 @@ try {
 
     gerarPDF(); // Gerar PDF
 
-    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\NetBeansProjects\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Prescrição Nutricional.pdf";
+    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
     File arquivoPdf = new File(caminhoDoPdf);
 
     if (arquivoPdf.exists() && Desktop.isDesktopSupported()) {
@@ -1136,6 +1286,27 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     }//GEN-LAST:event_botaofinalActionPerformed
 
     private void pesquisaDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaDietaActionPerformed
+/*pesquisaDieta.getDocument().addDocumentListener(new DocumentListener() {
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        pesquisar();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        pesquisar();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        pesquisar();
+    }
+
+    private void pesquisar() {
+        String nomeDieta = pesquisaDieta.getText().trim();
+        listarDepositoPorNome(nomeDieta);
+    }
+});*/
         // TODO add your handling code here:
     }//GEN-LAST:event_pesquisaDietaActionPerformed
 
@@ -1185,6 +1356,30 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
         listarFinalizadaDeposito();
     }//GEN-LAST:event_atualizarTabelaBT1ActionPerformed
 
+    private void botaoPDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPDActionPerformed
+        // TODO add your handling code here:
+        botaoPD.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String nomeDieta = pesquisaDieta.getText().trim();
+        listarDepositoPorNome(nomeDieta);
+    }
+});
+
+    }//GEN-LAST:event_botaoPDActionPerformed
+
+    private void adicionarMaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarMaisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adicionarMaisActionPerformed
+
+    private void TabelaDeDeposito1tabelaSelecaoClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaDeDeposito1tabelaSelecaoClick
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TabelaDeDeposito1tabelaSelecaoClick
+
+    private void BcadastrarDieta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcadastrarDieta1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BcadastrarDieta1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1221,21 +1416,24 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BcadastrarDieta;
+    private javax.swing.JButton BcadastrarDieta1;
     private javax.swing.JPanel PainelcadastrosDeDietas;
     private javax.swing.JTable TabelaDeDeposito;
+    private javax.swing.JTable TabelaDeDeposito1;
+    private javax.swing.JCheckBox adicionarMais;
+    private javax.swing.JButton atData;
     private javax.swing.JButton atualizarTabelaBT;
     private javax.swing.JButton atualizarTabelaBT1;
     private javax.swing.JToggleButton bEstoqueDeDietas1;
     private javax.swing.JToggleButton bRetirada2;
     private javax.swing.JButton bVoltar;
+    private javax.swing.JButton botaoPD;
     private javax.swing.JButton botaofinal;
     private javax.swing.JCheckBox conformeD;
     private javax.swing.JCheckBox finalizarSim1;
     private javax.swing.JComboBox<String> fornecedorD;
     private javax.swing.JTextField idCha1;
     private javax.swing.JTextField idFun1;
-    private javax.swing.JLabel imgFundo;
     private javax.swing.JLabel imgFundo2;
     private javax.swing.JToggleButton infoDeposito;
     private javax.swing.JToggleButton infoDeposito1;
@@ -1246,6 +1444,7 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1255,9 +1454,8 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel jlabel2;
     private javax.swing.JTextField loteD;
@@ -1274,6 +1472,8 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     private javax.swing.JButton saida;
     private javax.swing.JTable tabelaRetiradaDieta;
     private javax.swing.JComboBox<String> turnoBox;
+    private javax.swing.JLabel usuario1;
+    private javax.swing.JLabel usuario2;
     private javax.swing.JFormattedTextField validadeD;
     // End of variables declaration//GEN-END:variables
 }

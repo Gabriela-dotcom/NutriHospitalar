@@ -35,7 +35,7 @@ public class loginTela extends javax.swing.JFrame {
         setVisible(true);
         initComponents();
     
-        olhoBot.setIcon(new ImageIcon("C:/Users/devmat/Downloads/eye-slash.png"));
+        olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\eye.png"));
     }
 
 
@@ -64,15 +64,14 @@ private void limparCampos() {
         estiloAzul1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        criarLogin = new javax.swing.JButton();
         imgFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelLog.setBackground(new java.awt.Color(232, 228, 228));
+        panelLog.setBackground(new java.awt.Color(255, 255, 255));
         panelLog.setForeground(new java.awt.Color(255, 255, 255));
         panelLog.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelLog.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(722, 160, 214, 171));
+        panelLog.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 370, 214, 171));
 
         logarLog.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logarLog.setText("OK");
@@ -81,23 +80,23 @@ private void limparCampos() {
                 logarLogActionPerformed(evt);
             }
         });
-        panelLog.add(logarLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 408, 118, -1));
+        panelLog.add(logarLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 320, 118, -1));
 
         emailnome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         emailnome.setText("Email: ");
-        panelLog.add(emailnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 278, -1, -1));
+        panelLog.add(emailnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, -1, -1));
 
         nomeSenha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         nomeSenha.setText("Senha :");
-        panelLog.add(nomeSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(315, 337, -1, -1));
+        panelLog.add(nomeSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
 
         campoEmailLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEmailLogActionPerformed(evt);
             }
         });
-        panelLog.add(campoEmailLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 282, 238, -1));
-        panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 341, 193, -1));
+        panelLog.add(campoEmailLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 238, -1));
+        panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 193, -1));
 
         olhoBot.setForeground(new java.awt.Color(102, 255, 102));
         olhoBot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/eye.png"))); // NOI18N
@@ -106,49 +105,41 @@ private void limparCampos() {
                 olhoBotActionPerformed(evt);
             }
         });
-        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 340, 39, 22));
+        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 320, 39, 30));
 
-        estiloAzul.setBackground(new java.awt.Color(51, 102, 0));
+        estiloAzul.setBackground(new java.awt.Color(51, 102, 255));
         panelLog.add(estiloAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 632, 1000, 68));
 
-        estiloAzul1.setBackground(new java.awt.Color(51, 102, 0));
+        estiloAzul1.setBackground(new java.awt.Color(51, 102, 255));
         panelLog.add(estiloAzul1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 64));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Bem Vindo ao Login");
-        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, -1));
+        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 0, 51));
         jLabel3.setText("NutriHospitalar");
-        panelLog.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 340, -1));
+        panelLog.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 340, -1));
 
-        criarLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/danger.png"))); // NOI18N
-        criarLogin.setText("Criar Usuario");
-        criarLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                criarLoginActionPerformed(evt);
-            }
-        });
-        panelLog.add(criarLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 140, 40));
-
-        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Nutri.png"))); // NOI18N
-        panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 66, 1000, 570));
+        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Nutrihospitlar (2).jpg"))); // NOI18N
+        panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 230));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(panelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(panelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -177,20 +168,20 @@ private void limparCampos() {
 
         
     }//GEN-LAST:event_logarLogActionPerformed
-boolean oculto = true;
+boolean oculto = false;
     private void olhoBotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_olhoBotActionPerformed
         // TODO add your handling code here:
         //se senha wstiver oculta
         if (oculto==true){
             campoSenhaLog.setEchoChar((char)0);//desocultar senha
             oculto=false;
-            olhoBot.setIcon(new ImageIcon("C:/Users/devmat/Downloads/eye-slash.png"));
+            olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\eye.png"));
         }else{ //se senha não estiver oculta
             // \u25A0 - quadrado \u2022 - bolinha
 
             campoSenhaLog.setEchoChar('\u2022');//ocultar senha
             oculto=true;// senha oculta novamente
-            olhoBot.setIcon(new ImageIcon("C:/Users/devmat/Downloads/eye-scan-lock.png"));
+            olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\hidden.png"));
         }// fim do else
     }//GEN-LAST:event_olhoBotActionPerformed
 
@@ -198,14 +189,6 @@ boolean oculto = true;
         // TODO add your handling code here:
         
     }//GEN-LAST:event_campoEmailLogActionPerformed
-
-    private void criarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLoginActionPerformed
-        // TODO add your handling code here:
-        TelaAviso aviso = new TelaAviso();
-        aviso.setVisible(true);
-        //login.setVisible(false);
-        dispose();
-    }//GEN-LAST:event_criarLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,7 +228,6 @@ boolean oculto = true;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoEmailLog;
     private javax.swing.JPasswordField campoSenhaLog;
-    private javax.swing.JButton criarLogin;
     private javax.swing.JLabel emailnome;
     private javax.swing.JTextField estiloAzul;
     private javax.swing.JTextField estiloAzul1;

@@ -94,7 +94,38 @@ public List<Paciente> listarPacientes() {
     return lista;
 }
 //----------------------------------------------------------
+//metodo de pesquisa pacientes
+public List<Paciente> listarPacientesPorNome(String nomePaciente) {
+    List<Paciente> lista = new ArrayList<>();
+    String query = """
+    SELECT p.idPaciente, p.nomePaciente, p.leito, p.ala, p.nomeDieta
+    FROM Paciente p
+    WHERE LOWER(p.nomePaciente) LIKE LOWER(?)"""; // Ignora maiúsculas/minúsculas
 
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement pstmt = conexao.prepareStatement(query)) {
+
+        pstmt.setString(1, "%" + nomePaciente + "%"); // Pesquisa parcial pelo nome
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            Paciente p = new Paciente();
+            p.setIdPaciente(rs.getInt("idPaciente"));
+            p.setNomePaciente(rs.getString("nomePaciente"));
+            p.setLeito(rs.getString("leito"));
+            p.setAla(rs.getString("ala"));
+            p.setNomeDieta(rs.getString("nomeDieta"));
+            lista.add(p);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return lista;
+}
+
+
+
+//-------------------------------------------------------------
 //Verifica se paciente já existe
 public boolean pacienteExiste(String nomePaciente) {
     // Aqui você vai verificar no banco de dados ou lista se o paciente já existe
