@@ -681,7 +681,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="620" y="270" width="890" height="230"/>
+              <AbsoluteConstraints x="620" y="270" width="860" height="230"/>
             </Constraint>
           </Constraints>
 
@@ -696,8 +696,8 @@
                   <Table columnCount="6" rowCount="6">
                     <Column editable="true" title="Nome Dieta" type="java.lang.String"/>
                     <Column editable="true" title="Lote" type="java.lang.String"/>
-                    <Column editable="true" title="Fornecedor" type="java.lang.Object"/>
-                    <Column editable="true" title="Validade" type="java.lang.Object"/>
+                    <Column editable="true" title="Fornecedor" type="java.lang.String"/>
+                    <Column editable="true" title="Validade" type="java.lang.String"/>
                     <Column editable="true" title="Quantidade" type="java.lang.String"/>
                     <Column editable="true" title="Conforme" type="java.lang.Object"/>
                   </Table>
@@ -731,6 +731,21 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="350" y="700" width="200" height="39"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="atualizarTabelaBT2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/carregando.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="atualizarTabelaBT2ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="1440" y="510" width="40" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1213,7 +1228,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="80" y="750" width="246" height="59"/>
+              <AbsoluteConstraints x="90" y="710" width="246" height="59"/>
             </Constraint>
           </Constraints>
         </Component>

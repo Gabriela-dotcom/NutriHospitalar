@@ -54,7 +54,7 @@ public class TelaEstoque extends javax.swing.JFrame {
         configurarPesquisaDieta();
         // Dentro do construtor da tela de depósito
 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        listarDepositoTudo2();
          listarDepositoTudo();
          listarFinalizadaDeposito();
      PainelcadastrosDeDietas.setVisible(false);
@@ -191,7 +191,7 @@ public void listarDepositoTudo() {
         DietasController dietasController = new DietasController(); 
         
         // Obter os dados da tabela Deposito
-        List<Deposito> dadosInformacao = dietasController.listarDepositoTudo(); 
+        List<Deposito> dadosInformacao = dietasController.listarDepositoTudo2(); 
         
         // Obter o modelo da tabela
         DefaultTableModel modeloTabela = (DefaultTableModel)TabelaDeDeposito.getModel(); 
@@ -231,7 +231,50 @@ public void listarDepositoTudo() {
         JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela: " + e.getMessage()); 
     } 
 }
+//tabel de rececimento
+public void listarDepositoTudo2() { 
+    try { 
+        // Criar o controlador para acessar os dados da tabela Deposito
+        DietasController dietasController = new DietasController(); 
+        
+        // Obter os dados da tabela Deposito
+        List<Deposito> dadosInformacao = dietasController.listarDepositoTudo(); 
+        
+        // Obter o modelo da tabela
+        DefaultTableModel modeloTabela = (DefaultTableModel)TabelaDeDeposito1.getModel(); 
+        
+        // Verificando se o modelo da tabela já tem o número correto de colunas
+        if (modeloTabela.getColumnCount() == 0) {
+            modeloTabela.addColumn("Nome Dieta"); 
+            modeloTabela.addColumn("Lote"); 
+            modeloTabela.addColumn("Fornecedor"); 
+            modeloTabela.addColumn("Validade"); 
+            modeloTabela.addColumn("Quantidade"); 
+            modeloTabela.addColumn("Conforme");
+        }
+        
+        // Limpar a tabela antes de adicionar novos dados
+        modeloTabela.setRowCount(0); 
+        
+        // Adicionar cada linha de dados à tabela
+        for (Deposito linha : dadosInformacao) { 
+            modeloTabela.addRow(new Object[] {
+                linha.getNomedieta(),  // Nome da dieta
+                linha.getLote(),       // Lote
+                linha.getFornecedor(), // Fornecedor
+                linha.getValidade(),   // Validade
+                linha.getQuantidade(), // Quantidade
+                linha.isConforme() ? "Sim" : "Não" // Conforme
+            }); 
+        }
 
+    } catch (Exception e) { 
+        e.printStackTrace(); 
+        JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela: " + e.getMessage()); 
+    } 
+}
+
+//------------------------------------------------------------------------------
 
 //fim listagem deposito
 private void configurarPesquisaDieta() {
@@ -376,6 +419,7 @@ public void listarFinalizadaDeposito() {
         jScrollPane2 = new javax.swing.JScrollPane();
         TabelaDeDeposito1 = new javax.swing.JTable();
         BcadastrarDieta1 = new javax.swing.JButton();
+        atualizarTabelaBT2 = new javax.swing.JButton();
         painelRetiradaDieta = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tabelaRetiradaDieta = new javax.swing.JTable();
@@ -600,7 +644,7 @@ public void listarFinalizadaDeposito() {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -614,7 +658,7 @@ public void listarFinalizadaDeposito() {
         });
         jScrollPane2.setViewportView(TabelaDeDeposito1);
 
-        PainelcadastrosDeDietas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 890, 230));
+        PainelcadastrosDeDietas.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 270, 860, 230));
 
         BcadastrarDieta1.setBackground(new java.awt.Color(0, 102, 255));
         BcadastrarDieta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -626,6 +670,14 @@ public void listarFinalizadaDeposito() {
             }
         });
         PainelcadastrosDeDietas.add(BcadastrarDieta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 700, 200, 39));
+
+        atualizarTabelaBT2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/carregando.png"))); // NOI18N
+        atualizarTabelaBT2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarTabelaBT2ActionPerformed(evt);
+            }
+        });
+        PainelcadastrosDeDietas.add(atualizarTabelaBT2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1440, 510, 40, 30));
 
         painelRetiradaDieta.setBackground(new java.awt.Color(255, 255, 255));
         painelRetiradaDieta.setMaximumSize(new java.awt.Dimension(1920, 1080));
@@ -868,7 +920,7 @@ public void listarFinalizadaDeposito() {
                 bVoltarActionPerformed(evt);
             }
         });
-        painelDoEstoqueDietas.add(bVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 750, 246, 59));
+        painelDoEstoqueDietas.add(bVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 710, 246, 59));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Pesquisar:");
@@ -955,75 +1007,22 @@ public void listarFinalizadaDeposito() {
     }//GEN-LAST:event_loteDActionPerformed
 
     private void atDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atDataActionPerformed
-// Capturando os dados dos campos de entrada
-/*
-if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
-    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
+// Pegar os dados da interface
+String nomeAtualDieta = nomeDaDietaD.getText().trim();    // nome atual da dieta no depósito
+String novaValidade = validadeD.getText().trim();         // nova validade
+String novoNomeDieta = nomeDaDietaD.getText().trim();     // se quiser mudar também o nome, pode alterar este campo
+
+// Atualizar no controller
+DietasController controller = new DietasController();
+boolean atualizado = controller.atualizarValidadeOuNomeDieta(nomeAtualDieta, novaValidade, novoNomeDieta);
+
+if (atualizado) {
+    JOptionPane.showMessageDialog(null, "Dieta no depósito atualizada com sucesso!");
+    
 } else {
-  String tipoDieta = nomeDaDietaD.getText();
-String lote = loteD.getText();
-String fornecedor = fornecedorD.getSelectedItem().toString();
-String validade = validadeD.getText();
-int quantidade = Integer.parseInt(quantidadeD.getSelectedItem().toString()); // Corrigido aqui
-boolean conforme = conformeD.isSelected();
-
-
-   try {
-        DietasController adicionarDeposito = new DietasController();
-        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme);
-        
-        if (adicionou) {
-            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
-            
-            // Atualiza a tabela com a listagem atualizada
-            listarFinalizadaDeposito();
-            
-            // Limpa os campos do formulário
-            limparCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
-            listarFinalizadaDeposito();
-            
-            // Limpa os campos do formulário
-            limparCampos();
-        }
-    } catch (Exception e) {
-        System.err.print("Erro ao adicionar ao depósito: " + e);
-    }
+    JOptionPane.showMessageDialog(null, "Erro ao atualizar a dieta no depósito. Verifique o nome informado.");
 }
-*/
-//Novo metodo para ser possível adicionar mais ietas
-
-// Suponha que essa checkbox já esteja na sua interface
-if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
-    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
-} else {
-    String tipoDieta = nomeDaDietaD.getText();
-    String lote = loteD.getText();
-    String fornecedor = fornecedorD.getSelectedItem().toString();
-    String validade = validadeD.getText();
-    int quantidade = Integer.parseInt(quantidadeD.getSelectedItem().toString());
-    boolean conforme = conformeD.isSelected();
-    boolean usarDietaExistente = adicionarMais.isSelected(); // <-- aqui usamos sua checkbox
-
-    try {
-        DietasController adicionarDeposito = new DietasController();
-        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme, usarDietaExistente);
-
-        if (adicionou) {
-            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
-            listarFinalizadaDeposito(); // Atualiza a tabela
-            limparCampos();             // Limpa os campos
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
-            listarFinalizadaDeposito();
-            limparCampos();
-        }
-
-    } catch (Exception e) {
-        System.err.print("Erro ao adicionar ao depósito: " + e);
-    }
-}
+ listarDepositoTudo2();
 
 
     }//GEN-LAST:event_atDataActionPerformed
@@ -1044,6 +1043,8 @@ if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD
         painelDoEstoqueDietas.setVisible(false);  
          listarDepositoTudo();
          listarFinalizadaDeposito();// TODO add your handling code here:
+          listarDepositoTudo2();
+          
     }//GEN-LAST:event_bEstoqueDeDietas1ActionPerformed
 
     private void infoDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoDepositoActionPerformed
@@ -1374,11 +1375,105 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
 
     private void TabelaDeDeposito1tabelaSelecaoClick(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaDeDeposito1tabelaSelecaoClick
         // TODO add your handling code here:
+                                                                                             
+    // Captura a linha selecionada
+    int linhaSelecionada = TabelaDeDeposito1.getSelectedRow();
+    
+    // Verifica se alguma linha foi selecionada
+    if (linhaSelecionada >= 0) {
+        // Obtendo o modelo da tabela
+        DefaultTableModel modeloTabela = (DefaultTableModel) TabelaDeDeposito1.getModel();
+
+        // Atualizando os campos de acordo com os novos índices das colunas
+        nomeDaDietaD.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString()); // Nome da dieta
+        loteD.setText(modeloTabela.getValueAt(linhaSelecionada, 1).toString()); // Lote
+       
+        validadeD.setText(modeloTabela.getValueAt(linhaSelecionada, 3).toString()); // Validade
+
+    }
+
+
+
+ 
     }//GEN-LAST:event_TabelaDeDeposito1tabelaSelecaoClick
 
     private void BcadastrarDieta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcadastrarDieta1ActionPerformed
         // TODO add your handling code here:
+        // Capturando os dados dos campos de entrada
+/*
+if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
+    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
+} else {
+  String tipoDieta = nomeDaDietaD.getText();
+String lote = loteD.getText();
+String fornecedor = fornecedorD.getSelectedItem().toString();
+String validade = validadeD.getText();
+int quantidade = Integer.parseInt(quantidadeD.getSelectedItem().toString()); // Corrigido aqui
+boolean conforme = conformeD.isSelected();
+
+
+   try {
+        DietasController adicionarDeposito = new DietasController();
+        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme);
+        
+        if (adicionou) {
+            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
+            
+            // Atualiza a tabela com a listagem atualizada
+            listarFinalizadaDeposito();
+            
+            // Limpa os campos do formulário
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
+            listarFinalizadaDeposito();
+            
+            // Limpa os campos do formulário
+            limparCampos();
+        }
+    } catch (Exception e) {
+        System.err.print("Erro ao adicionar ao depósito: " + e);
+    }
+}
+*/
+//Novo metodo para ser possível adicionar mais ietas
+
+// Suponha que essa checkbox já esteja na sua interface
+if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
+    JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
+} else {
+    String tipoDieta = nomeDaDietaD.getText();
+    String lote = loteD.getText();
+    String fornecedor = fornecedorD.getSelectedItem().toString();
+    String validade = validadeD.getText();
+    int quantidade = Integer.parseInt(quantidadeD.getSelectedItem().toString());
+    boolean conforme = conformeD.isSelected();
+    boolean usarDietaExistente = adicionarMais.isSelected(); // <-- aqui usamos sua checkbox
+
+    try {
+        DietasController adicionarDeposito = new DietasController();
+        boolean adicionou = adicionarDeposito.adicionarDeposito(tipoDieta, lote, fornecedor, validade, quantidade, conforme, usarDietaExistente);
+
+        if (adicionou) {
+            JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
+            listarFinalizadaDeposito(); // Atualiza a tabela
+            limparCampos();             // Limpa os campos
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
+            listarFinalizadaDeposito();
+            limparCampos();
+        }
+
+    } catch (Exception e) {
+        System.err.print("Erro ao adicionar ao depósito: " + e);
+    }
+}
     }//GEN-LAST:event_BcadastrarDieta1ActionPerformed
+
+    private void atualizarTabelaBT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBT2ActionPerformed
+        // TODO add your handling code here:
+         listarDepositoTudo2();
+    }//GEN-LAST:event_atualizarTabelaBT2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1424,6 +1519,7 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
     private javax.swing.JButton atData;
     private javax.swing.JButton atualizarTabelaBT;
     private javax.swing.JButton atualizarTabelaBT1;
+    private javax.swing.JButton atualizarTabelaBT2;
     private javax.swing.JToggleButton bEstoqueDeDietas1;
     private javax.swing.JToggleButton bRetirada2;
     private javax.swing.JButton bVoltar;

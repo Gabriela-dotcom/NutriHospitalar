@@ -519,7 +519,72 @@ public boolean excluirFinalizacao(int idFinalizada) {
 }
 
 //fim codigo combobox
+//Atualizar dietas
+    //listar nome da dieta para atualizar a mesma
+public List<Deposito> listarNomeEValidade() {
+    List<Deposito> lista = new ArrayList<>();
+    String query = "SELECT nomedieta, validade FROM Deposito";
 
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement pstmt = conexao.prepareStatement(query);
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            Deposito deposito = new Deposito();
+            deposito.setNomedieta(rs.getString("nomedieta"));
+            deposito.setValidade(rs.getString("validade"));
+            lista.add(deposito);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return lista;
+}
+/*public boolean atualizarDeposito(String nomeDieta, String novaValidade, String novoNomeDieta) {
+    String query = "UPDATE Deposito SET validade = ?, nomedieta = ? WHERE nomedieta = ?";
+
+    try (Connection connection = Conexao.getConexao();
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        preparedStatement.setString(1, novaValidade);
+        preparedStatement.setString(2, novoNomeDieta);
+        preparedStatement.setString(3, nomeDieta);
+
+        int atualizado = preparedStatement.executeUpdate();
+        return atualizado > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao atualizar depósito: " + e);
+        return false;
+    }
+}
+*/
+
+   //---------------------------------------------
+     //Atualiza a as duas colunas validade e nome
+public boolean atualizarValidadeOuNomeDieta(String nomeAtualDieta, String novaValidade, String novoNomeDieta) {
+    String query = "UPDATE Deposito SET validade = ?, nomedieta = ? WHERE nomedieta = ?";
+
+    try (Connection connection = Conexao.getConexao();
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        preparedStatement.setString(1, novaValidade);
+        preparedStatement.setString(2, novoNomeDieta);
+        preparedStatement.setString(3, nomeAtualDieta);
+
+        int atualizado = preparedStatement.executeUpdate();
+        return atualizado > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao atualizar a validade ou nome da dieta no depósito: " + e.getMessage());
+        return false;
+    }
+}
+
+     //-------------------------------------------------------------
+//-----------------------------------------------------------------------
 //lista de infos finalizada deposito
  public List<Finalizada> listarFinalizadas() {
         List<Finalizada> listaFinalizadas = new ArrayList<>();
@@ -584,6 +649,36 @@ public boolean excluirFinalizacao(int idFinalizada) {
     return lista;
 }
 //fim deposito tudo
+ public List<Deposito> listarDepositoTudo2() {
+    List<Deposito> listaDeposito = new ArrayList<>();
+    String query = "SELECT idDeposito, idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta FROM Deposito";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query);
+         ResultSet resultSet = preparedStatement.executeQuery()) {
+
+        while (resultSet.next()) {
+            Deposito deposito = new Deposito();
+            deposito.setIdDeposito(resultSet.getInt("idDeposito"));  // Adicionando ID do depósito
+            deposito.setIdDieta(resultSet.getInt("idDieta"));  // Adicionando ID da dieta
+            deposito.setLote(resultSet.getString("lote"));
+            deposito.setFornecedor(resultSet.getString("fornecedor"));
+            deposito.setValidade(resultSet.getString("validade"));
+            deposito.setQuantidade(resultSet.getInt("quantidade"));
+            deposito.setConforme(resultSet.getBoolean("conforme"));
+            deposito.setNomedieta(resultSet.getString("nomedieta"));
+
+            listaDeposito.add(deposito);
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao listar depósito: " + e.getMessage());
+        e.printStackTrace();  // Logando o erro para facilitar a depuração
+    }
+
+    return listaDeposito;
+}
+
+
 //listar dieta por nome no deposito pesquisa
  public List<Deposito> listarDepositoPorNome(String nomeDieta) {
     String query = "SELECT idDeposito, idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta " +
