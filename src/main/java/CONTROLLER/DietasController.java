@@ -99,6 +99,7 @@ public class DietasController {
     //-------------------------------------------------------------------------
     
 //Cadastro por dieta-------------------------------------------------------------
+   /*
 public boolean cadastrarPrescricaoPorDieta(String nomedieta, String nomePaciente, String leito, String ala) {
     Deposito deposito = buscarDietaNoDeposito(nomedieta); // Obtém os dados da dieta no depósito
     
@@ -132,7 +133,80 @@ public boolean cadastrarPrescricaoPorDieta(String nomedieta, String nomePaciente
         System.err.println("Erro ao cadastrar prescrição: " + e.getMessage());
         return false;
     }
+}*/
+public boolean cadastrarPrescricaoPorDieta(String nomedieta, String nomePaciente, String leito, String ala) {
+
+    String dietaAtual = buscarDietaAtualDoPaciente(nomePaciente, leito);
+    
+    if (dietaAtual == null) {
+        JOptionPane.showMessageDialog(null, "Paciente não encontrado ou dieta não registrada.", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    if (!dietaAtual.equalsIgnoreCase(nomedieta)) {
+        JOptionPane.showMessageDialog(null,
+                "A dieta informada não corresponde à dieta atual do paciente.\n" +
+                "Para alterar a dieta, utilize a tela de atualização.",
+                "Dieta Incorreta",
+                JOptionPane.WARNING_MESSAGE);
+        return false;
+    }
+
+    // continua com o código original de inserção se as dietas forem iguais...
+    Deposito deposito = buscarDietaNoDeposito(nomedieta);
+    if (deposito == null) {
+        JOptionPane.showMessageDialog(null, "Dieta não encontrada no depósito! Verifique o nome.", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    String query = "INSERT INTO finalizada (nomePaciente, leito, ala, idDieta, nomedieta, status) VALUES (?, ?, ?, ?, ?, ?)";
+
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement preparedStatement = conexao.prepareStatement(query)) {
+
+        preparedStatement.setString(1, nomePaciente);
+        preparedStatement.setString(2, leito);
+        preparedStatement.setString(3, ala);
+        preparedStatement.setInt(4, deposito.getIdDieta());
+        preparedStatement.setString(5, deposito.getNomedieta());
+        preparedStatement.setBoolean(6, false);
+
+        int resultado = preparedStatement.executeUpdate();
+        if (resultado > 0) {
+            JOptionPane.showMessageDialog(null, "Prescrição cadastrada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar a prescrição.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao cadastrar prescrição: " + e.getMessage());
+        return false;
+    }
 }
+
+public String buscarDietaAtualDoPaciente(String nomePaciente, String leito) {
+    String sql = "SELECT nomedieta FROM pacientes WHERE nomePaciente = ? AND leito = ?";
+    
+    try (Connection conexao = Conexao.getConexao();
+         PreparedStatement ps = conexao.prepareStatement(sql)) {
+
+        ps.setString(1, nomePaciente);
+        ps.setString(2, leito);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getString("nomedieta");
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao buscar dieta do paciente: " + e.getMessage());
+    }
+
+    return null; // dieta não encontrada
+}
+
 //-------------------------------------------------------------------------
 
 //fim metodo cadastrar
@@ -800,6 +874,66 @@ public int criarOuBuscarDieta(String tipoDieta, boolean usarDietaExistente) {
     }
 }
 public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, boolean adicionarMais) {
+    int idDieta = criarOuBuscarDieta(tipoDieta, adicionarMais);
+
+    if (idDieta == -1) {
+        System.err.println("Erro ao obter ou criar id da dieta.");
+        return false;
+    }
+
+    try (Connection connection = Conexao.getConexao()) {
+
+        // Consulta para verificar se já existe esse lote para essa dieta
+        String selectQuery = """
+            SELECT idDeposito FROM Deposito 
+            WHERE idDieta = ? AND lote = ? AND fornecedor = ? AND validade = ?
+        """;
+
+        try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
+            selectStmt.setInt(1, idDieta);
+            selectStmt.setString(2, lote);
+            selectStmt.setString(3, fornecedor);
+            selectStmt.setString(4, validade);
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // ✅ Já existe: mostra erro e bloqueia
+                JOptionPane.showMessageDialog(null,
+                    "Já existe uma dieta cadastrada com esse lote!\n" +
+                    "Para alterar a quantidade, utilize a função de edição.",
+                    "Lote já existente",
+                    JOptionPane.WARNING_MESSAGE);
+                return false;
+            } else {
+                // 🔄 Não existe: insere nova dieta no depósito
+                String insertQuery = """
+                    INSERT INTO Deposito (idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+
+                try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+                    insertStmt.setInt(1, idDieta);
+                    insertStmt.setString(2, lote);
+                    insertStmt.setString(3, fornecedor);
+                    insertStmt.setString(4, validade);
+                    insertStmt.setInt(5, quantidade);
+                    insertStmt.setBoolean(6, conforme);
+                    insertStmt.setString(7, tipoDieta);
+                    insertStmt.executeUpdate();
+                    return true;
+                }
+            }
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao adicionar no depósito! " + e.getMessage());
+        return false;
+    }
+}
+
+/*
+public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, boolean adicionarMais) {
     // Usa a checkbox: se adicionarMais = true, tenta buscar dieta existente; senão, cria nova
     int idDieta = criarOuBuscarDieta(tipoDieta, adicionarMais);
 
@@ -864,7 +998,7 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
     }
 }
 
-
+*/
 /*
 public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme) {
     int idDieta = buscarIdDietaPorNome(tipoDieta); // ou criarDieta(tipoDieta) se for nova

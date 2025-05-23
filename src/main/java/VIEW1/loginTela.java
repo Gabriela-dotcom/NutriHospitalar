@@ -23,7 +23,7 @@ public class loginTela extends javax.swing.JFrame {
      * Creates new form loginTela
      */
     public loginTela() {
-        
+        iconeTela();
         setTitle("LOGIN");
         setSize(400, 400); // Define o tamanho da janela
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,7 +38,18 @@ public class loginTela extends javax.swing.JFrame {
         olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\eye.png"));
     }
 
+private void iconeTela(){  
+        try {
 
+        Image iconeTitulo = ImageIO.read(getClass().getResource("/icones/saude.png"));
+       
+            this.setIconImage(iconeTitulo);
+           
+        } catch(IOException ex) {
+          System.out.println("Erro ao importar icone: " + ex.getMessage());
+        }        
+   
+    }
   //  limpar campos  
 private void limparCampos() {
    campoSenhaLog.setText("");

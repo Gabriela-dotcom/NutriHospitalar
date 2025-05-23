@@ -12,14 +12,17 @@ import MODEL.Finalizada;
 import MODEL.InformacaoPaciente;
 import MODEL.Paciente;
 import java.awt.BorderLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -39,6 +42,7 @@ public class TelaNutricionista extends javax.swing.JFrame {
 
         // Criação ou chamada dos componentes
         initComponents(); // se estiver usando NetBeans
+        iconeTela();
         PesquisaPacientes(); // Chama o método para ativar a pesquisa
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(prescreverNutricionista, BorderLayout.CENTER);
@@ -47,10 +51,11 @@ public class TelaNutricionista extends javax.swing.JFrame {
         ListagemAT();
         ListagemDePacientes();
 
-        dietasAt.setVisible(false);
+            dietasAt.setVisible(false);
         tabelaPresStatus.setVisible(false);
 
         setVisible(true); // No final
+        
     }
 
 
@@ -59,7 +64,18 @@ public class TelaNutricionista extends javax.swing.JFrame {
 public void ListagemDePacientes() {
     ListagemDePacientes(""); // Chama a versão do método com filtro passando uma string vazia
 }
+private void iconeTela(){  
+        try {
 
+        Image iconeTitulo = ImageIO.read(getClass().getResource("/icones/saude.png"));
+       
+            this.setIconImage(iconeTitulo);
+           
+        } catch(IOException ex) {
+          System.out.println("Erro ao importar icone: " + ex.getMessage());
+        }        
+   
+    }
 // Método com filtro por nome do paciente-------------------------------
 public void ListagemDePacientes(String nomePaciente) {
     // Chamando o controlador que obtém os dados dos pacientes com o filtro
