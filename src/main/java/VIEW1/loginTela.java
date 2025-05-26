@@ -64,50 +64,57 @@ private void limparCampos() {
     private void initComponents() {
 
         panelLog = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        logarLog = new javax.swing.JButton();
-        emailnome = new javax.swing.JLabel();
-        nomeSenha = new javax.swing.JLabel();
-        campoEmailLog = new javax.swing.JTextField();
-        campoSenhaLog = new javax.swing.JPasswordField();
-        olhoBot = new javax.swing.JButton();
         estiloAzul = new javax.swing.JTextField();
         estiloAzul1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         imgFundo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        campoEmailLog = new javax.swing.JTextField();
+        emailnome = new javax.swing.JLabel();
+        campoSenhaLog = new javax.swing.JPasswordField();
+        nomeSenha = new javax.swing.JLabel();
+        olhoBot = new javax.swing.JButton();
+        logarLog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panelLog.setBackground(new java.awt.Color(255, 255, 255));
         panelLog.setForeground(new java.awt.Color(255, 255, 255));
         panelLog.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        panelLog.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 370, 214, 171));
 
-        logarLog.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        logarLog.setText("OK");
-        logarLog.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logarLogActionPerformed(evt);
-            }
-        });
-        panelLog.add(logarLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 320, 118, -1));
+        estiloAzul.setBackground(new java.awt.Color(51, 102, 255));
+        panelLog.add(estiloAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 632, 1000, 68));
 
-        emailnome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        emailnome.setText("Email: ");
-        panelLog.add(emailnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, -1, -1));
+        estiloAzul1.setBackground(new java.awt.Color(51, 102, 255));
+        panelLog.add(estiloAzul1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 64));
 
-        nomeSenha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        nomeSenha.setText("Senha :");
-        panelLog.add(nomeSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, -1, -1));
+        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Nutrihospitlar (2).jpg"))); // NOI18N
+        panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, 230));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setText("Bem Vindo ao Login");
+        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, -1, -1));
 
         campoEmailLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEmailLogActionPerformed(evt);
             }
         });
-        panelLog.add(campoEmailLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 238, -1));
-        panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 193, -1));
+        panelLog.add(campoEmailLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 238, -1));
+
+        emailnome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        emailnome.setText("Email: ");
+        panelLog.add(emailnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, -1, -1));
+
+        campoSenhaLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoSenhaLogActionPerformed(evt);
+            }
+        });
+        panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 480, 193, -1));
+
+        nomeSenha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        nomeSenha.setText("Senha :");
+        panelLog.add(nomeSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 450, -1, -1));
 
         olhoBot.setForeground(new java.awt.Color(102, 255, 102));
         olhoBot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/eye.png"))); // NOI18N
@@ -116,25 +123,16 @@ private void limparCampos() {
                 olhoBotActionPerformed(evt);
             }
         });
-        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 320, 39, 30));
+        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 480, 40, 23));
 
-        estiloAzul.setBackground(new java.awt.Color(51, 102, 255));
-        panelLog.add(estiloAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 632, 1000, 68));
-
-        estiloAzul1.setBackground(new java.awt.Color(51, 102, 255));
-        panelLog.add(estiloAzul1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 64));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setText("Bem Vindo ao Login");
-        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel3.setText("NutriHospitalar");
-        panelLog.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 340, -1));
-
-        imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Nutrihospitlar (2).jpg"))); // NOI18N
-        panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 230));
+        logarLog.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        logarLog.setText("OK");
+        logarLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logarLogActionPerformed(evt);
+            }
+        });
+        panelLog.add(logarLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 550, 118, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -142,8 +140,8 @@ private void limparCampos() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,6 +199,10 @@ boolean oculto = false;
         
     }//GEN-LAST:event_campoEmailLogActionPerformed
 
+    private void campoSenhaLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoSenhaLogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoSenhaLogActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -243,9 +245,7 @@ boolean oculto = false;
     private javax.swing.JTextField estiloAzul;
     private javax.swing.JTextField estiloAzul1;
     private javax.swing.JLabel imgFundo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton logarLog;
     private javax.swing.JLabel nomeSenha;
     private javax.swing.JButton olhoBot;
