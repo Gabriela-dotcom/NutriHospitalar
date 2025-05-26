@@ -187,7 +187,7 @@ public boolean cadastrarPrescricaoPorDieta(String nomedieta, String nomePaciente
 }
 
 public String buscarDietaAtualDoPaciente(String nomePaciente, String leito) {
-    String sql = "SELECT nomedieta FROM pacientes WHERE nomePaciente = ? AND leito = ?";
+    String sql = "SELECT nomedieta FROM paciente WHERE nomePaciente = ? AND leito = ?";
     
     try (Connection conexao = Conexao.getConexao();
          PreparedStatement ps = conexao.prepareStatement(sql)) {

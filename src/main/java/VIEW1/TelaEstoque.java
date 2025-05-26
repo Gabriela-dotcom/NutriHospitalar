@@ -19,6 +19,10 @@ import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -352,6 +356,7 @@ public void listarFinalizadaDeposito() {
     modeloTabela.addColumn("Responsável");
     modeloTabela.addColumn("Status");
     modeloTabela.addColumn("ID Dieta"); // <-- adiciona o ID da dieta
+  //  modeloTabela.addColumn("Nome Dieta");
 }
 
 
@@ -368,7 +373,8 @@ public void listarFinalizadaDeposito() {
     linha.getTurno(),
     linha.getQualFuncionario(),
     linha.isStatus() ? "Sim" : "Não",
-    linha.getIdDieta() // <-- adicionado
+    linha.getIdDieta(), // <-- adicionado
+   // linha.getNomedieta()             
 });
 
         } 
@@ -823,7 +829,7 @@ public void listarFinalizadaDeposito() {
         finalizarSim1.setText("Sim");
         painelRetiradaDieta.add(finalizarSim1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
 
-        turnoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespetino", " " }));
+        turnoBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matutino", "Vespetino" }));
         turnoBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 turnoBoxActionPerformed(evt);
@@ -839,7 +845,7 @@ public void listarFinalizadaDeposito() {
         jLabel11.setText("Turno");
         painelRetiradaDieta.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 360, 281, -1));
 
-        responsavelBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enfermeiro", "Medico", " " }));
+        responsavelBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enfermeiro", "Medico" }));
         painelRetiradaDieta.add(responsavelBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 450, 200, 30));
 
         qualID1.addActionListener(new java.awt.event.ActionListener() {
@@ -1018,6 +1024,7 @@ boolean atualizado = controller.atualizarValidadeOuNomeDieta(nomeAtualDieta, nov
 
 if (atualizado) {
     JOptionPane.showMessageDialog(null, "Dieta no depósito atualizada com sucesso!");
+      listarDepositoTudo2();
     
 } else {
     JOptionPane.showMessageDialog(null, "Erro ao atualizar a dieta no depósito. Verifique o nome informado.");
@@ -1262,15 +1269,17 @@ try {
     JOptionPane.showMessageDialog(null, "Finalização e estoque atualizados com sucesso!");
 
     gerarPDF(); // Gerar PDF
+InputStream pdfStream = getClass().getClassLoader().getResourceAsStream("PDFFinalizar/Presquição Nutricional.pdf");
 
-    String caminhoDoPdf = "C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\PDF Finalizar\\Presquição Nutricional.pdf";
-    File arquivoPdf = new File(caminhoDoPdf);
+if (pdfStream != null) {
+    File arquivoPdf = new File("Prescricao_Nutricional.pdf");
+    Files.copy(pdfStream, arquivoPdf.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    Desktop.getDesktop().open(arquivoPdf);
+} else {
+    JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado.");
+}
 
-    if (arquivoPdf.exists() && Desktop.isDesktopSupported()) {
-        Desktop.getDesktop().open(arquivoPdf);
-    } else {
-        JOptionPane.showMessageDialog(null, "Arquivo PDF não encontrado ou abertura não suportada.");
-    }
+
 
     // Atualiza tabela da tela
     listarFinalizadaDeposito();
@@ -1458,16 +1467,18 @@ if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD
             JOptionPane.showMessageDialog(null, "Dieta adicionada ao depósito com sucesso!");
             listarFinalizadaDeposito(); // Atualiza a tabela
             limparCampos();             // Limpa os campos
+              listarDepositoTudo2();
         } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto ao depósito.");
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar a dieta ao deposito.");
             listarFinalizadaDeposito();
             limparCampos();
         }
 
     } catch (Exception e) {
-        System.err.print("Erro ao adicionar ao depósito: " + e);
+        System.err.print("Erro ao adicionar ao deposito: " + e);
     }
 }
+
     }//GEN-LAST:event_BcadastrarDieta1ActionPerformed
 
     private void atualizarTabelaBT2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBT2ActionPerformed

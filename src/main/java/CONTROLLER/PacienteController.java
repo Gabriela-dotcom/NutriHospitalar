@@ -138,7 +138,7 @@ public boolean pacienteExiste(String nomePaciente) {
 
     try {
         conn = Conexao.getConexao(); // Método que retorna a conexão com o BD
-        String sql = "SELECT COUNT(*) FROM pacientes WHERE nome = ?";
+        String sql = "SELECT COUNT(*) FROM paciente WHERE nome = ?";
         stmt = conn.prepareStatement(sql);
         stmt.setString(1, nomePaciente);
         rs = stmt.executeQuery();

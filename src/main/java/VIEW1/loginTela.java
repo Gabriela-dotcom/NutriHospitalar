@@ -35,7 +35,7 @@ public class loginTela extends javax.swing.JFrame {
         setVisible(true);
         initComponents();
     
-        olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\eye.png"));
+        olhoBot.setIcon(new ImageIcon("/icones/eye.png"));
     }
 
 private void iconeTela(){  
@@ -186,13 +186,13 @@ boolean oculto = false;
         if (oculto==true){
             campoSenhaLog.setEchoChar((char)0);//desocultar senha
             oculto=false;
-            olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\eye.png"));
+            olhoBot.setIcon(new ImageIcon(getClass().getResource("/icones/eye.png")));
         }else{ //se senha não estiver oculta
             // \u25A0 - quadrado \u2022 - bolinha
 
             campoSenhaLog.setEchoChar('\u2022');//ocultar senha
             oculto=true;// senha oculta novamente
-            olhoBot.setIcon(new ImageIcon("C:\\Users\\edi\\Documents\\GitCarlos nutri\\nutriHopitalarMaven\\src\\main\\resources\\icones\\hidden.png"));
+            olhoBot.setIcon(new ImageIcon(getClass().getResource("/icones/eye.png")));
         }// fim do else
     }//GEN-LAST:event_olhoBotActionPerformed
 
