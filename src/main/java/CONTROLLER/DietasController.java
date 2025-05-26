@@ -883,6 +883,73 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
 
     try (Connection connection = Conexao.getConexao()) {
 
+        // Verifica se já existe esse lote para essa dieta
+        String selectQuery = "SELECT idDeposito, quantidade FROM Deposito WHERE idDieta = ? AND lote = ? AND fornecedor = ? AND validade = ?";
+
+        try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
+            selectStmt.setInt(1, idDieta);
+            selectStmt.setString(2, lote);
+            selectStmt.setString(3, fornecedor);
+            selectStmt.setString(4, validade);
+
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // ✅ Caso já exista, atualiza a quantidade no estoque
+                if (adicionarMais) { 
+                    int quantidadeAtual = rs.getInt("quantidade");
+                    int novoTotal = quantidadeAtual + quantidade; // Soma ao estoque existente
+
+                    String updateQuery = "UPDATE Deposito SET quantidade = ? WHERE idDeposito = ?";
+                    try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+                        updateStmt.setInt(1, novoTotal);
+                        updateStmt.setInt(2, rs.getInt("idDeposito"));
+                        updateStmt.executeUpdate();
+                        return true;
+                    }
+                } else {
+                    // 🔴 Se o usuário não marcou "Adicionar Mais", impede a duplicação e mostra mensagem
+                    JOptionPane.showMessageDialog(null, 
+                        "Já existe uma dieta cadastrada com esse lote! Use 'Adicionar Mais' para aumentar o estoque.",
+                        "Erro de duplicação", 
+                        JOptionPane.WARNING_MESSAGE);
+                    return false;
+                }
+            } else {
+                // 🔄 Se o lote ainda **não existe**, faz um INSERT normalmente
+                String insertQuery = "INSERT INTO Deposito (idDieta, lote, fornecedor, validade, quantidade, conforme, nomedieta) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+                try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+                    insertStmt.setInt(1, idDieta);
+                    insertStmt.setString(2, lote);
+                    insertStmt.setString(3, fornecedor);
+                    insertStmt.setString(4, validade);
+                    insertStmt.setInt(5, quantidade);
+                    insertStmt.setBoolean(6, conforme);
+                    insertStmt.setString(7, tipoDieta);
+                    insertStmt.executeUpdate();
+                    return true;
+                }
+            }
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao adicionar no depósito! " + e.getMessage());
+        return false;
+    }
+}
+
+/*
+public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, boolean adicionarMais) {
+    int idDieta = criarOuBuscarDieta(tipoDieta, adicionarMais);
+
+    if (idDieta == -1) {
+        System.err.println("Erro ao obter ou criar id da dieta.");
+        return false;
+    }
+
+    try (Connection connection = Conexao.getConexao()) {
+
         // Consulta para verificar se já existe esse lote para essa dieta
         String selectQuery = """
             SELECT idDeposito FROM Deposito 
@@ -930,7 +997,7 @@ public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedo
         System.err.println("Erro ao adicionar no depósito! " + e.getMessage());
         return false;
     }
-}
+*/
 
 /*
 public boolean adicionarDeposito(String tipoDieta, String lote, String fornecedor, String validade, int quantidade, boolean conforme, boolean adicionarMais) {
