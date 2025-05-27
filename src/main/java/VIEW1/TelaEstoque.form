@@ -370,13 +370,9 @@
         <Component class="javax.swing.JComboBox" name="fornecedorD">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="CAvisks"/>
-                <StringItem index="1" value="Chavinsks"/>
-                <StringItem index="2" value="Babinsks"/>
-                <StringItem index="3" value="Stravinsks"/>
-                <StringItem index="4" value="Chololisks"/>
-                <StringItem index="5" value=" "/>
+              <StringArray count="2">
+                <StringItem index="0" value="Supera"/>
+                <StringItem index="1" value="BRexpress"/>
               </StringArray>
             </Property>
           </Properties>

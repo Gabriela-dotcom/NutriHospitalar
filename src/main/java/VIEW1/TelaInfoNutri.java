@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.sql.SQLException;
-
+import VIEW1.TelaNutricionista;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
@@ -340,9 +340,11 @@ private void atualizarTableActionPerformed() {
       // cadastrarUsuario.setVisible(false);
       //panelModificar.setVisible(false);
      // panelMenuCooped.setVisible(true);
+    
+     
      TelaNutricionista nutri = new  TelaNutricionista();
      nutri.setVisible(true);
-
+     dispose();
     }//GEN-LAST:event_Fechar1ActionPerformed
 
     private void pdffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdffActionPerformed

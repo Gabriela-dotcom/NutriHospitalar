@@ -29,6 +29,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -36,6 +37,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -156,9 +158,53 @@ public class StatusCellRenderer extends DefaultTableCellRenderer {
         return c;
     }
 }
+
 //-----------------------------------------------------------------------------
+ 
+
+
  // Aqui você coloca a classe renderer
-    class ValidadeCellRenderer extends DefaultTableCellRenderer {
+public class ValidadeCellRenderer extends DefaultTableCellRenderer {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+        boolean isSelected, boolean hasFocus, int row, int column) {
+
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        try {
+            if (value != null) {
+                String dataStr = value.toString();
+                LocalDate validade = LocalDate.parse(dataStr, formatter);
+                LocalDate hoje = LocalDate.now();
+
+                if (validade.isBefore(hoje)) {
+                    c.setBackground(Color.RED);
+                } else if (!validade.isBefore(hoje) && validade.isBefore(hoje.plusDays(7))) {
+                    c.setBackground(Color.YELLOW);
+                } else {
+                    c.setBackground(Color.GREEN);
+                }
+            } else {
+                c.setBackground(Color.WHITE);
+            }
+        } catch (Exception e) {
+            c.setBackground(Color.WHITE);
+        }
+
+        // Mantém a seleção visível
+        if (isSelected) {
+            c.setBackground(Color.BLUE); // Destaque quando a linha estiver selecionada
+            c.setForeground(Color.WHITE);
+        }
+
+        return c;
+    }
+}
+
+/*
+ public class ValidadeCellRenderer extends DefaultTableCellRenderer {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         @Override
@@ -186,7 +232,7 @@ public class StatusCellRenderer extends DefaultTableCellRenderer {
             return c;
         }
     }
-
+*/
 
 //listagem de deposito(o que tem armazenado)
 public void listarDepositoTudo() { 
@@ -195,7 +241,7 @@ public void listarDepositoTudo() {
         DietasController dietasController = new DietasController(); 
         
         // Obter os dados da tabela Deposito
-        List<Deposito> dadosInformacao = dietasController.listarDepositoTudo2(); 
+        List<Deposito> dadosInformacao = dietasController.listarDepositoTudo(); 
         
         // Obter o modelo da tabela
         DefaultTableModel modeloTabela = (DefaultTableModel)TabelaDeDeposito.getModel(); 
@@ -211,10 +257,12 @@ public void listarDepositoTudo() {
             modeloTabela.addColumn("Conforme");
             modeloTabela.addColumn("nomedieta");
         }
-        
+         
         // Limpar a tabela antes de adicionar novos dados
         modeloTabela.setRowCount(0); 
-          TabelaDeDeposito.getColumnModel().getColumn(4).setCellRenderer(new ValidadeCellRenderer());
+             TabelaDeDeposito.getColumnModel().getColumn(4).setCellRenderer(new ValidadeCellRenderer());
+TabelaDeDeposito.repaint(); // Atualiza a exibição
+
         // Adicionar cada linha de dados à tabela
         for (Deposito linha : dadosInformacao) { 
             modeloTabela.addRow(new Object[] {
@@ -229,7 +277,7 @@ public void listarDepositoTudo() {
             }); 
         } // **Aqui o try é corretamente fechado**
       
-
+ 
     } catch (Exception e) {  // **Agora o catch está no lugar correto**
         e.printStackTrace(); 
         JOptionPane.showMessageDialog(null, "Erro ao atualizar a tabela: " + e.getMessage()); 
@@ -271,6 +319,7 @@ public void listarDepositoTudo2() {
                 linha.isConforme() ? "Sim" : "Não" // Conforme
             }); 
         }
+         TabelaDeDeposito1.getColumnModel().getColumn(4).setCellRenderer(new ValidadeCellRenderer());
 
     } catch (Exception e) { 
         e.printStackTrace(); 
@@ -602,7 +651,7 @@ public void listarFinalizadaDeposito() {
 
         PainelcadastrosDeDietas.add(menuEstoquista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 180, 1070));
 
-        fornecedorD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CAvisks", "Chavinsks", "Babinsks", "Stravinsks", "Chololisks", " " }));
+        fornecedorD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supera", "BRexpress" }));
         PainelcadastrosDeDietas.add(fornecedorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 250, 30));
 
         conformeD.setText("Sim\n\n");
@@ -1350,6 +1399,7 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
             }
         });
         listarDepositoTudo();
+        
     }//GEN-LAST:event_atualizarTabelaBTActionPerformed
 
     private void atualizarTabelaBT1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarTabelaBT1ActionPerformed

@@ -722,6 +722,7 @@ public boolean atualizarValidadeOuNomeDieta(String nomeAtualDieta, String novaVa
 
     return lista;
 }
+ 
 //fim deposito tudo
  public List<Deposito> listarDepositoTudo2() {
     List<Deposito> listaDeposito = new ArrayList<>();
@@ -744,6 +745,7 @@ public boolean atualizarValidadeOuNomeDieta(String nomeAtualDieta, String novaVa
 
             listaDeposito.add(deposito);
         }
+        
     } catch (SQLException e) {
         System.err.println("Erro ao listar depósito: " + e.getMessage());
         e.printStackTrace();  // Logando o erro para facilitar a depuração

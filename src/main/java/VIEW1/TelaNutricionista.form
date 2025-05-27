@@ -479,6 +479,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="atualizarTabelaBT2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/carregando.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="atualizarTabelaBT2ActionPerformed"/>
           </Events>
@@ -1028,12 +1033,17 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JButton" name="atualizarTabelaBT">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/carregando.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="atualizarTabelaBTActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="910" y="530" width="40" height="30"/>
+              <AbsoluteConstraints x="910" y="540" width="40" height="30"/>
             </Constraint>
           </Constraints>
         </Component>

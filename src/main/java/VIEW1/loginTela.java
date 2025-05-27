@@ -24,9 +24,7 @@ public class loginTela extends javax.swing.JFrame {
      */
     public loginTela() {
         iconeTela();
-        setTitle("LOGIN");
-        setSize(400, 400); // Define o tamanho da janela
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
         setResizable(false); // Impede redimensionamento da janela
        
         // Centraliza a janela no centro da tela
@@ -76,45 +74,47 @@ private void limparCampos() {
         logarLog = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
 
         panelLog.setBackground(new java.awt.Color(255, 255, 255));
         panelLog.setForeground(new java.awt.Color(255, 255, 255));
         panelLog.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         estiloAzul.setBackground(new java.awt.Color(51, 102, 255));
-        panelLog.add(estiloAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 632, 1000, 68));
+        panelLog.add(estiloAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 720, 1560, 68));
 
         estiloAzul1.setBackground(new java.awt.Color(51, 102, 255));
-        panelLog.add(estiloAzul1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 64));
+        panelLog.add(estiloAzul1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1560, 64));
 
         imgFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Nutrihospitlar (2).jpg"))); // NOI18N
-        panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, 230));
+        panelLog.add(imgFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, -1, 230));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Bem Vindo ao Login");
-        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, -1, -1));
+        panelLog.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 320, -1, -1));
 
         campoEmailLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEmailLogActionPerformed(evt);
             }
         });
-        panelLog.add(campoEmailLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 238, -1));
+        panelLog.add(campoEmailLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 380, 238, -1));
 
         emailnome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         emailnome.setText("Email: ");
-        panelLog.add(emailnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, -1, -1));
+        panelLog.add(emailnome, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 350, -1, -1));
 
         campoSenhaLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoSenhaLogActionPerformed(evt);
             }
         });
-        panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 480, 193, -1));
+        panelLog.add(campoSenhaLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 450, 193, -1));
 
         nomeSenha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         nomeSenha.setText("Senha :");
-        panelLog.add(nomeSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 450, -1, -1));
+        panelLog.add(nomeSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, -1, -1));
 
         olhoBot.setForeground(new java.awt.Color(102, 255, 102));
         olhoBot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/eye.png"))); // NOI18N
@@ -123,7 +123,7 @@ private void limparCampos() {
                 olhoBotActionPerformed(evt);
             }
         });
-        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 480, 40, 23));
+        panelLog.add(olhoBot, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 450, 40, 23));
 
         logarLog.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logarLog.setText("OK");
@@ -132,23 +132,23 @@ private void limparCampos() {
                 logarLogActionPerformed(evt);
             }
         });
-        panelLog.add(logarLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 550, 118, -1));
+        panelLog.add(logarLog, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 530, 118, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(panelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
 
         pack();

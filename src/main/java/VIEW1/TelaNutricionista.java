@@ -687,6 +687,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel20.setText("Ala:");
 
+        atualizarTabelaBT2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/carregando.png"))); // NOI18N
         atualizarTabelaBT2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarTabelaBT2ActionPerformed(evt);
@@ -1085,12 +1086,13 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
 
         tabelaPresStatus.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 719, 324));
 
+        atualizarTabelaBT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/carregando.png"))); // NOI18N
         atualizarTabelaBT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 atualizarTabelaBTActionPerformed(evt);
             }
         });
-        tabelaPresStatus.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 530, 40, 30));
+        tabelaPresStatus.add(atualizarTabelaBT, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 540, 40, 30));
 
         botaoPD.setForeground(new java.awt.Color(255, 255, 255));
         botaoPD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/magnifier (1).png"))); // NOI18N
