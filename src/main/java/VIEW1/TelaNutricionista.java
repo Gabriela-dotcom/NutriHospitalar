@@ -664,7 +664,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                         .addContainerGap()
                         .addComponent(usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(43, 43, 43)
                         .addComponent(saida)))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -677,11 +677,11 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98)
+                .addGap(117, 117, 117)
                 .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(114, 114, 114))
         );
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -882,26 +882,27 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                         .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuEsquerda1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addGroup(menuEsquerda1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuEsquerda1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuEsquerda1Layout.setVerticalGroup(
             menuEsquerda1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap()
                 .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17)
-                .addGap(26, 26, 26)
+                .addGap(58, 58, 58)
                 .addComponent(presquicao2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100)
+                .addGap(142, 142, 142)
                 .addComponent(listaDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addContainerGap(565, Short.MAX_VALUE))
         );
 
-        dietasAt.add(menuEsquerda1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 180, 780));
+        dietasAt.add(menuEsquerda1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 180, 1080));
 
         tabelaAtualizarPrescricao.setBackground(new java.awt.Color(204, 204, 204));
         tabelaAtualizarPrescricao.setModel(new javax.swing.table.DefaultTableModel(
@@ -1018,18 +1019,18 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
         menuEsquerda2Layout.setVerticalGroup(
             menuEsquerda2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuEsquerda2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(usuario3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                .addGap(33, 33, 33)
+                .addContainerGap()
+                .addComponent(usuario3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(presquicao3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(95, 95, 95)
+                .addGap(84, 84, 84)
                 .addComponent(atualizarDietas2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(304, 304, 304))
+                .addGap(671, 671, 671))
         );
 
-        tabelaPresStatus.add(menuEsquerda2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 180, 800));
+        tabelaPresStatus.add(menuEsquerda2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, 0, 180, 1080));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         jLabel7.setText("Dieta Entregues Do Dia");
@@ -1121,7 +1122,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(dietasAt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(tabelaPresStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(prescreverNutricionista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(prescreverNutricionista, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

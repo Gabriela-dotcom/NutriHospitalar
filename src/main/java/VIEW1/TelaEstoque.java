@@ -121,7 +121,7 @@ setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
   //  limpar campos  
 private void limparCampos() {
-    nomeDaDietaD.setText("");
+    nomeDaDietaD2.setText("");
     loteD.setText("");
     validadeD.setText("");
     
@@ -452,7 +452,7 @@ public void listarFinalizadaDeposito() {
         idFun1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        nomeDaDietaD = new javax.swing.JTextField();
+        nomeDaDietaD2 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jlabel2 = new javax.swing.JLabel();
         loteD = new javax.swing.JTextField();
@@ -540,12 +540,12 @@ public void listarFinalizadaDeposito() {
         jLabel8.setText("Fornecedor:");
         PainelcadastrosDeDietas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 338, -1, -1));
 
-        nomeDaDietaD.addActionListener(new java.awt.event.ActionListener() {
+        nomeDaDietaD2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeDaDietaDActionPerformed(evt);
+                nomeDaDietaD2ActionPerformed(evt);
             }
         });
-        PainelcadastrosDeDietas.add(nomeDaDietaD, new org.netbeans.lib.awtextra.AbsoluteConstraints(338, 211, 251, 29));
+        PainelcadastrosDeDietas.add(nomeDaDietaD2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 250, 29));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setText("Validade:");
@@ -1053,9 +1053,9 @@ public void listarFinalizadaDeposito() {
         // TODO add your handling code here:
     }//GEN-LAST:event_idFun1ActionPerformed
 
-    private void nomeDaDietaDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeDaDietaDActionPerformed
+    private void nomeDaDietaD2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeDaDietaD2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nomeDaDietaDActionPerformed
+    }//GEN-LAST:event_nomeDaDietaD2ActionPerformed
 
     private void loteDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loteDActionPerformed
         // TODO add your handling code here:
@@ -1063,9 +1063,11 @@ public void listarFinalizadaDeposito() {
 
     private void atDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atDataActionPerformed
 // Pegar os dados da interface
-String nomeAtualDieta = nomeDaDietaD.getText().trim();    // nome atual da dieta no depósito
+
+
+String nomeAtualDieta = nomeDaDietaD2.getText().trim();    // nome atual da dieta no depósito
 String novaValidade = validadeD.getText().trim();         // nova validade
-String novoNomeDieta = nomeDaDietaD.getText().trim();     // se quiser mudar também o nome, pode alterar este campo
+String novoNomeDieta = nomeDaDietaD2.getText().trim();     // se quiser mudar também o nome, pode alterar este campo
 
 // Atualizar no controller
 DietasController controller = new DietasController();
@@ -1444,7 +1446,7 @@ System.out.println("ID da dieta selecionado: " + qualIDqualFinalizada1.getText()
         DefaultTableModel modeloTabela = (DefaultTableModel) TabelaDeDeposito1.getModel();
 
         // Atualizando os campos de acordo com os novos índices das colunas
-        nomeDaDietaD.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString()); // Nome da dieta
+        nomeDaDietaD2.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString()); // Nome da dieta
         loteD.setText(modeloTabela.getValueAt(linhaSelecionada, 1).toString()); // Lote
        
         validadeD.setText(modeloTabela.getValueAt(linhaSelecionada, 3).toString()); // Validade
@@ -1498,10 +1500,10 @@ boolean conforme = conformeD.isSelected();
 //Novo metodo para ser possível adicionar mais ietas
 
 // Suponha que essa checkbox já esteja na sua interface
-if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
+if (nomeDaDietaD2.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD.getSelectedItem() == null || validadeD.getText().isEmpty() || quantidadeD.getSelectedItem() == null) {
     JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de adicionar.");
 } else {
-    String tipoDieta = nomeDaDietaD.getText();
+    String tipoDieta = nomeDaDietaD2.getText();
     String lote = loteD.getText();
     String fornecedor = fornecedorD.getSelectedItem().toString();
     String validade = validadeD.getText();
@@ -1618,7 +1620,7 @@ if (nomeDaDietaD.getText().isEmpty() || loteD.getText().isEmpty() || fornecedorD
     private javax.swing.JTextField loteD;
     private javax.swing.JPanel menuEstoquista1;
     private javax.swing.JPanel menuEstoquista2;
-    private javax.swing.JTextField nomeDaDietaD;
+    private javax.swing.JTextField nomeDaDietaD2;
     private javax.swing.JPanel painelDoEstoqueDietas;
     private javax.swing.JPanel painelRetiradaDieta;
     private javax.swing.JTextField pesquisaDieta;

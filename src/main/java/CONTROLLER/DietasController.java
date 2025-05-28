@@ -646,7 +646,7 @@ public boolean atualizarValidadeOuNomeDieta(String nomeAtualDieta, String novaVa
 
         preparedStatement.setString(1, novaValidade);
         preparedStatement.setString(2, novoNomeDieta);
-        preparedStatement.setString(3, nomeAtualDieta);
+        preparedStatement.setString(3, nomeAtualDieta);  // Mantém o nome antigo para garantir a referência correta
 
         int atualizado = preparedStatement.executeUpdate();
         return atualizado > 0;
@@ -657,6 +657,27 @@ public boolean atualizarValidadeOuNomeDieta(String nomeAtualDieta, String novaVa
     }
 }
 
+
+/*
+public boolean atualizarValidadeOuNomeDieta(String nomeAtualDieta, String novaValidade, String novoNomeDieta) {
+    String query = "UPDATE Deposito SET validade = ?, nomedieta = ? WHERE idDieta = ?";
+
+    try (Connection connection = Conexao.getConexao();
+         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        preparedStatement.setString(1, novaValidade);
+        preparedStatement.setString(2, novoNomeDieta);
+        preparedStatement.setString(3, nomeAtualDieta);
+
+        int atualizado = preparedStatement.executeUpdate();
+        return atualizado > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Erro ao atualizar a validade ou nome da dieta no depósito: " + e.getMessage());
+        return false;
+    }
+}
+*/
      //-------------------------------------------------------------
 //-----------------------------------------------------------------------
 //lista de infos finalizada deposito
