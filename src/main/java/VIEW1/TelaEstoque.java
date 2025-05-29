@@ -842,7 +842,7 @@ public void listarFinalizadaDeposito() {
                 .addComponent(usuario2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(menuEstoquista1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(37, 37, 37)
                 .addComponent(saida)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -857,9 +857,9 @@ public void listarFinalizadaDeposito() {
                 .addComponent(bEstoqueDeDietas1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
                 .addComponent(infoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
+                .addGap(113, 113, 113)
                 .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(190, 190, 190))
+                .addContainerGap(434, Short.MAX_VALUE))
         );
 
         painelRetiradaDieta.add(menuEstoquista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 1080));

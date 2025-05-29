@@ -664,7 +664,7 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                         .addContainerGap()
                         .addComponent(usuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuEsquerda3Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(44, 44, 44)
                         .addComponent(saida)))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -679,9 +679,9 @@ private void atualizarTabela3(List<Object[]> dadosPaciente) {
                 .addComponent(atualizarDietas4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(117, 117, 117)
                 .addComponent(listaDeDietas3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(153, 153, 153)
                 .addComponent(saida, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
